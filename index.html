@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v1.5</title>
+    <title>Országos Epson Szerviz | v1.6</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -192,7 +192,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v1.5 (Zips-Integration)</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v1.6 (Stable-Zip-System)</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -205,20 +205,22 @@
             breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 3, spaceBetween: 30 } }
         });
 
-        // --- IRÁNYÍTÓSZÁM -> VÁROS AUTOMATIZÁLÁS ---
-        document.getElementById('cust-zip').addEventListener('input', async function(e) {
+        // --- STABILABB IRÁNYÍTÓSZÁM -> VÁROS AUTOMATIZÁLÁS (Zippopotam) ---
+        document.getElementById('cust-zip').addEventListener('keyup', async function(e) {
             const zip = e.target.value;
             if (zip.length === 4) {
                 try {
-                    const response = await fetch(`https://api.zips.me/v1/hu/${zip}`);
+                    // Magyarország (HU) kódja és a megadott irányítószám lekérése
+                    const response = await fetch(`https://api.zippopotam.us/hu/${zip}`);
                     if (response.ok) {
                         const data = await response.json();
-                        if (data.city) {
-                            document.getElementById('cust-city').value = data.city;
+                        if (data.places && data.places.length > 0) {
+                            // Az első találat városnevének beírása
+                            document.getElementById('cust-city').value = data.places[0]['place name'];
                         }
                     }
                 } catch (err) {
-                    console.log("Irányítószám API nem elérhető, kézi kitöltés szükséges.");
+                    console.error("Irányítószám API hiba:", err);
                 }
             }
         });
