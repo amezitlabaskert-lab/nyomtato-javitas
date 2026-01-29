@@ -16,7 +16,7 @@
             --border-light: #e0e0e0;
         }
         
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; overflow-x: hidden; }
 
         /* --- FINOM KÉK FEJLÉC --- */
         header { 
@@ -60,35 +60,46 @@
             box-shadow: 0 8px 20px rgba(0, 51, 153, 0.3);
         }
 
-        /* --- KÖRHINTA (LAG-MENTESÍTETT) --- */
-        .carousel-outer { max-width: 1200px; margin: 40px auto; overflow: visible; }
-        .swiper { padding: 40px 0; }
+        /* --- KÖRHINTA (LAG-MENTES ÉS ÉLES) --- */
+        .carousel-outer { max-width: 1200px; margin: 40px auto; position: relative; }
+        .swiper { padding: 60px 0 !important; overflow: visible !important; }
         
         .swiper-slide {
             display: flex; 
             flex-direction: column; 
             align-items: center;
-            /* A transition-t a JS fogja vezérelni a szinkron miatt */
-            transform: scale(0.8);
-            will-change: transform;
-            backface-visibility: hidden;
+            opacity: 0.3; 
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.7) translateZ(0);
+            filter: blur(2px);
+            will-change: transform, opacity;
         }
+
         .swiper-slide-active { 
-            transform: scale(1.3) !important; 
+            opacity: 1; 
+            transform: scale(1.3) translateZ(0) !important; 
             z-index: 10; 
+            filter: blur(0);
         }
+
         .swiper-slide img { 
             width: 100%; 
             height: 320px; 
             object-fit: contain; 
+            image-rendering: -webkit-optimize-contrast;
+            backface-visibility: hidden;
         }
+        
         .swiper-slide p { 
             font-weight: 800; 
             color: var(--epson-blue); 
-            margin-top: 15px; 
-            font-size: 1.1rem;
+            margin-top: 20px; 
+            font-size: 1.1rem; 
+            opacity: 0; 
+            transition: 0.4s;
             text-align: center;
         }
+        .swiper-slide-active p { opacity: 1; }
 
         /* --- SZOLGÁLTATÁSOK --- */
         .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; scroll-margin-top: 50px; }
@@ -111,7 +122,14 @@
         .callback-card { background: #fff; padding: 35px; border-radius: 4px; color: #333; }
         .callback-card h3 { margin-top: 0; color: var(--epson-blue); }
         .callback-card input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box; }
-        .callback-card button { width: 100%; padding: 14px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; }
+        .callback-card button { width: 100%; padding: 14px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; transition: 0.3s; }
+        .callback-card button:hover { background: var(--accent-blue); }
+
+        /* Mobilos nézet finomítás */
+        @media (max-width: 768px) {
+            .why-grid { grid-template-columns: 1fr; gap: 40px; }
+            header h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
@@ -213,27 +231,15 @@
         var swiper = new Swiper(".mySwiper", {
             loop: true,
             centeredSlides: true,
-            slidesPerView: 3,
-            spaceBetween: 20,
-            autoplay: { 
-                delay: 3500, 
-                disableOnInteraction: false 
+            slidesPerView: 1.5, // Mobilon egy kép, asztalin több
+            breakpoints: {
+                768: { slidesPerView: 3 }
             },
-            speed: 900, 
+            spaceBetween: 30,
+            autoplay: { delay: 4000, disableOnInteraction: false },
+            speed: 800,
+            grabCursor: true,
             watchSlidesProgress: true,
-            roundLengths: true,
-            on: {
-                setTranslate: function() {
-                    this.slides.forEach(slide => {
-                        slide.style.transition = "transform 900ms ease";
-                    });
-                },
-                setTransition: function(speed) {
-                    this.slides.forEach(slide => {
-                        slide.style.transition = "transform " + speed + "ms ease";
-                    });
-                }
-            }
         });
     </script>
 </body>
