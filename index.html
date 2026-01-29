@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v3.2 (Test)</title>
+    <title>Országos Epson Szerviz | v3.3</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -85,7 +85,7 @@
         .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
         .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* --- SIKER ABLAK MODOSITVA --- */
+        /* --- SIKER ABLAK --- */
         #ticket-success { display: none; text-align: left; border: 2px dashed var(--epson-blue); padding: 25px; border-radius: 12px; background: #fff; }
         .work-order-header { text-align: center; margin-bottom: 20px; }
         .work-order-header i { font-size: 3rem; color: #28a745; margin-bottom: 10px; }
@@ -202,7 +202,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v3.2 (test)</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v3.3</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -243,7 +243,7 @@
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
 
-        // --- GOOGLE FORMS SUBMIT (FRISSÍTETT URL ÉS ID-K) ---
+        // --- GOOGLE FORMS SUBMIT ---
         async function submitTicket() {
             const name = document.getElementById('cust-name').value.trim();
             const zip = document.getElementById('cust-zip').value.trim();
@@ -267,18 +267,17 @@
             const ticketID = "EPSON-" + Math.floor(1000 + Math.random() * 9000);
             const fullDescription = `Választott hibák: ${errors.join(', ')} | Megjegyzés: ${extraMsg}`;
 
-            // A TE ŰRLAPODHOZ TARTOZÓ PONTOS ID-K
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-            formData.append('entry.2062331575', name);         // Név
-            formData.append('entry.1444170367', zip);          // Irányítószám
-            formData.append('entry.174116515', city);          // Város
-            formData.append('entry.311756592', street);        // Utca
-            formData.append('entry.1983084364', phone);        // Telefon
-            formData.append('entry.1718585090', email);        // Email
-            formData.append('entry.1221764657', errorCode);    // Hibakód
-            formData.append('entry.135319888', fullDescription); // Hiba leírása
+            formData.append('entry.2062331575', name);         
+            formData.append('entry.1444170367', zip);          
+            formData.append('entry.174116515', city);          
+            formData.append('entry.311756592', street);        
+            formData.append('entry.1983084364', phone);        
+            formData.append('entry.1718585090', email);        
+            formData.append('entry.1221764657', errorCode);    
+            formData.append('entry.135319888', fullDescription); 
 
             try {
                 await fetch(GOOGLE_FORM_URL, {
