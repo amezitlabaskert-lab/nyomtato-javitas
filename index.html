@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v1.4</title>
+    <title>Országos Epson Szerviz | v1.5</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -106,7 +106,7 @@
 
     <header>
         <h1><span>Országos</span> Epson Szervizelés</h1>
-        <p class="hero-sub">Gyors és szakszerű javítás bárhol az országban. Segítek újra munkára bírni nyomtatóját.</p>
+        <p class="hero-sub">Gyors és szakszerű javítás bárhol az országban.</p>
         <a href="#services" class="btn-main">Miben segíthetek? <i class="fas fa-chevron-down"></i></a>
 
         <div class="carousel-outer">
@@ -126,25 +126,21 @@
         <div class="services-grid">
             <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása.</p></div>
             <div class="service-box"><i class="fas fa-eye-dropper"></i><h3>Fejtisztítás</h3><p>Beszáradt fejek professzionális tisztítása, csíkmentes nyomatok.</p></div>
-            <div class="service-box"><i class="fas fa-sitemap"></i><h3>EcoTank karbantartás</h3><p>Tartályos rendszerek légtelenítése és rendszertisztítása.</p></div>
-            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>"Service Required" üzenet? Hulladéktinta-párna javítása.</p></div>
-            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szakmai tanácsadás</h3><p>Segítek kiválasztani a leginkább fenntartható Epson típust.</p></div>
-            <div class="service-box"><i class="fas fa-coins"></i><h3>Kellékanyagok</h3><p>Gyári vagy megbízható utángyártott tinták beszerzése.</p></div>
+            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>Hulladéktinta-párna javítása és számláló resetelés.</p></div>
         </div>
     </section>
 
     <section class="why-us">
         <div class="why-grid">
             <div>
-                <h2>Miért tőlem kérjen segítséget?</h2>
-                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ mindenre.</p></div></div>
-                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra és alkatrészre felelősséget vállalok.</p></div></div>
-                <div class="feature-item"><i class="fas fa-map-marked-alt"></i><div><strong>Pontos adatok</strong><p>A strukturált címbevitel segíti a gyors kiszállást.</p></div></div>
+                <h2>Hiba bejelentése</h2>
+                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Tőlem kap választ mindenre.</p></div></div>
+                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra felelősséget vállalok.</p></div></div>
             </div>
 
             <div class="report-card" id="ticket-box">
                 <div id="form-content">
-                    <h3>Hiba bejelentése</h3>
+                    <h3>Munkalap kitöltése</h3>
                     <p class="subtitle">Válasszon legfeljebb 2 jellemző tünetet:</p>
                     
                     <div class="error-grid">
@@ -159,13 +155,11 @@
                     
                     <div style="margin-top:15px;">
                         <input type="text" id="cust-name" placeholder="Az Ön neve / Cégneve" required>
-                        
                         <div class="address-row">
                             <input type="text" id="cust-zip" placeholder="Irányítószám" required>
                             <input type="text" id="cust-city" placeholder="Város" required>
                         </div>
                         <input type="text" id="cust-street" placeholder="Utca, házszám" required>
-
                         <input type="tel" id="cust-phone" placeholder="Telefonszáma" required>
                         <input type="email" id="cust-email" placeholder="E-mail címe" required>
                     </div>
@@ -183,8 +177,7 @@
                         <p><strong>Ügyfél:</strong> <span id="res-name"></span></p>
                         <p><strong>Helyszín:</strong> <span id="res-address"></span></p>
                         <p><strong>Bejelentett hiba:</strong> <span id="res-errors"></span></p>
-                        <p style="margin-top:20px; font-size: 0.85rem; color: #666; font-style: italic; text-align: center;">Hamarosan keresni fogom a megadott telefonszámon!</p>
-                        <button onclick="window.print()" style="width:100%; margin-top:15px; padding:10px; background:#eee; border:1px solid #ccc; border-radius:5px; cursor:pointer; font-weight:bold;"><i class="fas fa-print"></i> Munkalap Nyomtatása</button>
+                        <button onclick="window.print()" style="width:100%; margin-top:15px; padding:10px; background:#eee; border:1px solid #ccc; border-radius:5px; cursor:pointer; font-weight:bold;"><i class="fas fa-print"></i> Nyomtatás</button>
                     </div>
                 </div>
             </div>
@@ -192,20 +185,19 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v1.4 (Szócső-Debug Mode)</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v1.5 - Final Label Fix</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- CAROUSEL SETUP ---
+        // CAROUSEL
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
-            speed: 800,
             breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 3, spaceBetween: 30 } }
         });
 
-        // --- ERROR BUTTON TOGGLE ---
+        // ERROR SELECTION
         function toggleError(btn) {
             const activeBtns = document.querySelectorAll('.error-btn.active');
             if (!btn.classList.contains('active') && activeBtns.length >= 2) {
@@ -217,13 +209,13 @@
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
 
-        // --- SUBMIT FUNCTION WITH DEBUG (SZÓCSŐ) ---
+        // SUBMIT TICKET
         async function submitTicket() {
             const name = document.getElementById('cust-name').value;
             const zip = document.getElementById('cust-zip').value;
             const city = document.getElementById('cust-city').value;
             const street = document.getElementById('cust-street').value;
-            let phone = document.getElementById('cust-phone').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
             const email = document.getElementById('cust-email').value;
             const extra = document.getElementById('extra-msg').value;
             const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim());
@@ -239,20 +231,19 @@
 
             const ticketID = new Date().getFullYear() + "/" + Math.floor(1000 + Math.random() * 9000);
 
+            // FORMBRICKS PONTOS MEZŐNEVEK (A KÉPEID ALAPJÁN)
             const responseData = {
                 surveyId: "cmkz5hifa0qaqad01dl19fklo",
                 values: {
-                    "Név": name,
+                    "Az Ön neve": name,
                     "Címe": {
-                        "zip": zip,
-                        "city": city,
-                        "addressLine1": street
+                        "Utca, házszám": street,
+                        "Város": city,
+                        "Irányítószám": zip
                     },
-                    "Telefon": phone,
-                    "Email": email,
-                    "Hibajelenségek": errors.join(', '),
-                    "Üzenet": extra,
-                    "Ticket_ID": ticketID
+                    "Telefonszáma": phone,
+                    "E-mail címe": email,
+                    "Hiba leírása": errors.join(', ') + " | Megjegyzés: " + extra
                 }
             };
 
@@ -273,23 +264,16 @@
                     document.getElementById('res-name').innerText = name;
                     document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
                     document.getElementById('res-errors').innerText = errors.join(', ');
-
                     document.getElementById('form-content').style.display = 'none';
                     document.getElementById('ticket-success').style.display = 'block';
                 } else {
-                    // Itt a részletes hibaüzenet (A SZÓCSŐ)
-                    console.error("DEBUG - Formbricks hiba:", result);
-                    let detailMsg = result.message || "Ismeretlen hiba";
-                    if(result.details) detailMsg += "\n\nRészletek: " + JSON.stringify(result.details);
-                    
-                    alert("A FORMBRICKS NEM FOGADTA EL:\n" + detailMsg);
-                    
+                    console.error("Formbricks hiba:", result);
+                    alert("A Formbricks hibaüzenete: " + JSON.stringify(result.details || result.message));
                     btn.disabled = false;
                     btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
                 }
             } catch (error) {
-                console.error("DEBUG - Hálózati hiba:", error);
-                alert("Hálózati hiba történt! Ellenőrizze az internetet.");
+                alert("Hiba: Ha ez helyi fájl, a böngésző blokkolhatja a küldést. Próbálja meg online tárhelyről vagy Inkognitó módban!");
                 btn.disabled = false;
                 btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
