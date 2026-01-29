@@ -3,66 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | 3D Termékbemutató</title>
+    <title>Epson Nyomtató Szerviz | 3D Szakértő</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         :root { --epson-blue: #003399; --accent-yellow: #ffcc00; --light-bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; color: #333; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; background: #fff; overflow-x: hidden; }
         
-        .hero { background: var(--light-bg); padding: 60px 20px; text-align: center; }
-        .hero h1 { font-size: 2.5rem; color: #1a1a1a; margin-bottom: 10px; }
-        
-        /* Swiper tároló méretezése */
+        .hero { background: var(--light-bg); padding: 50px 20px; text-align: center; border-bottom: 1px solid #eee; }
+        .hero h1 { font-size: 2.8rem; color: #1a1a1a; margin: 0; }
+
+        /* Erőteljes 3D konténer */
         .swiper { 
             width: 100%; 
-            padding-top: 80px; 
-            padding-bottom: 100px; 
-            background: #fff;
-            perspective: 1500px; /* Erősebb 3D mélységérzet */
+            padding-top: 100px; 
+            padding-bottom: 120px; 
         }
 
-        /* Nyomtató kártyák megnövelése */
         .swiper-slide { 
-            width: 500px; /* Jóval nagyobb alapszélesség */
-            height: auto;
+            width: 550px; /* Extra nagy méret a főszereplőknek */
+            transition: 0.7s ease-out;
             display: flex; 
             flex-direction: column; 
-            align-items: center; 
-            transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            filter: blur(4px) opacity(0.6); /* Az oldalsók jobban elhalványulnak */
+            align-items: center;
+            /* Az oldalsók erősebb elhalványítása a fókuszért */
+            filter: blur(5px) opacity(0.4); 
         }
 
-        /* Aktív nyomtató kiemelése */
+        /* A középső elem kiemelése */
         .swiper-slide-active { 
             filter: blur(0) opacity(1); 
-            transform: scale(1.3) translateY(-20px); /* Kiemelkedik és megnagyobbodik */
+            transform: scale(1.4); /* Brutális nagyítás a közepén */
             z-index: 10;
         }
 
         .swiper-slide img { 
             width: 100%; 
-            height: 350px; /* Magasabb konténer a képeknek */
+            height: 380px; 
             object-fit: contain;
-            filter: drop-shadow(0px 20px 30px rgba(0,0,0,0.2));
+            /* Árnyék, hogy ne "lebegjenek" a semmiben */
+            filter: drop-shadow(0px 25px 35px rgba(0,0,0,0.25)); 
         }
 
         .swiper-slide p { 
             color: var(--epson-blue); 
-            font-weight: bold; 
-            font-size: 1.4rem; 
-            margin-top: 25px; 
-            background: rgba(255,255,255,0.8);
-            padding: 5px 15px;
-            border-radius: 20px;
+            font-weight: 800; 
+            font-size: 1.6rem; 
+            margin-top: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .services-container { max-width: 1100px; margin: 40px auto; padding: 20px; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .service-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; }
-        
+        .services-container { max-width: 1100px; margin: 20px auto 60px; padding: 0 20px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card { background: var(--light-bg); padding: 30px; border-radius: 15px; text-align: center; border: 1px solid #ddd; }
+        .service-card h3 { color: var(--epson-blue); font-size: 1.5rem; }
+
         @media (max-width: 768px) {
-            .swiper-slide { width: 300px; }
-            .swiper-slide img { height: 200px; }
+            .swiper-slide { width: 280px; }
+            .swiper-slide img { height: 220px; }
         }
     </style>
 </head>
@@ -97,9 +94,9 @@
 
     <div class="services-container">
         <div class="services-grid">
-            <div class="service-card"><h3>Mechanikai javítás</h3><p>Papírelakadás és görgőcsere gyorsan.</p></div>
-            <div class="service-card"><h3>Fejtisztítás</h3><p>Csíkos nyomtatás megszüntetése professzionálisan.</p></div>
-            <div class="service-card"><h3>Szoftveres nullázás</h3><p>"Service Required" hiba végleges elhárítása.</p></div>
+            <div class="service-card"><h3>Mechanikai javítás</h3><p>Papírelakadás és görgőcsere profi módon.</p></div>
+            <div class="service-card"><h3>Fejtisztítás</h3><p>Speciális eljárással a tökéletes színekért.</p></div>
+            <div class="service-card"><h3>Szoftveres nullázás</h3><p>Hulladéktinta-párna csere és szoftveres reset.</p></div>
         </div>
     </div>
 
@@ -110,15 +107,19 @@
             grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
+            
+            /* Végtelenítés kényszerítése */
             loop: true,
+            loopAdditionalSlides: 3, 
+            
             coverflowEffect: { 
-                rotate: -30,   /* NEGATÍV érték: így hátrafelé dőlnek el a szélek */
-                stretch: -50,  /* Összehúzza a diákat, hogy látványosabb legyen az átfedés */
-                depth: 400,    /* Nagyobb mélység a 3D hatáshoz */
-                modifier: 1, 
+                rotate: -25,    /* Negatív forgatás a hátrafelé dőléshez */
+                stretch: -120,  /* Erős egymásra csúsztatás a mélységért */
+                depth: 600,     /* Nagyobb mélység a látványosabb térérzetért */
+                modifier: 1.5,  /* Az effekt erejének szorzója */
                 slideShadows: false 
             },
-            autoplay: { delay: 4000 },
+            autoplay: { delay: 3000, disableOnInteraction: false },
             pagination: { el: ".swiper-pagination", clickable: true },
         });
     </script>
