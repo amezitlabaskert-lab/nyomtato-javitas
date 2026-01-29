@@ -18,7 +18,7 @@
         
         body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; overflow-x: hidden; }
 
-        /* --- GYORS KONTAKT SÁV --- */
+        /* --- TOP BAR --- */
         .top-bar {
             background: #fff;
             padding: 8px 20px;
@@ -26,23 +26,14 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 25px;
             font-size: 0.85rem;
             color: var(--epson-blue);
             font-weight: 600;
         }
-        .top-bar a {
-            text-decoration: none;
-            color: var(--epson-blue);
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .top-bar a:hover { color: var(--accent-blue); }
-        .top-bar i { font-size: 1rem; }
+        .top-bar a { text-decoration: none; color: var(--epson-blue); display: flex; align-items: center; gap: 8px; }
 
-        /* --- FEJLÉC --- */
+        /* --- HEADER --- */
         header { 
             text-align: center; 
             padding: 40px 20px 60px;
@@ -50,7 +41,7 @@
             border-bottom: 1px solid #ddecff;
         }
         header h1 { font-size: 2.6rem; font-weight: 800; color: var(--epson-blue); margin: 0; letter-spacing: -1px; }
-        header h1 span { color: var(--accent-blue); } /* Kiemelés az Országosnak */
+        header h1 span { color: var(--accent-blue); }
         .hero-sub { color: #444; font-size: 1.2rem; margin: 15px 0 35px; max-width: 750px; margin-left: auto; margin-right: auto; }
 
         .btn-main { 
@@ -60,61 +51,47 @@
         }
         .btn-main:hover { background: var(--accent-blue); transform: translateY(-2px); }
 
-        /* --- KÖRHINTA --- */
-        .carousel-outer { 
-            max-width: 1100px; 
-            margin: 40px auto; 
-            overflow: hidden; 
-            position: relative;
-        }
+        /* --- CAROUSEL --- */
+        .carousel-outer { max-width: 1100px; margin: 40px auto; overflow: hidden; position: relative; }
         .swiper { padding: 50px 0 !important; }
-        .swiper-slide { display: flex; flex-direction: column; align-items: center; opacity: 1; transition: 0.6s; transform: scale(0.7); filter: none !important; }
-        .swiper-slide-active { transform: scale(1.2) !important; z-index: 10; }
+        .swiper-slide { display: flex; flex-direction: column; align-items: center; opacity: 0.4; transition: 0.6s; transform: scale(0.7); filter: none !important; }
+        .swiper-slide-active { opacity: 1; transform: scale(1.2) !important; z-index: 10; }
         .swiper-slide img { width: 100%; height: 280px; object-fit: contain; }
         .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 20px; font-size: 1rem; opacity: 0; transition: 0.4s; }
         .swiper-slide-active p { opacity: 1; }
 
-        /* --- SZOLGÁLTATÁSI TERÜLET (ÚJ) --- */
-        .area-info {
-            background: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-light);
-        }
-        .area-cards {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            max-width: 1000px;
-            margin: 20px auto 0;
-            flex-wrap: wrap;
-        }
-        .area-card {
-            background: var(--bg-gray);
-            padding: 20px;
-            border-radius: 8px;
-            flex: 1;
-            min-width: 280px;
-            border-top: 4px solid var(--epson-blue);
-        }
-        .area-card h4 { margin: 0 0 10px; color: var(--epson-blue); }
+        /* --- AREA INFO --- */
+        .area-info { background: #fff; padding: 60px 20px; text-align: center; border-bottom: 1px solid var(--border-light); }
+        .area-cards { display: flex; justify-content: center; gap: 30px; max-width: 1000px; margin: 30px auto 0; flex-wrap: wrap; }
+        .area-card { background: var(--bg-gray); padding: 30px; border-radius: 8px; flex: 1; min-width: 280px; border-top: 4px solid var(--epson-blue); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .area-card i { font-size: 2rem; color: var(--epson-blue); margin-bottom: 15px; display: block; }
+        .area-card h4 { margin: 0 0 10px; font-size: 1.2rem; color: var(--dark-gray); }
 
-        /* --- SZOLGÁLTATÁSOK --- */
-        .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; scroll-margin-top: 50px; }
+        /* --- SERVICES --- */
+        .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 60px 40px; }
         .service-box i { font-size: 2rem; color: var(--epson-blue); margin-bottom: 15px; display: block; }
-        .service-box h3 { font-size: 1.4rem; color: var(--dark-gray); margin: 10px 0; border-left: 4px solid var(--epson-blue); padding-left: 15px; }
+        .service-box h3 { font-size: 1.4rem; color: var(--dark-gray); border-left: 4px solid var(--epson-blue); padding-left: 15px; }
 
-        .why-us { background: var(--epson-blue); color: #fff; padding: 70px 20px; }
+        /* --- VÉLEMÉNYEK (VISSZAÁLLÍTVA) --- */
+        .reviews-container { padding: 80px 20px; background: var(--bg-gray); text-align: center; }
+        .reviews-container h2 { margin-bottom: 30px; font-size: 2rem; color: var(--epson-blue); }
+
+        /* --- WHY US & VISSZAHÍVÁS (VISSZAÁLLÍTVA) --- */
+        .why-us { background: var(--epson-blue); color: #fff; padding: 80px 20px; }
         .why-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .feature-item { margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start; }
+        .feature-item i { font-size: 1.6rem; opacity: 0.9; }
         
-        .callback-card { background: #fff; padding: 35px; border-radius: 4px; color: #333; }
-        .callback-card button { width: 100%; padding: 14px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; }
+        .callback-card { background: #fff; padding: 40px; border-radius: 8px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .callback-card h3 { margin-top: 0; color: var(--epson-blue); margin-bottom: 20px; }
+        .callback-card input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
+        .callback-card button { width: 100%; padding: 16px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 1rem; }
+        .callback-card button:hover { background: var(--accent-blue); }
 
         @media (max-width: 768px) {
-            .top-bar { flex-direction: column; gap: 10px; }
-            header h1 { font-size: 1.8rem; }
-            .area-cards { flex-direction: column; }
+            .why-grid { grid-template-columns: 1fr; }
+            .top-bar { flex-direction: column; align-items: center; padding: 15px; }
         }
     </style>
 </head>
@@ -123,7 +100,7 @@
     <div class="top-bar">
         <a href="tel:+36301234567"><i class="fas fa-phone-alt"></i> +36 30 123 4567</a>
         <a href="mailto:info@epsonszerviz.hu"><i class="fas fa-envelope"></i> info@epsonszerviz.hu</a>
-        <span><i class="fas fa-map-marker-alt"></i> Országos kiszállás és szerviz</span>
+        <span><i class="fas fa-truck-loading"></i> Országos kiszállás és szerviz</span>
     </div>
 
     <header>
@@ -146,31 +123,29 @@
     </header>
 
     <section class="area-info">
-        <h3>Milyen gyorsan érek oda?</h3>
-        <p>A javítási idő függ a távolságtól, de igyekszem a lehető leghamarabb segíteni:</p>
+        <h2>Milyen gyorsan érek oda?</h2>
         <div class="area-cards">
             <div class="area-card">
-                <i class="fas fa-city" style="font-size: 1.5rem; color: var(--epson-blue);"></i>
+                <i class="fas fa-map-marked-alt"></i>
                 <h4>Budapest és Pest megye</h4>
-                <p>Általában <strong>1-3 munkanapon</strong> belül a helyszínen vagyok.</p>
+                <p>Általában <strong>1-3 munkanapon</strong> belül megkezdem a javítást.</p>
             </div>
             <div class="area-card">
-                <i class="fas fa-shuttle-van" style="font-size: 1.5rem; color: var(--epson-blue);"></i>
-                <h4>Vidéki megyeszékhelyek</h4>
-                <p>Távolságtól függően, jellemzően <strong>3-5 munkanap</strong>.</p>
+                <i class="fas fa-road"></i>
+                <h4>Vidéki kiszállás</h4>
+                <p>Távolságtól függően, jellemzően <strong>3-5 munkanap</strong> alatt odaérek.</p>
             </div>
         </div>
     </section>
 
     <section class="services-section" id="services">
-        <div class="section-title-row"><h2>Milyen hibákkal fordulhat hozzám?</h2></div>
         <div class="services-grid">
-            <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása. Gyors alkatrészcserével teszem újra munkára késszé a nyomtatóját.</p></div>
-            <div class="service-box"><i class="fas fa-eye-dropper"></i><h3>Fejtisztítás, csíkozásmentesítés</h3><p>Beszáradt fejek professzionális tisztítását vállalom, hogy újra tökéletes, csíkmentes nyomatokat kapjon.</p></div>
+            <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása. Gyors alkatrészcserével dolgozom.</p></div>
+            <div class="service-box"><i class="fas fa-eye-dropper"></i><h3>Fejtisztítás</h3><p>Beszáradt fejek professzionális tisztítása, hogy újra tökéletes, csíkmentes nyomatokat kapjon.</p></div>
             <div class="service-box"><i class="fas fa-sitemap"></i><h3>EcoTank karbantartás</h3><p>A tartályos rendszerek légtelenítése és rendszertisztítása rutinfeladat számomra.</p></div>
-            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>"Service Required" üzenet? Hulladéktinta-párna telítettség szoftveres és fizikai javítását is elvégzem.</p></div>
-            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szakmai tanácsadás</h3><p>Segítek kiválasztani a leginkább fenntartható Epson típust.</p></div>
-            <div class="service-box"><i class="fas fa-coins"></i><h3>Kellékanyag beszerzés</h3><p>Segítek a megfelelő gyári vagy megbízható utángyártott tinták kiválasztásában.</p></div>
+            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>"Service Required" üzenet? Hulladéktinta-párna telítettség szoftveres és fizikai javítása.</p></div>
+            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szakmai tanácsadás</h3><p>Segítek kiválasztani a leginkább fenntartható Epson típust a munkájához.</p></div>
+            <div class="service-box"><i class="fas fa-coins"></i><h3>Kellékanyagok</h3><p>Segítek a megfelelő gyári vagy megbízható utángyártott tinták beszerzésében.</p></div>
         </div>
     </section>
 
@@ -185,8 +160,20 @@
         <div class="why-grid">
             <div>
                 <h2>Miért tőlem kérjen segítséget?</h2>
-                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ minden kérdésére.</p></div></div>
-                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra és alkatrészre felelősséget vállalok.</p></div></div>
+                <div class="feature-item">
+                    <i class="fas fa-user-check"></i>
+                    <div>
+                        <strong>Közvetlen kapcsolat</strong>
+                        <p>Én javítom a gépét, tőlem kap választ minden szakmai kérdésére.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <strong>Személyes garancia</strong>
+                        <p>Minden elvégzett javításra és beépített alkatrészre felelősséget vállalok.</p>
+                    </div>
+                </div>
             </div>
             <div class="callback-card">
                 <h3>Visszahívást kér?</h3>
