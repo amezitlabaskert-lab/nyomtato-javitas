@@ -270,14 +270,14 @@
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-            formData.append('entry.1567915132', name);         
-            formData.append('entry.977338095', zip);          
-            formData.append('entry.2063510905', city);          
-            formData.append('entry.566376283', street);        
-            formData.append('entry.175515844', phone);        
-            formData.append('entry.156899408', email);        
-            formData.append('entry.836895663', errorCode);    
-            formData.append('entry.1127298870', fullDescription); 
+formData.append('entry.1567915132', name);
+formData.append('entry.2063510905', zip);
+formData.append('entry.566376283', city);
+formData.append('entry.977338095', street);
+formData.append('entry.175515844', phone);
+formData.append('entry.156899408', email);
+formData.append('entry.836895663', errorCode);
+formData.append('entry.1127298870', fullDescription);
 
             try {
                 await fetch(GOOGLE_FORM_URL, {
