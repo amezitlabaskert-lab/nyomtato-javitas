@@ -243,7 +243,7 @@
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
 
-        // --- GOOGLE FORMS SUBMIT ---
+        // --- GOOGLE FORMS SUBMIT (FRISSÍTETT URL ÉS ID-K) ---
         async function submitTicket() {
             const name = document.getElementById('cust-name').value.trim();
             const zip = document.getElementById('cust-zip').value.trim();
@@ -267,6 +267,7 @@
             const ticketID = "EPSON-" + Math.floor(1000 + Math.random() * 9000);
             const fullDescription = `Választott hibák: ${errors.join(', ')} | Megjegyzés: ${extraMsg}`;
 
+            // A JSON ALAPJÁN FRISSÍTETT CÍM ÉS AZONOSÍTÓK
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
@@ -278,7 +279,6 @@
             formData.append('entry.1718585090', email);
             formData.append('entry.1221764657', errorCode);
             formData.append('entry.135319888', fullDescription);
-            // formData.append('entry.IDE_IRD_A_TICKETID_MEZO_ID_JET', ticketID); // Ezt akkor add hozzá, ha van Ticket ID meződ a Google-ben
 
             try {
                 await fetch(GOOGLE_FORM_URL, {
@@ -288,7 +288,6 @@
                     body: formData
                 });
 
-                // ADATOK KIIRASA A SIKER ABLAKBA
                 document.getElementById('ticket-id').innerText = ticketID;
                 document.getElementById('res-name').innerText = name;
                 document.getElementById('res-phone').innerText = phone;
