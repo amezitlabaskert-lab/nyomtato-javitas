@@ -3,107 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Szerviz | Circular 3D v1.1.5</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css?v=1.1.5" />
+    <title>Epson Orbit v1.1.6</title>
     <style>
         :root { --epson-blue: #003399; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; overflow: hidden; }
-        
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            background: #fff; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
         .version-badge {
             position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8);
             color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999;
         }
 
-        .swiper-container-wrapper {
+        /* A 3D TÉR */
+        .scene {
+            width: 400px;
+            height: 400px;
+            margin-top: 100px;
+            perspective: 1200px; /* Ezt látod szemből */
+        }
+
+        /* A FORGÓ HENGER */
+        .carousel {
             width: 100%;
-            max-width: 800px; /* Szűkebb keret, hogy látszódjon a körforgás */
-            margin: 80px auto;
-            perspective: 1500px;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .swiper { width: 100%; overflow: visible; }
-
-        .swiper-slide { 
-            width: 300px; 
-            transition: all 1s ease-in-out;
-            opacity: 0;
-            transform: translate3d(0, 0, -1000px); /* Alaphelyzet: hátul középen */
+        /* EGY-EGY NYOMTATÓ HELYE */
+        .carousel__cell {
+            position: absolute;
+            width: 360px;
+            height: 300px;
+            left: 20px;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 1s;
+            backface-visibility: visible; /* Hogy lásd hátul is! */
         }
 
-        /* --- A 3D KÖR POZÍCIÓI --- */
+        /* POZÍCIONÁLÁS A KÖRPÁLYÁN (5 elem esetén 72 fokonként) */
+        /* A translateZ(400px) tolja ki őket a kör szélére a középpontból */
+        .carousel__cell:nth-child(1) { transform: rotateY(0deg) translateZ(450px); }
+        .carousel__cell:nth-child(2) { transform: rotateY(72deg) translateZ(450px); }
+        .carousel__cell:nth-child(3) { transform: rotateY(144deg) translateZ(450px); }
+        .carousel__cell:nth-child(4) { transform: rotateY(216deg) translateZ(450px); }
+        .carousel__cell:nth-child(5) { transform: rotateY(288deg) translateZ(450px); }
 
-        /* 1. KÖZÉP - ELÖL */
-        .swiper-slide-active {
-            transform: translate3d(0, 0, 200px) !important;
-            opacity: 1;
-            z-index: 100;
-        }
-
-        /* 2. BALRA ELÖL - Itt fordul be a körbe */
-        .swiper-slide-prev {
-            transform: translate3d(-70%, 0, -100px) rotateY(40deg) !important;
-            opacity: 0.5;
-            z-index: 50;
-        }
-
-        /* 7. JOBBRA ELÖL - Itt érkezik vissza */
-        .swiper-slide-next {
-            transform: translate3d(70%, 0, -100px) rotateY(-40deg) !important;
-            opacity: 0.5;
-            z-index: 50;
-        }
-
-        /* 3. BALRA HÁTUL (A rajzod szerint: elindul jobbra a háttérben) */
-        .swiper-slide-prev-prev,
-        .swiper-slide:has(+ .swiper-slide-prev) {
-            transform: translate3d(-30%, 0, -500px) rotateY(70deg) !important;
-            opacity: 0.2;
-            z-index: 10;
-        }
-
-        /* 4-5. HÁTUL KÖZÉPEN (A fekete nyomtató helye) */
-        .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next):not(.swiper-slide-prev-prev) {
-            transform: translate3d(30%, 0, -500px) rotateY(-70deg) !important;
-            opacity: 0.1;
-            z-index: 5;
-        }
-
-        .swiper-slide img { 
+        .carousel__cell img { 
             width: 100%; 
             height: 250px; 
             object-fit: contain;
-            filter: drop-shadow(0px 20px 15px rgba(0,0,0,0.2)); 
+            filter: drop-shadow(0px 20px 20px rgba(0,0,0,0.2));
         }
 
-        .swiper-slide p { color: var(--epson-blue); font-weight: 800; text-align: center; margin-top: 10px; }
+        .carousel__cell p { 
+            color: var(--epson-blue); 
+            font-weight: 900; 
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        /* VEZÉRLŐ GOMBOK */
+        .controls { margin-top: 50px; z-index: 100; }
+        button {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: var(--epson-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="version-badge">v1.1.5 - Back-to-Right Orbit</div>
+    <div class="version-badge">v1.1.6 - True 3D Orbit (No Swiper)</div>
 
-    <div class="swiper-container-wrapper">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="l5590.png" alt="L5590"><p>EcoTank L5590</p></div>
-                <div class="swiper-slide"><img src="c5390.png" alt="C5390"><p>WorkForce C5390</p></div>
-                <div class="swiper-slide"><img src="c5890.png" alt="C5890"><p>WorkForce C5890</p></div>
-                <div class="swiper-slide"><img src="st-c4100.png" alt="ST-C4100"><p>WorkForce ST-C4100</p></div>
-                <div class="swiper-slide"><img src="am-c5000.png" alt="AM-C5000"><p>Enterprise AM-C5000</p></div>
-            </div>
+    <div class="scene">
+        <div class="carousel">
+            <div class="carousel__cell"><img src="l5590.png" alt="L5590"><p>EcoTank L5590</p></div>
+            <div class="carousel__cell"><img src="c5390.png" alt="C5390"><p>WorkForce C5390</p></div>
+            <div class="carousel__cell"><img src="c5890.png" alt="C5890"><p>WorkForce C5890</p></div>
+            <div class="carousel__cell"><img src="st-c4100.png" alt="ST-C4100"><p>WorkForce ST-C4100</p></div>
+            <div class="carousel__cell"><img src="am-c5000.png" alt="AM-C5000"><p>Enterprise AM-C5000</p></div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?v=1.1.5"></script>
+    <div class="controls">
+        <button class="prev-button">◀</button>
+        <button class="next-button">▶</button>
+    </div>
+
     <script>
-        var swiper = new Swiper(".mySwiper", {
-            centeredSlides: true,
-            slidesPerView: "auto",
-            loop: true,
-            speed: 1200,
-            autoplay: { delay: 3500 },
-            watchSlidesProgress: true,
+        var carousel = document.querySelector('.carousel');
+        var cellCount = 5;
+        var selectedIndex = 0;
+
+        function rotateCarousel() {
+            var angle = selectedIndex / cellCount * -360;
+            carousel.style.transform = 'translateZ(-450px) rotateY(' + angle + 'deg)';
+        }
+
+        document.querySelector('.prev-button').addEventListener('click', function() {
+            selectedIndex--;
+            rotateCarousel();
         });
+
+        document.querySelector('.next-button').addEventListener('click', function() {
+            selectedIndex++;
+            rotateCarousel();
+        });
+
+        // Automata forgatás
+        setInterval(() => {
+            selectedIndex++;
+            rotateCarousel();
+        }, 4000);
+
+        rotateCarousel(); // Alaphelyzet beállítása
     </script>
 </body>
 </html>
