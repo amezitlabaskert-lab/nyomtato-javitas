@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | Személyes Szakértői Segítség</title>
+    <title>Országos Epson Szerviz | v1.2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -78,7 +78,6 @@
 
         .report-card input, .report-card textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; }
         
-        /* Cím mezők elrendezése: Irányítószám és Város egymás mellett */
         .address-row { display: flex; gap: 10px; }
         .address-row input[id="cust-zip"] { flex: 1; }
         .address-row input[id="cust-city"] { flex: 2; }
@@ -86,12 +85,14 @@
         .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
         .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* SUCCESS / WORK ORDER STYLING */
         #ticket-success { display: none; text-align: left; border: 2px dashed var(--epson-blue); padding: 25px; border-radius: 12px; background: #fff; }
         .work-order-header { text-align: center; margin-bottom: 20px; }
         .work-order-header i { font-size: 3rem; color: #28a745; margin-bottom: 10px; }
         .work-order-data { font-size: 0.95rem; border-top: 1px solid #eee; padding-top: 15px; }
         .work-order-data p { margin: 8px 0; }
+
+        /* VERSION FOOTER */
+        footer { text-align: center; padding: 20px; color: #999; font-size: 0.75rem; background: var(--bg-gray); }
 
         @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } .address-row { flex-direction: column; gap: 0; } }
     </style>
@@ -139,7 +140,7 @@
                 <h2>Miért tőlem kérjen segítséget?</h2>
                 <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ mindenre.</p></div></div>
                 <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra és alkatrészre felelősséget vállalok.</p></div></div>
-                <div class="feature-item"><i class="fas fa-map-marked-alt"></i><div><strong>Teljes helyszíni adatok</strong><p>A rögzített cím alapján pontos kiszállási tervet készítek.</p></div></div>
+                <div class="feature-item"><i class="fas fa-map-marked-alt"></i><div><strong>Pontos adatok</strong><p>A strukturált címbevitel segíti a gyors kiszállást.</p></div></div>
             </div>
 
             <div class="report-card" id="ticket-box">
@@ -190,6 +191,10 @@
             </div>
         </div>
     </section>
+
+    <footer>
+        &copy; 2026 Országos Epson Szerviz | <strong>v1.2 (Address Mapping Update)</strong>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
