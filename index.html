@@ -3,18 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Orbit v1.1.6</title>
+    <title>Epson Billboard Orbit v1.1.7</title>
     <style>
         :root { --epson-blue: #003399; }
         body { 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-            background: #fff; 
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; 
+            overflow: hidden; display: flex; flex-direction: column; align-items: center;
         }
 
         .version-badge {
@@ -22,119 +16,87 @@
             color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999;
         }
 
-        /* A 3D TÉR */
         .scene {
-            width: 400px;
-            height: 400px;
-            margin-top: 100px;
-            perspective: 1200px; /* Ezt látod szemből */
+            width: 100%; height: 500px;
+            perspective: 1200px; display: flex; align-items: center; justify-content: center;
         }
 
-        /* A FORGÓ HENGER */
-        .carousel {
-            width: 100%;
-            height: 100%;
-            position: absolute;
+        /* A láthatatlan forgó váz */
+        .orbit-container {
+            width: 1px; height: 1px;
+            position: relative;
             transform-style: preserve-3d;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        /* EGY-EGY NYOMTATÓ HELYE */
-        .carousel__cell {
+        .printer-card {
             position: absolute;
-            width: 360px;
-            height: 300px;
-            left: 20px;
-            top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: opacity 1s;
-            backface-visibility: visible; /* Hogy lásd hátul is! */
+            width: 320px;
+            left: -160px; top: -150px;
+            display: flex; flex-direction: column; align-items: center;
+            /* Fontos: A kártya ellentétesen forog a vázzal, így mindig szemből látod */
+            transition: transform 1s, opacity 1s;
         }
 
-        /* POZÍCIONÁLÁS A KÖRPÁLYÁN (5 elem esetén 72 fokonként) */
-        /* A translateZ(400px) tolja ki őket a kör szélére a középpontból */
-        .carousel__cell:nth-child(1) { transform: rotateY(0deg) translateZ(450px); }
-        .carousel__cell:nth-child(2) { transform: rotateY(72deg) translateZ(450px); }
-        .carousel__cell:nth-child(3) { transform: rotateY(144deg) translateZ(450px); }
-        .carousel__cell:nth-child(4) { transform: rotateY(216deg) translateZ(450px); }
-        .carousel__cell:nth-child(5) { transform: rotateY(288deg) translateZ(450px); }
-
-        .carousel__cell img { 
-            width: 100%; 
-            height: 250px; 
-            object-fit: contain;
-            filter: drop-shadow(0px 20px 20px rgba(0,0,0,0.2));
+        .printer-card img { 
+            width: 100%; height: 260px; object-fit: contain;
+            filter: drop-shadow(0px 30px 20px rgba(0,0,0,0.25));
         }
 
-        .carousel__cell p { 
-            color: var(--epson-blue); 
-            font-weight: 900; 
-            font-size: 1.2rem;
-            text-align: center;
+        .printer-card p { 
+            color: var(--epson-blue); font-weight: 900; font-size: 1.2rem; margin-top: 15px;
         }
 
-        /* VEZÉRLŐ GOMBOK */
-        .controls { margin-top: 50px; z-index: 100; }
-        button {
-            padding: 10px 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: var(--epson-blue);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            margin: 0 10px;
-        }
+        .controls { margin-top: 30px; }
+        button { padding: 15px 30px; font-size: 1.5rem; cursor: pointer; background: var(--epson-blue); color: white; border: none; border-radius: 8px; }
     </style>
 </head>
 <body>
 
-    <div class="version-badge">v1.1.6 - True 3D Orbit (No Swiper)</div>
+    <div class="version-badge">v1.1.7 - Billboard Orbit (No Squish)</div>
 
     <div class="scene">
-        <div class="carousel">
-            <div class="carousel__cell"><img src="l5590.png" alt="L5590"><p>EcoTank L5590</p></div>
-            <div class="carousel__cell"><img src="c5390.png" alt="C5390"><p>WorkForce C5390</p></div>
-            <div class="carousel__cell"><img src="c5890.png" alt="C5890"><p>WorkForce C5890</p></div>
-            <div class="carousel__cell"><img src="st-c4100.png" alt="ST-C4100"><p>WorkForce ST-C4100</p></div>
-            <div class="carousel__cell"><img src="am-c5000.png" alt="AM-C5000"><p>Enterprise AM-C5000</p></div>
+        <div class="orbit-container">
+            <div class="printer-card"><img src="l5590.png"><p>EcoTank L5590</p></div>
+            <div class="printer-card"><img src="c5390.png"><p>WorkForce C5390</p></div>
+            <div class="printer-card"><img src="c5890.png"><p>WorkForce C5890</p></div>
+            <div class="printer-card"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
+            <div class="printer-card"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
         </div>
     </div>
 
     <div class="controls">
-        <button class="prev-button">◀</button>
-        <button class="next-button">▶</button>
+        <button onclick="rotate(-1)">◀</button>
+        <button onclick="rotate(1)">▶</button>
     </div>
 
     <script>
-        var carousel = document.querySelector('.carousel');
-        var cellCount = 5;
-        var selectedIndex = 0;
+        const container = document.querySelector('.orbit-container');
+        const cards = document.querySelectorAll('.printer-card');
+        const radius = 450; // A kör sugara
+        let currentRotation = 0;
 
-        function rotateCarousel() {
-            var angle = selectedIndex / cellCount * -360;
-            carousel.style.transform = 'translateZ(-450px) rotateY(' + angle + 'deg)';
+        function updateCards() {
+            cards.forEach((card, index) => {
+                const angle = (index * (360 / cards.length));
+                // Kiszámoljuk a pozíciót a körpályán
+                // A rotateY(-currentRotation) trükk: kioltja a forgást, így a kép szemben marad
+                card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px) rotateY(${-angle - currentRotation}deg)`;
+                
+                // Opacitás és méret finomhangolása a távolság alapján
+                const actualAngle = (angle + currentRotation) % 360;
+                const normalizedAngle = (actualAngle + 360) % 360;
+                card.style.opacity = (normalizedAngle > 90 && normalizedAngle < 270) ? "0.3" : "1";
+            });
         }
 
-        document.querySelector('.prev-button').addEventListener('click', function() {
-            selectedIndex--;
-            rotateCarousel();
-        });
+        function rotate(direction) {
+            currentRotation -= direction * (360 / cards.length);
+            container.style.transform = `rotateY(${currentRotation}deg)`;
+            updateCards();
+        }
 
-        document.querySelector('.next-button').addEventListener('click', function() {
-            selectedIndex++;
-            rotateCarousel();
-        });
-
-        // Automata forgatás
-        setInterval(() => {
-            selectedIndex++;
-            rotateCarousel();
-        }, 4000);
-
-        rotateCarousel(); // Alaphelyzet beállítása
+        updateCards(); // Első render
     </script>
 </body>
 </html>
