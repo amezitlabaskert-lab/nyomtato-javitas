@@ -3,101 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | Gyors Javítás</title>
+    <title>Epson Szerviz | Zero Blur v1.2.6</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        :root { --epson-blue: #003399; --text: #333; --light-gray: #f9f9f9; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; color: var(--text); line-height: 1.6; }
+        :root { --epson-blue: #003399; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; }
 
-        /* --- HERO SECTION --- */
-        .hero { text-align: center; padding: 60px 20px; background: linear-gradient(180deg, #f0f4f8 0%, #ffffff 100%); }
-        .hero h1 { color: var(--epson-blue); font-size: 2.8rem; margin-bottom: 10px; }
-        
-        /* --- KÖRHINTA (NO BLUR) --- */
-        .carousel-section { max-width: 900px; margin: 0 auto; overflow: hidden; }
-        .swiper-slide {
-            display: flex; flex-direction: column; align-items: center;
-            transition: all 0.5s ease; opacity: 0.3; transform: scale(0.8);
-            filter: blur(0) !important; /* SEHOL NINCS BLUR */
+        /* --- KÖRHINTA (TILTOTT BLUR) --- */
+        .swiper-container-wrapper { 
+            max-width: 900px; 
+            margin: 50px auto; 
+            overflow: visible; /* Hogy a szélső éles képek se vágódjanak le */
         }
-        .swiper-slide-active { opacity: 1; transform: scale(1.1); z-index: 10; }
-        .swiper-slide img { width: 100%; height: 220px; object-fit: contain; }
+
+        .swiper-slide {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            transition: transform 0.6s ease, opacity 0.6s ease;
+            
+            /* RADIKÁLIS BLUR-TILTS */
+            filter: none !important; 
+            -webkit-filter: none !important;
+            backface-visibility: hidden;
+            transform-style: flat; /* Megakadályozza a 3D-s pixel-elmosódást */
+            
+            opacity: 0.4; 
+            transform: scale(0.8);
+        }
+
+        /* Csak az aktív elem kap fókuszt, de a többi is ÉLES marad */
+        .swiper-slide-active {
+            opacity: 1; 
+            transform: scale(1.1); 
+            z-index: 10;
+            filter: none !important;
+        }
+
+        /* Szomszédos elemek - halványabbak, de kristálytiszták */
+        .swiper-slide-prev, .swiper-slide-next {
+            opacity: 0.7;
+            filter: none !important;
+        }
+
+        .swiper-slide img { 
+            width: 100%; 
+            height: 250px; 
+            object-fit: contain; 
+            /* Letisztult árnyék, blur nélkül */
+            filter: drop-shadow(0px 10px 5px rgba(0,0,0,0.1)) !important; 
+        }
+
         .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 10px; }
 
-        /* --- SERVICES GRID --- */
-        .services { padding: 80px 20px; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .service-card { padding: 30px; border-radius: 12px; background: var(--light-gray); border-bottom: 4px solid #ddd; transition: 0.3s; }
-        .service-card:hover { border-bottom-color: var(--epson-blue); transform: translateY(-5px); }
-        .service-card h3 { color: var(--epson-blue); margin-bottom: 15px; }
-
-        /* --- REVIEW SECTION --- */
-        .reviews { background: #333; color: #fff; padding: 80px 20px; text-align: center; }
-        .reviews-container { max-width: 1100px; margin: 40px auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .review-card { background: #444; padding: 25px; border-radius: 10px; text-align: left; position: relative; }
-        .review-card p { font-style: italic; font-size: 0.95rem; }
-        .author { margin-top: 15px; font-weight: bold; color: #ffcc00; display: block; }
-        .stars { color: #ffcc00; font-size: 1.2rem; margin-bottom: 10px; display: block; }
-
-        footer { padding: 40px; text-align: center; font-size: 0.9rem; border-top: 1px solid #eee; }
+        /* --- WIDGET HELY --- */
+        .widget-section { padding: 40px; background: #f9f9f9; text-align: center; }
+        #trustindex-widget { min-height: 150px; }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <h1>Epson Nyomtatók Javítása</h1>
-        <p>20 éves szakmai tapasztalat, minőségi alkatrészek.</p>
-        <div class="carousel-section">
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
-                    <div class="swiper-slide"><img src="c5390.png"><p>WorkForce C5390</p></div>
-                    <div class="swiper-slide"><img src="c5890.png"><p>WorkForce C5890</p></div>
-                    <div class="swiper-slide"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
-                    <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
-                </div>
+    <section class="swiper-container-wrapper">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
+                <div class="swiper-slide"><img src="c5390.png"><p>WorkForce C5390</p></div>
+                <div class="swiper-slide"><img src="c5890.png"><p>WorkForce C5890</p></div>
+                <div class="swiper-slide"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
+                <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
             </div>
         </div>
     </section>
 
-    <section class="services">
-        <div class="service-card">
-            <h3>Papírelakadás</h3>
-            <p>Mechanikai hibák javítása, görgők cseréje és tisztítása rövid határidővel.</p>
-        </div>
-        <div class="service-card">
-            <h3>Beszáradt fejek</h3>
-            <p>Csíkos nyomtatás elhárítása ultrahangos tisztítással vagy fejcsere garanciával.</p>
-        </div>
-        <div class="service-card">
-            <h3>Service Required</h3>
-            <p>Hulladéktinta-tartály csere és szoftveres számláló nullázás azonnal.</p>
+    <section class="widget-section">
+        <h3>Valódi Vélemények</h3>
+        <div id="trustindex-widget">
+             <p>A Google és Facebook vélemények betöltése...</p>
         </div>
     </section>
-
-    <section class="reviews">
-        <h2>Ügyfeleink Mondták</h2>
-        <div class="reviews-container">
-            <div class="review-card">
-                <span class="stars">★★★★★</span>
-                <p>"Nagyon gyors és precíz munka. A beszáradt fejet pikk-pakk kitisztították, a nyomtatóm újra olyan, mint az új!"</p>
-                <span class="author">- Kovács János</span>
-            </div>
-            <div class="review-card">
-                <span class="stars">★★★★★</span>
-                <p>"Korrekt árak és profi hozzáállás. Külön tetszett a gyors kommunikáció és a tiszta műhely."</p>
-                <span class="author">- Szabó Beatrix</span>
-            </div>
-            <div class="review-card">
-                <span class="stars">★★★★★</span>
-                <p>"A Service Required hibát 20 perc alatt megoldották. Csak ajánlani tudom őket!"</p>
-                <span class="author">- Tóth László</span>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 Epson Szerviz Műhely. Minden jog fenntartva.</p>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
@@ -108,6 +91,8 @@
             spaceBetween: 0,
             autoplay: { delay: 3500 },
             speed: 800,
+            // Ez kikapcsolja a Swiper saját CSS transzformációs trükkjeit, amik blurt okozhatnak
+            watchSlidesProgress: true,
         });
     </script>
 </body>
