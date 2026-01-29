@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v1.2</title>
+    <title>Országos Epson Szerviz | v1.4</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -91,7 +91,6 @@
         .work-order-data { font-size: 0.95rem; border-top: 1px solid #eee; padding-top: 15px; }
         .work-order-data p { margin: 8px 0; }
 
-        /* VERSION FOOTER */
         footer { text-align: center; padding: 20px; color: #999; font-size: 0.75rem; background: var(--bg-gray); }
 
         @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } .address-row { flex-direction: column; gap: 0; } }
@@ -193,11 +192,12 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v1.2 (Address Mapping Update)</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v1.4 (Szócső-Debug Mode)</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        // --- CAROUSEL SETUP ---
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
@@ -205,6 +205,7 @@
             breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 3, spaceBetween: 30 } }
         });
 
+        // --- ERROR BUTTON TOGGLE ---
         function toggleError(btn) {
             const activeBtns = document.querySelectorAll('.error-btn.active');
             if (!btn.classList.contains('active') && activeBtns.length >= 2) {
@@ -216,12 +217,13 @@
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
 
+        // --- SUBMIT FUNCTION WITH DEBUG (SZÓCSŐ) ---
         async function submitTicket() {
             const name = document.getElementById('cust-name').value;
             const zip = document.getElementById('cust-zip').value;
             const city = document.getElementById('cust-city').value;
             const street = document.getElementById('cust-street').value;
-            const phone = document.getElementById('cust-phone').value;
+            let phone = document.getElementById('cust-phone').value.trim();
             const email = document.getElementById('cust-email').value;
             const extra = document.getElementById('extra-msg').value;
             const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim());
@@ -264,6 +266,8 @@
                     body: JSON.stringify(responseData)
                 });
 
+                const result = await response.json();
+
                 if (response.ok) {
                     document.getElementById('ticket-id').innerText = ticketID;
                     document.getElementById('res-name').innerText = name;
@@ -273,10 +277,19 @@
                     document.getElementById('form-content').style.display = 'none';
                     document.getElementById('ticket-success').style.display = 'block';
                 } else {
-                    throw new Error("Szerver hiba");
+                    // Itt a részletes hibaüzenet (A SZÓCSŐ)
+                    console.error("DEBUG - Formbricks hiba:", result);
+                    let detailMsg = result.message || "Ismeretlen hiba";
+                    if(result.details) detailMsg += "\n\nRészletek: " + JSON.stringify(result.details);
+                    
+                    alert("A FORMBRICKS NEM FOGADTA EL:\n" + detailMsg);
+                    
+                    btn.disabled = false;
+                    btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
                 }
             } catch (error) {
-                alert("Hiba történt. Kérjük próbálja újra!");
+                console.error("DEBUG - Hálózati hiba:", error);
+                alert("Hálózati hiba történt! Ellenőrizze az internetet.");
                 btn.disabled = false;
                 btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
