@@ -3,57 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Auto Orbit v1.1.8</title>
+    <title>Epson Szerviz | Profi Nyomtató Javítás</title>
     <style>
-        :root { --epson-blue: #003399; }
-        body { 
-            font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; 
-            overflow: hidden; display: flex; flex-direction: column; align-items: center;
+        :root { 
+            --epson-blue: #003399; 
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
         }
+        
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #fff; color: var(--dark-text); overflow-x: hidden; }
 
-        .version-badge {
-            position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8);
-            color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999;
-        }
+        /* --- HEADER --- */
+        header { background: #fff; padding: 20px; text-align: center; border-bottom: 3px solid var(--epson-blue); }
+        header h1 { margin: 0; color: var(--epson-blue); font-size: 2.5rem; text-transform: uppercase; }
+        header p { margin: 5px 0 0; font-weight: 300; letter-spacing: 2px; }
 
-        .scene {
-            width: 100%; height: 550px;
-            perspective: 1500px; display: flex; align-items: center; justify-content: center;
-        }
+        /* --- 3D SCENE --- */
+        .scene { width: 100%; height: 500px; perspective: 1500px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #ffffff 0%, #f0f0f0 100%); }
+        .orbit-container { width: 1px; height: 1px; position: relative; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .printer-card { position: absolute; width: 300px; left: -150px; top: -150px; display: flex; flex-direction: column; align-items: center; transition: transform 1.2s, opacity 1.2s; backface-visibility: hidden; }
+        .printer-card img { width: 100%; height: 240px; object-fit: contain; filter: drop-shadow(0px 20px 15px rgba(0,0,0,0.15)); }
+        .printer-card p { color: var(--epson-blue); font-weight: 900; margin-top: 10px; text-align: center; }
 
-        /* A központi forgótengely */
-        .orbit-container {
-            width: 1px; height: 1px;
-            position: relative;
-            transform-style: preserve-3d;
-            /* Lassabb, finomabb átmenet (1.2 másodperc) */
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        /* --- SERVICES GRID --- */
+        .section-title { text-align: center; padding: 40px 20px 20px; font-size: 1.8rem; }
+        .services-grid { max-width: 1100px; margin: 0 auto 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 0 20px; }
+        .service-card { background: var(--light-bg); padding: 30px; border-radius: 15px; text-align: center; border-bottom: 4px solid #ddd; transition: 0.3s; }
+        .service-card:hover { border-bottom-color: var(--epson-blue); transform: translateY(-5px); }
+        .service-card h3 { color: var(--epson-blue); margin-top: 0; }
 
-        .printer-card {
-            position: absolute;
-            width: 320px;
-            left: -160px; top: -150px;
-            display: flex; flex-direction: column; align-items: center;
-            /* A kártyák is követik az animációt, hogy ne rángassanak */
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s;
-            backface-visibility: hidden;
-        }
-
-        .printer-card img { 
-            width: 100%; height: 280px; object-fit: contain;
-            filter: drop-shadow(0px 35px 25px rgba(0,0,0,0.2));
-        }
-
-        .printer-card p { 
-            color: var(--epson-blue); font-weight: 900; font-size: 1.3rem; margin-top: 15px;
-            text-align: center;
-        }
+        /* --- FOOTER --- */
+        footer { background: var(--dark-text); color: #fff; padding: 40px 20px; text-align: center; }
+        .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; }
+        .footer-info { margin: 10px; min-width: 200px; }
+        .version-badge { font-size: 10px; opacity: 0.5; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="version-badge">v1.1.8 - Fully Automatic Orbit</div>
+    <header>
+        <h1>Epson Szerviz</h1>
+        <p>GYORS • PRECÍZ • GARANCIÁLIS</p>
+    </header>
 
     <div class="scene">
         <div class="orbit-container">
@@ -65,41 +56,62 @@
         </div>
     </div>
 
+    <h2 class="section-title">Amiben Segíteni Tudunk</h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <h3>Mechanikai Javítás</h3>
+            <p>Papírelakadás, görgők cseréje és általános tisztítás.</p>
+        </div>
+        <div class="service-card">
+            <h3>Fejtisztítás</h3>
+            <p>Besűrűsödött tinta eltávolítása speciális ultrahangos eljárással.</p>
+        </div>
+        <div class="service-card">
+            <h3>Hulladéktinta Reset</h3>
+            <p>"Service Required" hiba elhárítása és tartály csere.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h4>Helyszín</h4>
+                <p>1234 Budapest, Példa utca 12.</p>
+            </div>
+            <div class="footer-info">
+                <h4>Kapcsolat</h4>
+                <p>Tel: +36 1 234 5678<br>Email: info@epsonszerviz.hu</p>
+            </div>
+            <div class="footer-info">
+                <h4>Nyitvatartás</h4>
+                <p>H-P: 08:00 - 17:00</p>
+            </div>
+        </div>
+        <div class="version-badge">v1.1.9 - Professional Full Page Build</div>
+    </footer>
+
     <script>
         const container = document.querySelector('.orbit-container');
         const cards = document.querySelectorAll('.printer-card');
-        const radius = 420; // Optimális kör-sugár a 3D-hez
+        const radius = 420;
         let currentRotation = 0;
 
         function updateCards() {
             cards.forEach((card, index) => {
                 const angle = (index * (360 / cards.length));
-                // Kiszámoljuk a Billboard pozíciót: 
-                // A rotateY(-angle - currentRotation) tartja a képet mindig veled szemben
                 card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px) rotateY(${-angle - currentRotation}deg)`;
-                
-                // Láthatóság finomítása: ami hátul van, az halványabb
                 const normalizedRotation = ((angle + currentRotation) % 360 + 360) % 360;
-                if (normalizedRotation > 100 && normalizedRotation < 260) {
-                    card.style.opacity = "0.2";
-                } else {
-                    card.style.opacity = "1";
-                }
+                card.style.opacity = (normalizedRotation > 100 && normalizedRotation < 260) ? "0.15" : "1";
             });
         }
 
-        function autoRotate() {
-            // Egy egységgel (72 fokkal) fordítjuk el a kört
+        setInterval(() => {
             currentRotation -= (360 / cards.length);
             container.style.transform = `rotateY(${currentRotation}deg)`;
             updateCards();
-        }
+        }, 3500);
 
-        // Első beállítás
         updateCards();
-
-        // Indítjuk az automata pörgést (3.5 másodpercenként vált)
-        setInterval(autoRotate, 3500);
     </script>
 </body>
 </html>
