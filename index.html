@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v3.6</title>
+    <title>Országos Epson Szerviz | v3.7</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -53,7 +53,7 @@
 
         /* --- SERVICES --- */
         .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 60px 40px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmin(320px, 1fr)); gap: 60px 40px; }
         .service-box i { font-size: 2rem; color: var(--epson-blue); margin-bottom: 15px; display: block; }
         .service-box h3 { font-size: 1.4rem; color: var(--dark-gray); border-left: 4px solid var(--epson-blue); padding-left: 15px; margin-bottom: 10px; }
         .service-box p { margin: 0; color: #555; }
@@ -202,7 +202,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v3.6</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v3.7</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -264,7 +264,7 @@
             btn.disabled = true;
             btn.innerText = "KÜLDÉS...";
 
-            // ✅ ÚJ TICKET ID GENERÁLÁS - DÁTUM ALAPÚ (EPSON-260129-456)
+            // ✅ TICKET ID GENERÁLÁS - DÁTUM ALAPÚ
             const now = new Date();
             const year = String(now.getFullYear()).slice(-2);
             const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -272,7 +272,7 @@
             const random = Math.floor(100 + Math.random() * 900);
             const ticketID = `EPSON-${year}${month}${day}-${random}`;
 
-            // Teljes leírás összeállítása
+            // ✅ JAVÍTOTT VERZIÓ - Tartalmazza a választott hibákat is!
             const fullDescription = `Választott hibák: ${errors.join(', ')} | Hibakód: ${errorCode || 'Nincs'} | Megjegyzés: ${extraMsg || 'Nincs'}`;
 
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
@@ -285,8 +285,13 @@
             formData.append('entry.175515844', phone);           // Telefon
             formData.append('entry.156899408', email);           // Email
             formData.append('entry.836895663', errorCode);       // Hibakód
-            formData.append('entry.1127298870', fullDescription); // Hibajelenség
-            formData.append('entry.1869404490', ticketID);       // ✅ Munkalap azonosító
+            formData.append('entry.1127298870', fullDescription); // Hibajelenség (teljes!)
+            formData.append('entry.1869404490', ticketID);       // Munkalap azonosító
+            
+            // Hibák külön küldése a checkbox mezőbe
+            errors.forEach(error => {
+                formData.append('entry.1886008896', error);
+            });
 
             try {
                 await fetch(GOOGLE_FORM_URL, {
