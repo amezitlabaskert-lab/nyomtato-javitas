@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | Profi Javítás</title>
+    <title>Országos Epson Szerviz | v1.4</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -13,71 +13,87 @@
             --soft-blue: #f0f5ff; 
             --bg-gray: #f4f7fa;
             --dark-gray: #333;
+            --border-light: #e0e0e0;
         }
         
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; overflow-x: hidden; }
 
-        /* 1. HEADER ÉS TOP BAR */
-        .top-bar { 
-            background: #fff; padding: 10px 20px; border-bottom: 1px solid #eee; 
-            display: flex; justify-content: center; gap: 25px; font-size: 0.85rem; 
-            color: var(--epson-blue); font-weight: 600; 
+        /* --- TOP BAR --- */
+        .top-bar {
+            background: #fff; padding: 8px 20px; border-bottom: 1px solid var(--border-light);
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 25px;
+            font-size: 0.85rem; color: var(--epson-blue); font-weight: 600;
         }
         .top-bar a { text-decoration: none; color: var(--epson-blue); display: flex; align-items: center; gap: 8px; }
 
-        header { text-align: center; padding: 40px 20px; background: var(--soft-blue); border-bottom: 1px solid #ddecff; }
-        header h1 { font-size: 2.6rem; color: var(--epson-blue); margin: 0; font-weight: 800; }
+        /* --- HEADER --- */
+        header { 
+            text-align: center; padding: 40px 20px 60px;
+            background: var(--soft-blue); border-bottom: 1px solid #ddecff;
+        }
+        header h1 { font-size: 2.6rem; font-weight: 800; color: var(--epson-blue); margin: 0; letter-spacing: -1px; }
         header h1 span { color: var(--accent-blue); }
+        .hero-sub { color: #444; font-size: 1.2rem; margin: 15px 0 35px; max-width: 750px; margin-left: auto; margin-right: auto; }
 
-        /* CAROUSEL */
-        .carousel-outer { max-width: 900px; margin: 20px auto; overflow: hidden; }
-        .swiper-slide { display: flex; flex-direction: column; align-items: center; }
-        .swiper-slide img { height: 250px; object-fit: contain; }
-
-        /* 2. SZOLGÁLTATÁSOK - A 6 KÁRTYA */
-        .services-section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 30px; 
+        .btn-main { 
+            display: inline-block; padding: 16px 40px; background: var(--epson-blue); color: #fff; text-decoration: none;
+            font-weight: bold; border-radius: 50px; transition: 0.3s; text-transform: uppercase; font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0, 51, 153, 0.2); cursor: pointer; border: none;
         }
-        .service-box { 
-            background: #fff; padding: 30px; border-radius: 12px; border: 1px solid #eee;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
-        }
-        .service-box:hover { transform: translateY(-5px); border-color: var(--epson-blue); }
-        .service-box i { font-size: 2.5rem; color: var(--epson-blue); margin-bottom: 15px; display: block; }
-        .service-box h3 { color: var(--epson-blue); margin-bottom: 10px; }
+        .btn-main:hover { background: var(--accent-blue); transform: translateY(-2px); }
 
-        /* 3. HIBABEJELENTŐ ÉS FORMBRICKS */
-        .form-section { background: var(--epson-blue); color: #fff; padding: 80px 20px; }
-        .container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        /* --- CAROUSEL --- */
+        .carousel-outer { max-width: 1100px; margin: 40px auto; overflow: hidden; position: relative; }
+        .swiper { padding: 60px 0 !important; }
+        .swiper-slide { display: flex; flex-direction: column; align-items: center; transition: 0.6s; transform: scale(0.7); opacity: 1; }
+        .swiper-slide-active { transform: scale(1.2) !important; z-index: 10; }
+        .swiper-slide img { width: 100%; height: 350px; object-fit: contain; }
+        .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 20px; font-size: 1rem; opacity: 0; transition: 0.4s; }
+        .swiper-slide-active p { opacity: 1; }
 
-        .report-card { background: #fff; padding: 40px; border-radius: 15px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        /* --- SERVICES --- */
+        .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 60px 40px; }
+        .service-box i { font-size: 2rem; color: var(--epson-blue); margin-bottom: 15px; display: block; }
+        .service-box h3 { font-size: 1.4rem; color: var(--dark-gray); border-left: 4px solid var(--epson-blue); padding-left: 15px; margin-bottom: 10px; }
+        .service-box p { margin: 0; color: #555; }
+
+        /* --- WHY US & TICKET SYSTEM --- */
+        .why-us { background: var(--epson-blue); color: #fff; padding: 80px 20px; }
+        .why-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .feature-item { margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start; }
         
-        .error-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .report-card { background: #fff; padding: 40px; border-radius: 12px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; }
+        .report-card h3 { margin-top: 0; color: var(--epson-blue); margin-bottom: 5px; }
+        .report-card p.subtitle { font-size: 0.85rem; color: #666; margin-bottom: 20px; }
+        
+        .error-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 15px; }
         .error-btn { 
-            padding: 12px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; 
-            background: #fff; font-weight: 600; font-size: 0.85rem; transition: 0.2s;
+            padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa; cursor: pointer;
+            font-size: 0.9rem; font-weight: 600; color: #555; transition: 0.2s; text-align: left; display: flex; align-items: center; gap: 10px;
         }
-        .error-btn.active { background: var(--soft-blue); border-color: var(--epson-blue); color: var(--epson-blue); }
+        .error-btn i { color: var(--epson-blue); width: 20px; text-align: center; }
+        .error-btn:hover { border-color: var(--accent-blue); background: #f0f5ff; }
+        .error-btn.active { border-color: var(--epson-blue); background: var(--soft-blue); color: var(--epson-blue); box-shadow: inset 0 0 0 1px var(--epson-blue); }
 
-        input, textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
+        .report-card input, .report-card textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; }
+        
         .address-row { display: flex; gap: 10px; }
-        .auto-filled { background-color: #e8f0fe !important; border: 1px solid var(--accent-blue) !important; }
+        .address-row input[id="cust-zip"] { flex: 1; }
+        .address-row input[id="cust-city"] { flex: 2; }
 
-        .submit-btn { 
-            width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; 
-            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; 
-            font-size: 1.1rem; text-transform: uppercase; transition: 0.3s;
-        }
-        .submit-btn:hover { background: var(--accent-blue); }
+        .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
+        .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        #success-msg { display: none; text-align: center; padding: 20px; }
+        #ticket-success { display: none; text-align: left; border: 2px dashed var(--epson-blue); padding: 25px; border-radius: 12px; background: #fff; }
+        .work-order-header { text-align: center; margin-bottom: 20px; }
+        .work-order-header i { font-size: 3rem; color: #28a745; margin-bottom: 10px; }
+        .work-order-data { font-size: 0.95rem; border-top: 1px solid #eee; padding-top: 15px; }
+        .work-order-data p { margin: 8px 0; }
 
-        footer { text-align: center; padding: 40px; background: var(--bg-gray); color: #666; font-size: 0.9rem; }
+        footer { text-align: center; padding: 20px; color: #999; font-size: 0.75rem; background: var(--bg-gray); }
 
-        @media (max-width: 768px) { .container, .error-grid { grid-template-columns: 1fr; } .address-row { flex-direction: column; gap: 0; } }
+        @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } .address-row { flex-direction: column; gap: 0; } }
     </style>
 </head>
 <body>
@@ -85,119 +101,158 @@
     <div class="top-bar">
         <a href="tel:+36301234567"><i class="fas fa-phone-alt"></i> +36 30 123 4567</a>
         <a href="mailto:info@epsonszerviz.hu"><i class="fas fa-envelope"></i> info@epsonszerviz.hu</a>
-        <span><i class="fas fa-truck-loading"></i> Országos kiszállás</span>
+        <span><i class="fas fa-truck-loading"></i> Országos kiszállás és szerviz</span>
     </div>
 
     <header>
-        <h1><span>Epson</span> Szerviz Központ</h1>
-        <p>Hivatalos és szakszerű segítségnyújtás</p>
+        <h1><span>Országos</span> Epson Szervizelés</h1>
+        <p class="hero-sub">Gyors és szakszerű javítás bárhol az országban. Segítek újra munkára bírni nyomtatóját.</p>
+        <a href="#services" class="btn-main">Miben segíthetek? <i class="fas fa-chevron-down"></i></a>
+
         <div class="carousel-outer">
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="c5390.png"></div>
-                    <div class="swiper-slide"><img src="c5890.png"></div>
-                    <div class="swiper-slide"><img src="l5590.png"></div>
+                    <div class="swiper-slide"><img src="c5390.png"><p>WF-C5390</p></div>
+                    <div class="swiper-slide"><img src="c5890.png"><p>WF-C5890</p></div>
+                    <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
+                    <div class="swiper-slide"><img src="st-c4100.png"><p>WF ST-C4100</p></div>
+                    <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <section class="services-section">
-        <h2 style="text-align: center; margin-bottom: 40px;">Szolgáltatásaink</h2>
+    <section class="services-section" id="services">
         <div class="services-grid">
-            <div class="service-box"><i class="fas fa-tools"></i><h3>Mechanika</h3><p>Papírfelszívás és görgők javítása.</p></div>
-            <div class="service-box"><i class="fas fa-tint"></i><h3>Fejtisztítás</h3><p>Beszáradt fúvókák professzionális tisztítása.</p></div>
-            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szoftveres reset</h3><p>Hulladéktinta számláló nullázása.</p></div>
-            <div class="service-box"><i class="fas fa-network-wired"></i><h3>Beállítás</h3><p>Hálózati és Wi-Fi konfigurációk.</p></div>
-            <div class="service-box"><i class="fas fa-oil-can"></i><h3>Karbantartás</h3><p>Tisztítás, kenés, élettartam hosszabbítás.</p></div>
-            <div class="service-box"><i class="fas fa-truck"></i><h3>Kiszállás</h3><p>Országos szerviz az Ön telephelyén.</p></div>
+            <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása.</p></div>
+            <div class="service-box"><i class="fas fa-eye-dropper"></i><h3>Fejtisztítás</h3><p>Beszáradt fejek professzionális tisztítása, csíkmentes nyomatok.</p></div>
+            <div class="service-box"><i class="fas fa-sitemap"></i><h3>EcoTank karbantartás</h3><p>Tartályos rendszerek légtelenítése és rendszertisztítása.</p></div>
+            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>"Service Required" üzenet? Hulladéktinta-párna javítása.</p></div>
+            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szakmai tanácsadás</h3><p>Segítek kiválasztani a leginkább fenntartható Epson típust.</p></div>
+            <div class="service-box"><i class="fas fa-coins"></i><h3>Kellékanyagok</h3><p>Gyári vagy megbízható utángyártott tinták beszerzése.</p></div>
         </div>
     </section>
 
-    <section class="form-section">
-        <div class="container">
+    <section class="why-us">
+        <div class="why-grid">
             <div>
-                <h2>Mi történik a bejelentés után?</h2>
-                <p>Munkatársunk a Formbricks rendszerén keresztül kapja meg az adatokat, és 4 órán belül visszahívja Önt a megadott számon.</p>
-                <p><i class="fas fa-check"></i> Gyors feldolgozás</p>
-                <p><i class="fas fa-check"></i> Hivatalos munkalap</p>
+                <h2>Miért tőlem kérjen segítséget?</h2>
+                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ mindenre.</p></div></div>
+                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra és alkatrészre felelősséget vállalok.</p></div></div>
+                <div class="feature-item"><i class="fas fa-map-marked-alt"></i><div><strong>Pontos adatok</strong><p>A strukturált címbevitel segíti a gyors kiszállást.</p></div></div>
             </div>
 
-            <div class="report-card">
-                <div id="form-container">
-                    <h3>Hibabejelentő Munkalap</h3>
+            <div class="report-card" id="ticket-box">
+                <div id="form-content">
+                    <h3>Hiba bejelentése</h3>
+                    <p class="subtitle">Válasszon legfeljebb 2 jellemző tünetet:</p>
+                    
                     <div class="error-grid">
-                        <button type="button" class="error-btn" onclick="this.classList.toggle('active')">Csíkoz a nyomat</button>
-                        <button type="button" class="error-btn" onclick="this.classList.toggle('active')">Papírelakadás</button>
-                        <button type="button" class="error-btn" onclick="this.classList.toggle('active')">Tinta-párna hiba</button>
-                        <button type="button" class="error-btn" onclick="this.classList.toggle('active')">Nem kapcsol be</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-magic"></i> Nem tudom, nem értek hozzá</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tint"></i> Csíkoz / Foltos a nyomat</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-scroll"></i> Beragadt / Nem húz papírt</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-exclamation-triangle"></i> Kerreg / Fura hangja van</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tools"></i> Karbantartás (Tinta-párna)</button>
                     </div>
 
-                    <input type="text" id="c_name" placeholder="Teljes név / Cégnév">
-                    <div class="address-row">
-                        <input type="text" id="c_zip" placeholder="Irányítószám" maxlength="4">
-                        <input type="text" id="c_city" placeholder="Város">
-                    </div>
-                    <input type="text" id="c_street" placeholder="Utca, házszám">
-                    <input type="tel" id="c_phone" placeholder="Telefonszám">
-                    <input type="email" id="c_email" placeholder="E-mail cím">
-                    <textarea id="c_msg" placeholder="Egyéb részletek..." rows="2"></textarea>
+                    <textarea id="extra-msg" placeholder="Bővebb leírás vagy hibakód..." rows="2" style="display:none;"></textarea>
                     
-                    <button class="submit-btn" onclick="submitToFormbricks()">Hibabejelentés küldése</button>
+                    <div style="margin-top:15px;">
+                        <input type="text" id="cust-name" placeholder="Az Ön neve / Cégneve" required>
+                        
+                        <div class="address-row">
+                            <input type="text" id="cust-zip" placeholder="Irányítószám" required>
+                            <input type="text" id="cust-city" placeholder="Város" required>
+                        </div>
+                        <input type="text" id="cust-street" placeholder="Utca, házszám" required>
+
+                        <input type="tel" id="cust-phone" placeholder="Telefonszáma" required>
+                        <input type="email" id="cust-email" placeholder="E-mail címe" required>
+                    </div>
+                    
+                    <button class="submit-btn" onclick="submitTicket()">HIBAJEGY LÉTREHOZÁSA</button>
                 </div>
 
-                <div id="success-msg">
-                    <i class="fas fa-check-double" style="font-size: 3rem; color: #28a745;"></i>
-                    <h3>Sikeresen beküldve!</h3>
-                    <p>Hamarosan keresni fogjuk.</p>
+                <div id="ticket-success">
+                    <div class="work-order-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h3 style="color:var(--epson-blue); margin:0;">MUNKALAP RÖGZÍTVE</h3>
+                        <p style="font-size: 1.1rem; font-weight: bold; margin-top: 5px;">Azonosító: #<span id="ticket-id"></span></p>
+                    </div>
+                    <div class="work-order-data">
+                        <p><strong>Ügyfél:</strong> <span id="res-name"></span></p>
+                        <p><strong>Helyszín:</strong> <span id="res-address"></span></p>
+                        <p><strong>Bejelentett hiba:</strong> <span id="res-errors"></span></p>
+                        <p style="margin-top:20px; font-size: 0.85rem; color: #666; font-style: italic; text-align: center;">Hamarosan keresni fogom a megadott telefonszámon!</p>
+                        <button onclick="window.print()" style="width:100%; margin-top:15px; padding:10px; background:#eee; border:1px solid #ccc; border-radius:5px; cursor:pointer; font-weight:bold;"><i class="fas fa-print"></i> Munkalap Nyomtatása</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Országos Epson Szerviz | Minden jog fenntartva.</p>
+        &copy; 2026 Országos Epson Szerviz | <strong>v1.4 (Szócső-Debug Mode)</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // CAROUSEL INDÍTÁS
-        new Swiper(".mySwiper", { loop: true, autoplay: { delay: 3500 } });
-
-        // AUTOMATA VÁROS KERESÉS
-        document.getElementById('c_zip').addEventListener('input', async (e) => {
-            if(e.target.value.length === 4) {
-                const r = await fetch(`https://api.zippopotam.us/hu/${e.target.value}`);
-                if(r.ok) {
-                    const d = await r.json();
-                    document.getElementById('c_city').value = d.places[0]['place name'];
-                    document.getElementById('c_city').classList.add('auto-filled');
-                }
-            }
+        // --- CAROUSEL SETUP ---
+        var swiper = new Swiper(".mySwiper", {
+            loop: true, centeredSlides: true,
+            autoplay: { delay: 4000, disableOnInteraction: false },
+            speed: 800,
+            breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 3, spaceBetween: 30 } }
         });
 
-        // FORMBRICKS BEKÜLDÉS
-        async function submitToFormbricks() {
-            const btn = document.querySelector('.submit-btn');
-            const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText);
-            
-            if(!document.getElementById('c_name').value) {
-                alert("A név megadása kötelező!");
+        // --- ERROR BUTTON TOGGLE ---
+        function toggleError(btn) {
+            const activeBtns = document.querySelectorAll('.error-btn.active');
+            if (!btn.classList.contains('active') && activeBtns.length >= 2) {
+                alert("Kérjük, jelölje meg a két legfontosabb problémát!");
+                return;
+            }
+            btn.classList.toggle('active');
+            document.getElementById('extra-msg').style.display = 
+                document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
+        }
+
+        // --- SUBMIT FUNCTION WITH DEBUG (SZÓCSŐ) ---
+        async function submitTicket() {
+            const name = document.getElementById('cust-name').value;
+            const zip = document.getElementById('cust-zip').value;
+            const city = document.getElementById('cust-city').value;
+            const street = document.getElementById('cust-street').value;
+            let phone = document.getElementById('cust-phone').value.trim();
+            const email = document.getElementById('cust-email').value;
+            const extra = document.getElementById('extra-msg').value;
+            const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim());
+
+            if (!name || !zip || !city || !street || !phone || !email || errors.length === 0) {
+                alert("Kérem töltsön ki minden mezőt!");
                 return;
             }
 
+            const btn = document.querySelector('.submit-btn');
             btn.disabled = true;
             btn.innerText = "KÜLDÉS...";
 
-            const payload = {
+            const ticketID = new Date().getFullYear() + "/" + Math.floor(1000 + Math.random() * 9000);
+
+            const responseData = {
                 surveyId: "cmkz5hifa0qaqad01dl19fklo",
                 values: {
-                    "Név": document.getElementById('c_name').value,
-                    "Cím": `${document.getElementById('c_zip').value} ${document.getElementById('c_city').value}, ${document.getElementById('c_street').value}`,
-                    "Telefon": document.getElementById('c_phone').value,
-                    "Email": document.getElementById('c_email').value,
-                    "Hibák": errors.join(", "),
-                    "Üzenet": document.getElementById('c_msg').value
+                    "Név": name,
+                    "Címe": {
+                        "zip": zip,
+                        "city": city,
+                        "addressLine1": street
+                    },
+                    "Telefon": phone,
+                    "Email": email,
+                    "Hibajelenségek": errors.join(', '),
+                    "Üzenet": extra,
+                    "Ticket_ID": ticketID
                 }
             };
 
@@ -208,19 +263,35 @@
                         'Content-Type': 'application/json',
                         'x-api-key': 'fbk_q_xrojXCoctBUiMI1PjSehl--LJ1RM2EwJhLdQPz4CQ' 
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(responseData)
                 });
 
+                const result = await response.json();
+
                 if (response.ok) {
-                    document.getElementById('form-container').style.display = 'none';
-                    document.getElementById('success-msg').style.display = 'block';
+                    document.getElementById('ticket-id').innerText = ticketID;
+                    document.getElementById('res-name').innerText = name;
+                    document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
+                    document.getElementById('res-errors').innerText = errors.join(', ');
+
+                    document.getElementById('form-content').style.display = 'none';
+                    document.getElementById('ticket-success').style.display = 'block';
                 } else {
-                    alert("Szerver hiba történt!");
+                    // Itt a részletes hibaüzenet (A SZÓCSŐ)
+                    console.error("DEBUG - Formbricks hiba:", result);
+                    let detailMsg = result.message || "Ismeretlen hiba";
+                    if(result.details) detailMsg += "\n\nRészletek: " + JSON.stringify(result.details);
+                    
+                    alert("A FORMBRICKS NEM FOGADTA EL:\n" + detailMsg);
+                    
                     btn.disabled = false;
+                    btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
                 }
-            } catch (e) {
-                alert("Hálózati hiba!");
+            } catch (error) {
+                console.error("DEBUG - Hálózati hiba:", error);
+                alert("Hálózati hiba történt! Ellenőrizze az internetet.");
                 btn.disabled = false;
+                btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
         }
     </script>
