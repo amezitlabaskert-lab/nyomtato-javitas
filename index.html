@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | 3D Szakértő</title>
+    <title>Epson Nyomtató Szerviz | 3D Galéria</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         :root { --epson-blue: #003399; --accent-yellow: #ffcc00; --light-bg: #f4f7f6; }
@@ -12,54 +12,52 @@
         .hero { background: var(--light-bg); padding: 50px 20px; text-align: center; border-bottom: 1px solid #eee; }
         .hero h1 { font-size: 2.8rem; color: #1a1a1a; margin: 0; }
 
-        /* Erőteljes 3D konténer */
+        /* Szuper-mély 3D konténer */
         .swiper { 
             width: 100%; 
             padding-top: 100px; 
-            padding-bottom: 120px; 
+            padding-bottom: 150px; 
+            perspective: 2000px; /* Megnövelt térhatás */
         }
 
         .swiper-slide { 
-            width: 550px; /* Extra nagy méret a főszereplőknek */
-            transition: 0.7s ease-out;
+            width: 550px; /* Nagyobb méret a főszereplőknek */
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
             display: flex; 
             flex-direction: column; 
             align-items: center;
-            /* Az oldalsók erősebb elhalványítása a fókuszért */
-            filter: blur(5px) opacity(0.4); 
+            filter: blur(4px) opacity(0.3); /* Az oldalsók erősebb elhalványítása */
         }
 
-        /* A középső elem kiemelése */
+        /* A középső elem brutális kiemelése */
         .swiper-slide-active { 
             filter: blur(0) opacity(1); 
-            transform: scale(1.4); /* Brutális nagyítás a közepén */
+            transform: scale(1.5) translateY(-30px); /* Kiemelkedik a síkból */
             z-index: 10;
         }
 
         .swiper-slide img { 
             width: 100%; 
-            height: 380px; 
+            height: 400px; 
             object-fit: contain;
-            /* Árnyék, hogy ne "lebegjenek" a semmiben */
-            filter: drop-shadow(0px 25px 35px rgba(0,0,0,0.25)); 
+            filter: drop-shadow(0px 30px 40px rgba(0,0,0,0.3)); 
         }
 
         .swiper-slide p { 
             color: var(--epson-blue); 
-            font-weight: 800; 
-            font-size: 1.6rem; 
-            margin-top: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-weight: 900; 
+            font-size: 1.7rem; 
+            margin-top: 35px;
+            text-transform: uppercase;
         }
 
-        .services-container { max-width: 1100px; margin: 20px auto 60px; padding: 0 20px; }
+        .services-container { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .service-card { background: var(--light-bg); padding: 30px; border-radius: 15px; text-align: center; border: 1px solid #ddd; }
-        .service-card h3 { color: var(--epson-blue); font-size: 1.5rem; }
+        .service-card { background: var(--light-bg); padding: 30px; border-radius: 15px; text-align: center; }
 
         @media (max-width: 768px) {
-            .swiper-slide { width: 280px; }
-            .swiper-slide img { height: 220px; }
+            .swiper-slide { width: 300px; }
+            .swiper-slide img { height: 250px; }
         }
     </style>
 </head>
@@ -74,19 +72,23 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img src="Ecotank L5590.png" alt="L5590">
-                <p>Epson EcoTank L5590</p>
+                <p>EcoTank L5590</p>
             </div>
             <div class="swiper-slide">
                 <img src="WF-C5390.png" alt="C5390">
-                <p>WorkForce Pro WF-C5390</p>
+                <p>WorkForce WF-C5390</p>
             </div>
             <div class="swiper-slide">
                 <img src="WF-C5890.png" alt="C5890">
-                <p>WorkForce Pro WF-C5890</p>
+                <p>WorkForce WF-C5890</p>
             </div>
             <div class="swiper-slide">
                 <img src="Workforce ST-C4100.png" alt="ST-C4100">
                 <p>WorkForce ST-C4100</p>
+            </div>
+            <div class="swiper-slide">
+                <img src="Epson Workforce Enterprise AM-C5000.png" alt="AM-C5000">
+                <p>Enterprise AM-C5000</p>
             </div>
         </div>
         <div class="swiper-pagination"></div>
@@ -96,7 +98,7 @@
         <div class="services-grid">
             <div class="service-card"><h3>Mechanikai javítás</h3><p>Papírelakadás és görgőcsere profi módon.</p></div>
             <div class="service-card"><h3>Fejtisztítás</h3><p>Speciális eljárással a tökéletes színekért.</p></div>
-            <div class="service-card"><h3>Szoftveres nullázás</h3><p>Hulladéktinta-párna csere és szoftveres reset.</p></div>
+            <div class="service-card"><h3>Szoftveres nullázás</h3><p>Hulladéktinta-párna reset és csere.</p></div>
         </div>
     </div>
 
@@ -107,19 +109,15 @@
             grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
-            
-            /* Végtelenítés kényszerítése */
-            loop: true,
-            loopAdditionalSlides: 3, 
-            
+            loop: true, /* Most már hibátlanul fog körbejárni */
             coverflowEffect: { 
-                rotate: -25,    /* Negatív forgatás a hátrafelé dőléshez */
-                stretch: -120,  /* Erős egymásra csúsztatás a mélységért */
-                depth: 600,     /* Nagyobb mélység a látványosabb térérzetért */
-                modifier: 1.5,  /* Az effekt erejének szorzója */
+                rotate: -35,   /* Negatív érték: hátrafelé dőlnek el a szélek */
+                stretch: -80,  /* Egymásra csúsztatás a görbületért */
+                depth: 800,    /* Brutális mélység a valódi körpályához */
+                modifier: 1, 
                 slideShadows: false 
             },
-            autoplay: { delay: 3000, disableOnInteraction: false },
+            autoplay: { delay: 3500, disableOnInteraction: false },
             pagination: { el: ".swiper-pagination", clickable: true },
         });
     </script>
