@@ -264,20 +264,29 @@
             btn.disabled = true;
             btn.innerText = "KÜLDÉS...";
 
-            const ticketID = "EPSON-" + Math.floor(1000 + Math.random() * 9000);
-            const fullDescription = `Választott hibák: ${errors.join(', ')} | Megjegyzés: ${extraMsg}`;
+            // ✅ ÚJ TICKET ID GENERÁLÁS - DÁTUM ALAPÚ
+            const now = new Date();
+            const year = String(now.getFullYear()).slice(-2);
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const random = Math.floor(100 + Math.random() * 900);
+            const ticketID = `EPSON-${year}${month}${day}-${random}`;
+
+            // Teljes leírás összeállítása
+            const fullDescription = `Választott hibák: ${errors.join(', ')} | Hibakód: ${errorCode || 'Nincs'} | Megjegyzés: ${extraMsg || 'Nincs'}`;
 
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-formData.append('entry.1567915132', name);
-formData.append('entry.2063510905', zip);
-formData.append('entry.566376283', city);
-formData.append('entry.977338095', street);
-formData.append('entry.175515844', phone);
-formData.append('entry.156899408', email);
-formData.append('entry.836895663', errorCode);
-formData.append('entry.1127298870', fullDescription);
+            formData.append('entry.1567915132', name);           // Név
+            formData.append('entry.2063510905', zip);            // Irányítószám
+            formData.append('entry.566376283', city);            // Város
+            formData.append('entry.977338095', street);          // Utca
+            formData.append('entry.175515844', phone);           // Telefon
+            formData.append('entry.156899408', email);           // Email
+            formData.append('entry.836895663', errorCode);       // Hibakód
+            formData.append('entry.1127298870', fullDescription); // Hibajelenség
+            formData.append('entry.1869404490', ticketID);       // ✅ Munkalap azonosító
 
             try {
                 await fetch(GOOGLE_FORM_URL, {
@@ -293,7 +302,7 @@ formData.append('entry.1127298870', fullDescription);
                 document.getElementById('res-email').innerText = email;
                 document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
                 document.getElementById('res-errors').innerText = errors.join(', ');
-                document.getElementById('res-desc').innerText = (errorCode ? errorCode + " - " : "") + (extraMsg || "Nincs extra megjegyzés");
+                document.getElementById('res-desc').innerText = fullDescription;
 
                 document.getElementById('form-content').style.display = 'none';
                 document.getElementById('ticket-success').style.display = 'block';
