@@ -77,6 +77,12 @@
         .error-btn.active { border-color: var(--epson-blue); background: var(--soft-blue); color: var(--epson-blue); box-shadow: inset 0 0 0 1px var(--epson-blue); }
 
         .report-card input, .report-card textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; }
+        
+        /* Cím mezők elrendezése: Irányítószám és Város egymás mellett */
+        .address-row { display: flex; gap: 10px; }
+        .address-row input[id="cust-zip"] { flex: 1; }
+        .address-row input[id="cust-city"] { flex: 2; }
+
         .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
         .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
@@ -87,7 +93,7 @@
         .work-order-data { font-size: 0.95rem; border-top: 1px solid #eee; padding-top: 15px; }
         .work-order-data p { margin: 8px 0; }
 
-        @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } .address-row { flex-direction: column; gap: 0; } }
     </style>
 </head>
 <body>
@@ -153,7 +159,13 @@
                     
                     <div style="margin-top:15px;">
                         <input type="text" id="cust-name" placeholder="Az Ön neve / Cégneve" required>
-                        <input type="text" id="cust-address" placeholder="Teljes cím (Ir.szám, Város, Utca, Házszám)" required>
+                        
+                        <div class="address-row">
+                            <input type="text" id="cust-zip" placeholder="Irányítószám" required>
+                            <input type="text" id="cust-city" placeholder="Város" required>
+                        </div>
+                        <input type="text" id="cust-street" placeholder="Utca, házszám" required>
+
                         <input type="tel" id="cust-phone" placeholder="Telefonszáma" required>
                         <input type="email" id="cust-email" placeholder="E-mail címe" required>
                     </div>
@@ -201,13 +213,15 @@
 
         async function submitTicket() {
             const name = document.getElementById('cust-name').value;
-            const address = document.getElementById('cust-address').value;
+            const zip = document.getElementById('cust-zip').value;
+            const city = document.getElementById('cust-city').value;
+            const street = document.getElementById('cust-street').value;
             const phone = document.getElementById('cust-phone').value;
             const email = document.getElementById('cust-email').value;
             const extra = document.getElementById('extra-msg').value;
             const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim());
 
-            if (!name || !address || !phone || !email || errors.length === 0) {
+            if (!name || !zip || !city || !street || !phone || !email || errors.length === 0) {
                 alert("Kérem töltsön ki minden mezőt!");
                 return;
             }
@@ -222,7 +236,11 @@
                 surveyId: "cmkz5hifa0qaqad01dl19fklo",
                 values: {
                     "Név": name,
-                    "Teljes Cím": address,
+                    "Címe": {
+                        "zip": zip,
+                        "city": city,
+                        "addressLine1": street
+                    },
                     "Telefon": phone,
                     "Email": email,
                     "Hibajelenségek": errors.join(', '),
@@ -244,7 +262,7 @@
                 if (response.ok) {
                     document.getElementById('ticket-id').innerText = ticketID;
                     document.getElementById('res-name').innerText = name;
-                    document.getElementById('res-address').innerText = address;
+                    document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
                     document.getElementById('res-errors').innerText = errors.join(', ');
 
                     document.getElementById('form-content').style.display = 'none';
