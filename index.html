@@ -3,87 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Szerviz | Clear Orbit v1.1.4</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css?v=1.1.4" />
+    <title>Epson Szerviz | Circular 3D v1.1.5</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css?v=1.1.5" />
     <style>
         :root { --epson-blue: #003399; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; overflow: hidden; }
         
         .version-badge {
             position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8);
             color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999;
         }
 
-        /* SZŰKÍTETT KONTÉNER: Hogy ne legyen túl széles a mozgás */
         .swiper-container-wrapper {
-            max-width: 900px; 
-            margin: 50px auto;
-            perspective: 2000px;
+            width: 100%;
+            max-width: 800px; /* Szűkebb keret, hogy látszódjon a körforgás */
+            margin: 80px auto;
+            perspective: 1500px;
         }
 
         .swiper { width: 100%; overflow: visible; }
 
         .swiper-slide { 
-            width: 320px; /* Kisebb szélesség */
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: blur(0); /* BLUR TÖRÖLVE */
-            opacity: 0.3; /* A hátsó elemek maradnak halványak, de élesek */
-            transform: translate3d(0, 0, -800px);
-            backface-visibility: hidden;
+            width: 300px; 
+            transition: all 1s ease-in-out;
+            opacity: 0;
+            transform: translate3d(0, 0, -1000px); /* Alaphelyzet: hátul középen */
         }
 
-        /* 1. KÖZÉP (Elöl) */
+        /* --- A 3D KÖR POZÍCIÓI --- */
+
+        /* 1. KÖZÉP - ELÖL */
         .swiper-slide-active {
-            transform: translate3d(0, 0, 250px) !important;
+            transform: translate3d(0, 0, 200px) !important;
             opacity: 1;
             z-index: 100;
         }
 
-        /* 2. BALRA (Hátrafelé indul) */
+        /* 2. BALRA ELÖL - Itt fordul be a körbe */
         .swiper-slide-prev {
-            transform: translate3d(-70%, 0, -150px) rotateY(35deg) !important;
-            opacity: 0.6;
+            transform: translate3d(-70%, 0, -100px) rotateY(40deg) !important;
+            opacity: 0.5;
             z-index: 50;
         }
 
-        /* 7. JOBBRA (Előre érkezik) */
+        /* 7. JOBBRA ELÖL - Itt érkezik vissza */
         .swiper-slide-next {
-            transform: translate3d(70%, 0, -150px) rotateY(-35deg) !important;
-            opacity: 0.6;
+            transform: translate3d(70%, 0, -100px) rotateY(-40deg) !important;
+            opacity: 0.5;
             z-index: 50;
         }
 
-        /* 3-4-5-6. A HÁTSÓ ÍV (Éles, de távoli) */
-        .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) {
-            transform: translate3d(0, 0, -600px) scale(0.7) !important;
+        /* 3. BALRA HÁTUL (A rajzod szerint: elindul jobbra a háttérben) */
+        .swiper-slide-prev-prev,
+        .swiper-slide:has(+ .swiper-slide-prev) {
+            transform: translate3d(-30%, 0, -500px) rotateY(70deg) !important;
             opacity: 0.2;
+            z-index: 10;
+        }
+
+        /* 4-5. HÁTUL KÖZÉPEN (A fekete nyomtató helye) */
+        .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next):not(.swiper-slide-prev-prev) {
+            transform: translate3d(30%, 0, -500px) rotateY(-70deg) !important;
+            opacity: 0.1;
+            z-index: 5;
         }
 
         .swiper-slide img { 
             width: 100%; 
-            height: 280px; 
+            height: 250px; 
             object-fit: contain;
-            filter: drop-shadow(0px 30px 20px rgba(0,0,0,0.2)); 
+            filter: drop-shadow(0px 20px 15px rgba(0,0,0,0.2)); 
         }
 
-        .swiper-slide p { 
-            color: var(--epson-blue); 
-            font-weight: 900; 
-            font-size: 1.1rem; 
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        /* Mobil optimalizálás */
-        @media (max-width: 768px) {
-            .swiper-slide { width: 220px; }
-            .swiper-slide-active { transform: translate3d(0, 0, 150px) !important; }
-        }
+        .swiper-slide p { color: var(--epson-blue); font-weight: 800; text-align: center; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="version-badge">v1.1.4 - Zero Blur & Narrow Path</div>
+    <div class="version-badge">v1.1.5 - Back-to-Right Orbit</div>
 
     <div class="swiper-container-wrapper">
         <div class="swiper mySwiper">
@@ -97,14 +94,15 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?v=1.1.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?v=1.1.5"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
             centeredSlides: true,
             slidesPerView: "auto",
             loop: true,
             speed: 1200,
-            autoplay: { delay: 3500, disableOnInteraction: false },
+            autoplay: { delay: 3500 },
+            watchSlidesProgress: true,
         });
     </script>
 </body>
