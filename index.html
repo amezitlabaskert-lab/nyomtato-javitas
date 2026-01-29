@@ -3,85 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | Home</title>
+    <title>Epson Szerviz | Elegant Blue v1.2.9</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         :root { 
             --epson-blue: #003399; 
+            --epson-light-blue: #0055ff;
             --gold: #ffcc00; 
-            --bg-gray: #f8f9fa;
-            --dark-text: #222;
+            --text-main: #2c3e50;
+            --text-muted: #546e7a;
         }
         
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; color: var(--dark-text); background: #fff; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; color: var(--text-main); background: #fff; }
 
-        /* --- HEADER & HERO --- */
-        header { text-align: center; padding: 50px 20px; }
-        header h1 { font-size: 3rem; font-weight: 800; margin: 0; text-transform: none; }
-        header p { font-size: 1.1rem; color: #555; margin: 15px 0 25px; }
-        .btn-main { 
-            display: inline-block; padding: 12px 30px; border: 2px solid #333; 
-            text-decoration: none; color: #333; font-weight: bold; border-radius: 4px;
-            transition: 0.3s;
-        }
-        .btn-main:hover { background: #333; color: #fff; }
+        /* --- CÍMSOROK SZÍNEZÉSE --- */
+        h1, h2, h3 { color: var(--epson-blue); letter-spacing: -0.5px; }
+        
+        header { text-align: center; padding: 60px 20px; }
+        header h1 { font-size: 3.2rem; margin: 0; color: #000; } /* A főcím marad fekete a tekintélyért */
+        header p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; }
 
         /* --- KÖRHINTA (MINDEN ÉLES) --- */
-        .carousel-outer { max-width: 1000px; margin: 40px auto; }
+        .carousel-outer { max-width: 1000px; margin: 0 auto 50px; }
         .swiper-slide {
             display: flex; flex-direction: column; align-items: center;
-            transition: all 0.5s ease;
-            filter: none !important; /* SEHOL NINCS BLUR */
-            opacity: 0.3; transform: scale(0.8);
+            transition: all 0.6s ease;
+            filter: none !important; /* FIX: Nincs elmosódás */
+            opacity: 0.25; transform: scale(0.8);
         }
         .swiper-slide-active { opacity: 1; transform: scale(1.1); z-index: 10; }
         .swiper-slide img { width: 100%; height: 260px; object-fit: contain; }
-        .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 15px; }
+        
+        /* Nyomtató nevek diszkrét kékkel */
+        .swiper-slide p { font-weight: 700; color: var(--epson-light-blue); margin-top: 15px; font-size: 1.1rem; }
 
-        /* --- BLUE INFO BAR --- */
+        /* --- INFO BAR --- */
         .info-bar { 
-            background: #1a3a8a; color: #fff; padding: 40px 20px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            max-width: 1100px; margin: 0 auto; gap: 30px; border-radius: 4px;
+            background: var(--epson-blue); color: #fff; padding: 35px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            max-width: 1100px; margin: 0 auto; gap: 20px; border-radius: 8px;
         }
-        .info-card { display: flex; align-items: center; gap: 15px; }
-        .info-card i { font-size: 2rem; color: var(--gold); }
+        .info-card strong { color: var(--gold); font-size: 1.1rem; }
 
-        /* --- SZOLGÁLTATÁSOK (KÉPED ALAPJÁN) --- */
-        .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; }
-        .services-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 40px; 
-        }
+        /* --- SZOLGÁLTATÁSOK RÁCS --- */
+        .services-section { padding: 90px 20px; max-width: 1100px; margin: 0 auto; }
         .service-box h3 { 
-            font-size: 1.4rem; color: var(--dark-text); margin-bottom: 15px;
-            border-left: 4px solid var(--epson-blue); padding-left: 15px;
+            font-size: 1.35rem; margin-bottom: 12px;
+            border-left: 5px solid var(--epson-blue); padding-left: 15px;
         }
-        .service-box p { font-size: 0.95rem; color: #666; line-height: 1.6; }
+        .service-box p { color: var(--text-main); font-size: 0.95rem; line-height: 1.7; }
 
-        /* --- WHY CHOOSE US (Sötét rész) --- */
-        .why-us { background: #555; color: #fff; padding: 80px 20px; }
-        .why-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-        .why-content h2 { font-size: 2rem; margin-bottom: 20px; }
-        .feature-item { margin-bottom: 20px; display: flex; gap: 15px; }
-        .callback-form { background: #fff; padding: 30px; border-radius: 4px; color: #333; }
-        .callback-form input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; }
-        .callback-form button { width: 100%; padding: 12px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; }
+        /* --- REVIEW WIDGET SZÍNEK --- */
+        .customer-say h2 { margin-bottom: 10px; }
+        .customer-say p { color: var(--text-muted); margin-bottom: 40px; }
+        .review-box { 
+            background: #f8fafd; border: 1px solid #e1e8ed; padding: 30px; 
+            width: 450px; border-radius: 12px;
+        }
+        .review-box strong { color: var(--epson-blue); display: block; margin-top: 15px; }
 
-        /* --- REVIEWS --- */
-        .customer-say { padding: 80px 20px; text-align: center; }
-        .reviews-wrapper { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
-        .review-box { background: var(--bg-gray); padding: 30px; width: 450px; text-align: left; border-radius: 4px; }
+        .stars-row { color: var(--gold); margin-bottom: 10px; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Epson Nyomtatók Javítása</h1>
-        <p>20 éves szakmai tapasztalat, amivel ügyfeleink rendelkezésére állunk.</p>
-        <a href="#services" class="btn-main">MINDEN SZOLGÁLTATÁS MEGTEKINTÉSE</a>
-
+        <p>Hivatalos minőség, szakértő kezekben.</p>
+        
         <div class="carousel-outer">
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
@@ -96,53 +85,42 @@
     </header>
 
     <div class="info-bar">
-        <div class="info-card"><div><strong>Make An Appointment</strong><br><small>Foglaljon időpontot online</small></div></div>
-        <div class="info-card"><div><strong>Working Hours</strong><br><small>H-P: 08:00 - 17:00</small></div></div>
-        <div class="info-card"><div><strong>Emergency Call 24/7</strong><br><strong>+36 1 234 5678</strong></div></div>
+        <div class="info-card"><div><strong>Időpontfoglalás</strong><br><small>Hívjon minket munkanapokon</small></div></div>
+        <div class="info-card"><div><strong>Nyitvatartás</strong><br><small>H-P: 08:00 - 17:00</small></div></div>
+        <div class="info-card"><div><strong>Sürgősségi Szerviz</strong><br><strong>+36 1 234 5678</strong></div></div>
     </div>
 
-    <section class="services-section" id="services">
-        <div class="section-header">
-            <h2>Amiben Segíteni Tudok</h2>
-            <a href="#" class="btn-main" style="font-size: 0.8rem;">SZOLGÁLTATÁSAIM</a>
-        </div>
+    <section class="services-section">
         <div class="services-grid">
             <div class="service-box">
-                <h3>Papírelakadás és Mechanikai Javítás</h3>
-                <p>Recseg, ropog, vagy egyszerűen begyűri a papírt? A görgők kopása és az idegen tárgyak a leggyakoribb hibaforrások.</p>
+                <h3>Mechanikai Hibák</h3>
+                <p>Papírelakadás, görgők kopása és idegen tárgyak szakszerű eltávolítása garanciával.</p>
             </div>
             <div class="service-box">
-                <h3>Beszáradt Fejek és Csíkos Nyomtatás</h3>
-                <p>Hiányoznak a színek vagy vízszintes csíkok rontják az összképet? A fúvóka-tisztítást professzionálisan orvosoljuk.</p>
+                <h3>Nyomtatófej Tisztítás</h3>
+                <p>Csíkos vagy hiányos nyomtatás javítása speciális, ultrahangos technológiával.</p>
             </div>
             <div class="service-box">
-                <h3>Tartályos Rendszerek Karbantartása</h3>
-                <p>Légbuborék került a csövekbe? Az EcoTank rendszerek professzionális légtelenítését és tisztítását vállaljuk.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="why-us">
-        <div class="why-grid">
-            <div class="why-content">
-                <h2>Why Choose Us</h2>
-                <div class="feature-item"><strong>Expert Engineers:</strong> Tapasztalt szakemberekkel dolgozunk.</div>
-                <div class="feature-item"><strong>Guarantee Service:</strong> Minden javításra garanciát vállalunk.</div>
-            </div>
-            <div class="callback-form">
-                <h3>Request Call Back</h3>
-                <input type="text" placeholder="Név">
-                <input type="text" placeholder="Telefonszám">
-                <button>KÜLDÉS</button>
+                <h3>Szoftveres Szerviz</h3>
+                <p>Hulladéktinta számláló nullázás és szerviz üzenetek végleges elhárítása.</p>
             </div>
         </div>
     </section>
 
     <section class="customer-say">
-        <h2>Our Customer Say</h2>
-        <div class="reviews-wrapper">
-            <div class="review-box">"Szuper gyors segítség, a nyomtatóm újra tökéletes!"<br><strong>- Manuel Chance</strong></div>
-            <div class="review-box">"Korrekt árak és profi hozzáállás. Csak ajánlani tudom."<br><strong>- Luras Rice</strong></div>
+        <h2>Ügyfeleink véleménye</h2>
+        <p>Több mint 500 sikeres javítás után</p>
+        <div class="reviews-wrapper" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+            <div class="review-box">
+                <div class="stars-row">★★★★★</div>
+                "Profi hozzáállás, a nyomtatóm egy óra alatt elkészült!"
+                <strong>- Kovács Pál</strong>
+            </div>
+            <div class="review-box">
+                <div class="stars-row">★★★★★</div>
+                "Végre egy szerviz, ahol nem csak alkatrészt cserélnek, hanem javítanak is."
+                <strong>- Nagy Erzsébet</strong>
+            </div>
         </div>
     </section>
 
@@ -152,10 +130,9 @@
             loop: true,
             centeredSlides: true,
             slidesPerView: 3,
-            spaceBetween: 0,
             autoplay: { delay: 4000 },
             speed: 800,
-            watchSlidesProgress: true, // Fixálja a renderelési hibákat
+            watchSlidesProgress: true,
         });
     </script>
 </body>
