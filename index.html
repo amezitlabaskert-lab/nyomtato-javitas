@@ -45,50 +45,47 @@
         /* --- CAROUSEL --- */
         .carousel-outer { max-width: 1100px; margin: 40px auto; overflow: hidden; position: relative; }
         .swiper { padding: 60px 0 !important; }
-        .swiper-slide { display: flex; flex-direction: column; align-items: center; transition: 0.6s; transform: scale(0.7); }
+        .swiper-slide { display: flex; flex-direction: column; align-items: center; transition: 0.6s; transform: scale(0.7); opacity: 1; }
         .swiper-slide-active { transform: scale(1.2) !important; z-index: 10; }
         .swiper-slide img { width: 100%; height: 350px; object-fit: contain; }
         .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 20px; font-size: 1rem; opacity: 0; transition: 0.4s; }
         .swiper-slide-active p { opacity: 1; }
 
-        /* --- AREA INFO --- */
-        .area-info { background: #fff; padding: 60px 20px; text-align: center; border-bottom: 1px solid var(--border-light); }
-        .area-cards { display: flex; justify-content: center; gap: 30px; max-width: 1000px; margin: 30px auto 0; flex-wrap: wrap; }
-        .area-card { background: var(--bg-gray); padding: 30px; border-radius: 8px; flex: 1; min-width: 280px; border-top: 4px solid var(--epson-blue); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .area-card i { font-size: 2rem; color: var(--epson-blue); margin-bottom: 15px; display: block; }
-
-        /* --- SERVICES (VISSZAÁLLÍTOTT SZÖVEGEK) --- */
+        /* --- SERVICES --- */
         .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 60px 40px; }
         .service-box i { font-size: 2rem; color: var(--epson-blue); margin-bottom: 15px; display: block; }
         .service-box h3 { font-size: 1.4rem; color: var(--dark-gray); border-left: 4px solid var(--epson-blue); padding-left: 15px; margin-bottom: 10px; }
         .service-box p { margin: 0; color: #555; }
 
-        /* --- REVIEWS --- */
-        .reviews-container { padding: 80px 20px; background: var(--bg-gray); text-align: center; }
-
-        /* --- WHY US & HIBABEJELENTŐ --- */
+        /* --- WHY US & TICKET SYSTEM --- */
         .why-us { background: var(--epson-blue); color: #fff; padding: 80px 20px; }
         .why-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
         .feature-item { margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start; }
         
-        .report-card { background: #fff; padding: 40px; border-radius: 12px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .report-card h3 { margin-top: 0; color: var(--epson-blue); margin-bottom: 10px; }
+        .report-card { background: #fff; padding: 40px; border-radius: 12px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; }
+        .report-card h3 { margin-top: 0; color: var(--epson-blue); margin-bottom: 5px; }
+        .report-card p.subtitle { font-size: 0.85rem; color: #666; margin-bottom: 20px; }
         
-        .error-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        /* Új Hiba-rács stílus */
+        .error-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 15px; }
         .error-btn { 
-            padding: 10px; border: 2px solid #eee; border-radius: 6px; background: none; cursor: pointer;
-            font-size: 0.85rem; font-weight: 600; color: #555; transition: 0.3s;
+            padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa; cursor: pointer;
+            font-size: 0.9rem; font-weight: 600; color: #555; transition: 0.2s; text-align: left; display: flex; align-items: center; gap: 10px;
         }
-        .error-btn.active { border-color: var(--epson-blue); background: var(--epson-blue); color: #fff; }
+        .error-btn i { color: var(--epson-blue); width: 20px; text-align: center; }
+        .error-btn:hover { border-color: var(--accent-blue); background: #f0f5ff; }
+        .error-btn.active { border-color: var(--epson-blue); background: var(--soft-blue); color: var(--epson-blue); box-shadow: inset 0 0 0 1px var(--epson-blue); }
 
-        .report-card input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
-        .report-card button.submit-btn { width: 100%; padding: 16px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 1rem; }
+        .report-card input, .report-card textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; }
+        .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; }
+        .report-card button.submit-btn:hover { background: var(--accent-blue); }
 
-        @media (max-width: 768px) {
-            .why-grid { grid-template-columns: 1fr; }
-            .error-options { grid-template-columns: 1fr; }
-        }
+        /* Ticket Siker Üzenet */
+        #ticket-success { display: none; text-align: center; padding: 20px 0; }
+        #ticket-success i { font-size: 3rem; color: #28a745; margin-bottom: 15px; }
+
+        @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -118,22 +115,6 @@
         </div>
     </header>
 
-    <section class="area-info">
-        <h2>Milyen gyorsan érek oda?</h2>
-        <div class="area-cards">
-            <div class="area-card">
-                <i class="fas fa-map-marked-alt"></i>
-                <h4>Budapest és Pest megye</h4>
-                <p>Általában <strong>1-3 munkanapon</strong> belül megkezdem a javítást.</p>
-            </div>
-            <div class="area-card">
-                <i class="fas fa-road"></i>
-                <h4>Vidéki kiszállás</h4>
-                <p>Távolságtól függően, jellemzően <strong>3-5 munkanap</strong> alatt odaérek.</p>
-            </div>
-        </div>
-    </section>
-
     <section class="services-section" id="services">
         <div class="services-grid">
             <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása. Gyors alkatrészcserével dolgozom.</p></div>
@@ -145,51 +126,47 @@
         </div>
     </section>
 
-    <section class="reviews-container">
-        <h2>Ügyfeleim mondták</h2>
-        <div id="seosamba-widget-placeholder">
-            <p style="color:#888;">(Itt jelennek majd meg a SeoSamba widgetből az igazi vélemények)</p>
-        </div>
-    </section>
-
     <section class="why-us">
         <div class="why-grid">
             <div>
                 <h2>Miért tőlem kérjen segítséget?</h2>
-                <div class="feature-item">
-                    <i class="fas fa-user-check"></i>
-                    <div>
-                        <strong>Közvetlen kapcsolat</strong>
-                        <p>Én javítom a gépét, tőlem kap választ minden szakmai kérdésére.</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-shield-alt"></i>
-                    <div>
-                        <strong>Személyes garancia</strong>
-                        <p>Minden elvégzett javításra és beépített alkatrészre felelősséget vállalok.</p>
-                    </div>
-                </div>
+                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ minden szakmai kérdésére.</p></div></div>
+                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden elvégzett javításra és beépített alkatrészre felelősséget vállalok.</p></div></div>
             </div>
 
-            <div class="report-card" id="hibabejelento">
-                <h3>Gyors Hibabejelentő</h3>
-                <p>Válassza ki a hibát, hogy felkészülten hívhassam:</p>
-                <div class="error-options">
-                    <button type="button" class="error-btn" onclick="this.classList.toggle('active')">Csíkoz a nyomat</button>
-                    <button type="button" class="error-btn" onclick="this.classList.toggle('active')">Papírelakadás</button>
-                    <button type="button" class="error-btn" onclick="this.classList.toggle('active')">Tinta-párna hiba</button>
-                    <button type="button" class="error-btn" onclick="this.classList.toggle('active')">Nem kapcsol be</button>
+            <div class="report-card" id="ticket-box">
+                <div id="form-content">
+                    <h3>Hiba bejelentése</h3>
+                    <p class="subtitle">Válasszon legfeljebb 2 jellemző tünetet:</p>
+                    
+                    <div class="error-grid">
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-magic"></i> Nem tudom, nem értek hozzá</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tint"></i> Csíkoz / Foltos a nyomat</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-scroll"></i> Beragadt / Nem húz papírt</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-exclamation-circle"></i> Karbantartás (Tinta-párna)</button>
+                    </div>
+
+                    <textarea id="extra-msg" placeholder="Bővebb leírás (opcionális)..." rows="2" style="display:none;"></textarea>
+                    
+                    <input type="text" id="cust-name" placeholder="Az Ön neve">
+                    <input type="tel" id="cust-phone" placeholder="Telefonszáma">
+                    
+                    <button class="submit-btn" onclick="submitTicket()">HIBAJEGY LÉTREHOZÁSA</button>
                 </div>
-                <input type="text" placeholder="Az Ön neve">
-                <input type="tel" placeholder="Telefonszáma">
-                <button class="submit-btn">KÉREM A VISSZAHÍVÁST</button>
+
+                <div id="ticket-success">
+                    <i class="fas fa-check-circle"></i>
+                    <h3 style="color:var(--epson-blue)">Hibajegy rögzítve!</h3>
+                    <p>Azonosító: <strong>#<span id="ticket-id"></span></strong></p>
+                    <p>Hamarosan keresni fogom a megadott telefonszámon.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        // Swiper inicializálás
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
@@ -199,6 +176,40 @@
                 768: { slidesPerView: 3, spaceBetween: 30 }
             }
         });
+
+        // Ticket Logika
+        function toggleError(btn) {
+            const activeBtns = document.querySelectorAll('.error-btn.active');
+            
+            if (!btn.classList.contains('active') && activeBtns.length >= 2) {
+                alert("Kérjük, jelölje meg a két legfontosabb problémát!");
+                return;
+            }
+            
+            btn.classList.toggle('active');
+            
+            // Mutassuk a textarea-t, ha van kijelölt hiba
+            document.getElementById('extra-msg').style.display = 
+                document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
+        }
+
+        function submitTicket() {
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const errors = document.querySelectorAll('.error-btn.active');
+
+            if (!name || !phone || errors.length === 0) {
+                alert("Kérem adja meg a nevét, telefonját és legalább egy hibát!");
+                return;
+            }
+
+            // Ticket generálás szimuláció
+            const randomID = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('ticket-id').innerText = new Date().getFullYear() + "/" + randomID;
+            
+            document.getElementById('form-content').style.display = 'none';
+            document.getElementById('ticket-success').style.display = 'block';
+        }
     </script>
 </body>
 </html>
