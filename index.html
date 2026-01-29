@@ -3,60 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | 3D Szakértői Megoldások</title>
+    <title>Epson Nyomtató Szerviz | 3D Szakértő</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         :root { --epson-blue: #003399; --accent-yellow: #ffcc00; --light-bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; line-height: 1.6; color: #333; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; color: #333; overflow-x: hidden; }
         
-        /* Hero szekció */
-        .hero { background: var(--light-bg); padding: 80px 20px; text-align: center; }
-        .hero h1 { font-size: 3rem; color: #1a1a1a; margin: 0; }
-        .hero p { font-size: 1.2rem; color: #555; margin-bottom: 30px; }
+        .hero { background: var(--light-bg); padding: 60px 20px; text-align: center; }
+        .hero h1 { font-size: 2.5rem; color: #1a1a1a; margin: 0; }
         .call-btn { 
-            display: inline-block; padding: 18px 35px; border: 2px solid var(--accent-yellow); 
-            color: var(--epson-blue); text-decoration: none; font-weight: bold; border-radius: 5px; background: white;
+            display: inline-block; margin-top: 20px; padding: 15px 30px; 
+            border: 2px solid var(--accent-yellow); color: var(--epson-blue); 
+            text-decoration: none; font-weight: bold; border-radius: 5px; background: white;
         }
 
-        /* 3D Coverflow Swiper */
-        .swiper { width: 100%; padding: 60px 0; background: #fff; }
-        .swiper-slide { width: 320px; filter: blur(2px) grayscale(50%); transition: 0.5s; display: flex; flex-direction: column; align-items: center; }
-        .swiper-slide-active { filter: blur(0) grayscale(0); transform: scale(1.2); z-index: 10; }
-        .swiper-slide img { width: 100%; height: 250px; object-fit: contain; }
-        .swiper-slide p { color: var(--epson-blue); font-weight: bold; margin-top: 15px; }
+        /* 3D Coverflow Swiper beállítások */
+        .swiper { width: 100%; padding: 50px 0; background: #fff; }
+        .swiper-slide { width: 300px; display: flex; flex-direction: column; align-items: center; transition: 0.5s; filter: grayscale(100%) blur(2px); }
+        .swiper-slide-active { filter: grayscale(0%) blur(0); transform: scale(1.1); }
+        .swiper-slide img { width: 100%; height: 220px; object-fit: contain; }
+        .swiper-slide p { color: var(--epson-blue); font-weight: bold; margin-top: 10px; text-align: center; }
 
-        /* Szolgáltatások blokk */
-        .services-container { max-width: 1200px; margin: 60px auto; padding: 20px; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .service-card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .service-card img { width: 60px; height: 60px; margin-bottom: 20px; }
-        .service-card h3 { color: var(--epson-blue); margin-bottom: 10px; border-left: 4px solid var(--accent-yellow); padding-left: 15px; }
+        .services-container { max-width: 1100px; margin: 40px auto; padding: 20px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .service-card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
+        .service-card h3 { color: var(--epson-blue); margin-top: 15px; }
     </style>
 </head>
 <body>
 
     <section class="hero">
         <h1>Epson Nyomtatók Javítása</h1>
-        <p>20 éves szakmai tapasztalattal állok rendelkezésére</p>
-        <a href="tel:+36201234567" class="call-btn">HÍVJON SZAKEMBERT: +36 20 123 4567</a>
+        <p>Profi szerviz 20 év tapasztalattal</p>
+        <a href="tel:+36201234567" class="call-btn">HÍVJON MOST: +36 20 123 4567</a>
     </section>
 
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="Ecotank L5590.png" alt="Epson L5590">
+                <img src="Ecotank L5590.png" alt="L5590">
                 <p>Epson EcoTank L5590</p>
             </div>
             <div class="swiper-slide">
-                <img src="WF-C5390.png" alt="Epson C5390">
+                <img src="WF-C5390.png" alt="C5390">
                 <p>WorkForce Pro WF-C5390</p>
             </div>
             <div class="swiper-slide">
-                <img src="WF-C5890.png" alt="Epson C5890">
+                <img src="WF-C5890.png" alt="C5890">
                 <p>WorkForce Pro WF-C5890</p>
             </div>
             <div class="swiper-slide">
-                <img src="Workforce ST-C4100.png" alt="Epson ST-C4100">
+                <img src="Workforce ST-C4100.png" alt="ST-C4100">
                 <p>WorkForce ST-C4100</p>
             </div>
         </div>
@@ -64,22 +61,19 @@
     </div>
 
     <div class="services-container">
-        <h2 style="text-align: center; font-size: 2.5rem;">Amiben Segíteni Tudok</h2>
+        <h2 style="text-align: center;">Szolgáltatásaink</h2>
         <div class="services-grid">
             <div class="service-card">
-                <img src="hardver.png" alt="Mechanika">
-                <h3>Papírelakadás és mechanika</h3>
-                <p>Görgők cseréje és idegen tárgyak eltávolítása után újra akadásmentesen nyomtathat.</p>
+                <h3>Mechanikai javítás</h3>
+                <p>Papírelakadás és görgőcsere gyorsan.</p>
             </div>
             <div class="service-card">
-                <img src="tisztitas.png" alt="Fejtisztítás">
-                <h3>Beszáradt fejek javítása</h3>
-                <p>Vákuumos és ultrahangos technológiával tisztítjuk ki a fúvókákat.</p>
+                <h3>Fejtisztítás</h3>
+                <p>Csíkos nyomtatás megszüntetése professzionálisan.</p>
             </div>
             <div class="service-card">
-                <img src="software.png" alt="Szoftver">
                 <h3>Szoftveres nullázás</h3>
-                <p>A "Service Required" hiba elhárítása és a hulladéktinta-párnák cseréje.</p>
+                <p>"Service Required" hiba végleges elhárítása.</p>
             </div>
         </div>
     </div>
@@ -88,10 +82,11 @@
     <script>
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
+            grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
             loop: true,
-            coverflowEffect: { rotate: 30, stretch: 0, depth: 200, modifier: 1, slideShadows: false },
+            coverflowEffect: { rotate: 20, stretch: 0, depth: 100, modifier: 1, slideShadows: false },
             autoplay: { delay: 3000 },
             pagination: { el: ".swiper-pagination" },
         });
