@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | Professzionális Javítás</title>
+    <title>Epson Nyomtató Szerviz | Professzionális 3D Galéria</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
@@ -18,7 +18,8 @@
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             margin: 0; 
             line-height: 1.6;
-            color: #333; 
+            color: #333;
+            overflow-x: hidden;
         }
 
         /* Hero szekció */
@@ -26,9 +27,8 @@
             background: var(--light-bg); 
             padding: 80px 20px; 
             text-align: center; 
-            border-bottom: 1px solid #ddd;
         }
-        .hero h1 { font-size: 3rem; color: #1a1a1a; margin-bottom: 10px; }
+        .hero h1 { font-size: 3rem; color: #1a1a1a; margin: 0 0 10px 0; }
         .hero p { font-size: 1.2rem; color: #555; margin-bottom: 30px; }
         
         .call-btn { 
@@ -45,19 +45,47 @@
         }
         .call-btn:hover { background: var(--accent-yellow); color: white; }
 
-        /* Carousel (Swiper) stílusok */
-        .swiper { width: 100%; padding: 50px 0; background: #fff; border-bottom: 1px solid #eee; }
-        .swiper-slide { 
-            display: flex; flex-direction: column; align-items: center; 
-            text-align: center; 
+        /* 3D Coverflow Swiper stílusok */
+        .swiper {
+            width: 100%;
+            padding-top: 60px;
+            padding-bottom: 80px;
+            background: #fff;
         }
-        .swiper-slide img { 
-            width: 280px; height: 200px; object-fit: contain; 
-            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.1));
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px; /* Fix szélesség a látványos forgatáshoz */
+            height: auto;
+            filter: blur(2px) grayscale(50%);
+            transition: 0.5s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .swiper-slide p { color: var(--epson-blue); font-weight: bold; margin-top: 15px; font-size: 1.1rem; }
-        
-        /* Navigációs gombok színe */
+
+        /* Az éppen kiválasztott nyomtató kiemelése */
+        .swiper-slide-active {
+            filter: blur(0) grayscale(0);
+            transform: scale(1.2);
+            z-index: 10;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            filter: drop-shadow(0px 15px 20px rgba(0,0,0,0.15));
+        }
+
+        .swiper-slide p {
+            color: var(--epson-blue);
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
         .swiper-button-next, .swiper-button-prev { color: var(--epson-blue); }
         .swiper-pagination-bullet-active { background: var(--epson-blue) !important; }
 
@@ -76,31 +104,30 @@
             background: white;
             padding: 30px; 
             border-radius: 10px;
-            transition: transform 0.3s ease;
+            transition: 0.3s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-bottom: 3px solid transparent;
         }
-        .service-card:hover { transform: translateY(-5px); }
+        .service-card:hover { 
+            transform: translateY(-10px);
+            border-bottom: 3px solid var(--accent-yellow);
+        }
         
         .service-card img { 
-            width: 70px; 
-            height: 70px; 
-            margin-bottom: 20px; 
-            object-fit: contain;
+            width: 65px; height: 65px; margin-bottom: 20px; object-fit: contain;
         }
 
         .service-card h3 { 
             color: var(--epson-blue); 
             font-size: 1.4rem;
-            margin-bottom: 15px; 
-            border-left: 4px solid var(--accent-yellow);
-            padding-left: 15px;
+            margin-bottom: 15px;
         }
 
-        .service-card p { font-size: 0.95rem; color: #666; }
+        .service-card p { font-size: 0.95rem; color: #666; margin: 0; }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .services-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+            .swiper-slide { width: 260px; }
         }
     </style>
 </head>
@@ -130,6 +157,10 @@
                 <img src="l1800.png" alt="Epson L1800">
                 <p>Epson EcoTank L1800</p>
             </div>
+            <div class="swiper-slide">
+                <img src="sc-p700.png" alt="Epson P700">
+                <p>Epson SureColor P700</p>
+            </div>
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
@@ -138,72 +169,60 @@
 
     <div class="services-container">
         <h2 class="section-title">Amiben Segíteni Tudok</h2>
-        <p class="section-desc">
-            Epson specialistaként teljes körű támogatást nyújtok nyomtatója élettartama alatt. Az alábbi témákban állok rendelkezésükre:
-        </p>
+        <p class="section-desc">Epson specialistaként teljes körű támogatást nyújtok készüléke élettartama alatt.</p>
 
         <div class="services-grid">
             <div class="service-card">
-                <img src="hardver.png" alt="Hardveres javítás">
-                <h3>Papírelakadás és mechanikai javítás</h3>
-                <p>Recseg, ropog, vagy egyszerűen begyűri a papírt? A görgők kopása és az idegen tárgyak a leggyakoribb hibaforrások. Gyors alkatrészcserével újra akadásmentessé tesszük készülékét.</p>
+                <img src="hardver.png" alt="Mechanika">
+                <h3>Papírelakadás és mechanika</h3>
+                <p>Görgők cseréje és idegen tárgyak eltávolítása után újra akadásmentesen nyomtathat.</p>
             </div>
-
             <div class="service-card">
                 <img src="tisztitas.png" alt="Fejtisztítás">
-                <h3>Beszáradt fejek és csíkos nyomtatás</h3>
-                <p>Hiányoznak a színek vagy vízszintes csíkok rontják az összképet? Speciális ultrahangos és vákuumos technológiával a legmakacsabb elzáródásokat is orvosoljuk.</p>
+                <h3>Beszáradt fejek javítása</h3>
+                <p>Vákuumos és ultrahangos technológiával tisztítjuk ki a makacsul elzáródott fúvókákat.</p>
             </div>
-
             <div class="service-card">
-                <img src="software.png" alt="Szoftveres nullázás">
-                <h3>"Service Required" hiba elhárítása</h3>
-                <p>Szoftveres nullázással és a hulladéktinta-gyűjtő párnák cseréjével megmentjük nyomtatóját a szemétteleptől, ha az az élettartama végét jelzi.</p>
+                <img src="software.png" alt="Szoftver">
+                <h3>Szoftveres nullázás</h3>
+                <p>A "Service Required" hiba elhárítása és a hulladéktinta-gyűjtő párnák cseréje.</p>
             </div>
-
             <div class="service-card">
-                <img src="ecotank.png" alt="EcoTank szerviz">
-                <h3>Tartályos (EcoTank) rendszerek karbantartása</h3>
-                <p>Professzionális légtelenítés és rendszertisztítás, ha légbuborék került a csövekbe vagy nem jut el a tinta a fejig.</p>
+                <img src="ecotank.png" alt="Karbantartás">
+                <h3>EcoTank karbantartás</h3>
+                <p>Rendszertisztítás és légtelenítés, ha a festékellátás nem egyenletes.</p>
             </div>
-
             <div class="service-card">
                 <img src="tanacsadas.png" alt="Tanácsadás">
-                <h3>Szakértői tanácsadás: Vásárlás és használat</h3>
-                <p>Segítünk a leggazdaságosabb modell kiválasztásában, és megtanítjuk a helyes üzemeltetésre, hogy megelőzze a későbbi drága javításokat.</p>
+                <h3>Vételi tanácsadás</h3>
+                <p>Segítünk kiválasztani a leggazdaságosabb gépet az Ön egyedi igényeihez.</p>
             </div>
-
             <div class="service-card">
-                <img src="tinta.png" alt="Kellékanyagok">
-                <h3>Prémium tinta és kellékanyagok</h3>
-                <p>Minőségi Epson tinták és tonerek raktárról. Segítünk választani a gyári és a megbízható utángyártott alternatívák közül.</p>
+                <img src="tinta.png" alt="Kellékanyag">
+                <h3>Prémium kellékanyagok</h3>
+                <p>Minőségi tinták és tonerek raktárról, gyors kiszállítással.</p>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
     <script>
         var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1,
-            spaceBetween: 30,
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
             loop: true,
-            autoplay: {
-                delay: 3500,
-                disableOnInteraction: false,
+            coverflowEffect: {
+                rotate: 35,    /* Szélső képek dőlésszöge */
+                stretch: 0,
+                depth: 150,   /* Mélységi távolság */
+                modifier: 1,
+                slideShadows: false,
             },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                640: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-            },
+            autoplay: { delay: 3500 },
+            pagination: { el: ".swiper-pagination" },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
         });
     </script>
 
