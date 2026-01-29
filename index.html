@@ -3,65 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Szerviz | Convex 3D v1.1.0</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css?v=1.1.0" />
+    <title>Epson Szerviz | Real Convex v1.1.1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css?v=1.1.1" />
     <style>
         :root { --epson-blue: #003399; --light-bg: #f4f7f6; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; overflow-x: hidden; }
         
         .version-badge {
-            position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8);
+            position: fixed; bottom: 10px; right: 10px; background: rgba(0, 0, 0, 0.8);
             color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999;
         }
 
-        .hero { background: var(--light-bg); padding: 30px; text-align: center; }
-
         .swiper-container-wrapper {
-            max-width: 1100px;
+            max-width: 1000px; /* Szűkebb keret a jobb ívhez */
             margin: 0 auto;
-            overflow: visible; /* Fontos a 3D kilátáshoz */
+            overflow: visible;
         }
 
         .swiper { 
             width: 100%; 
-            padding-top: 60px; 
+            padding-top: 80px; 
             padding-bottom: 100px; 
             perspective: 1500px;
         }
 
         .swiper-slide { 
-            width: 420px; 
-            transition: transform 0.8s ease;
-            filter: blur(4px) opacity(0.3);
+            width: 380px; 
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: blur(3px) opacity(0.3);
             backface-visibility: hidden;
         }
 
-        /* Ez a rész kényszeríti a hátrafelé hajló ívet */
+        /* BAL OLDALI: Balra fordul el (negatív forgatás) és hátrafelé megy */
         .swiper-slide-prev {
-            transform: translate3d(-20%, 0, -500px) rotateY(45deg) !important;
+            transform: translate3d(15%, 0, -400px) rotateY(-45deg) !important;
         }
 
+        /* JOBB OLDALI: Jobbra fordul el (pozitív forgatás) és hátrafelé megy */
         .swiper-slide-next {
-            transform: translate3d(20%, 0, -500px) rotateY(-45deg) !important;
+            transform: translate3d(-15%, 0, -400px) rotateY(45deg) !important;
         }
 
+        /* KÖZÉPSŐ: Kiemelkedik és szemben marad */
         .swiper-slide-active { 
             filter: blur(0) opacity(1); 
-            transform: translate3d(0, 0, 0) scale(1.3) !important;
+            transform: translate3d(0, 0, 100px) scale(1.2) !important;
             z-index: 10;
         }
 
         .swiper-slide img { 
             width: 100%; 
-            height: 320px; 
+            height: 300px; 
             object-fit: contain;
-            filter: drop-shadow(0px 35px 30px rgba(0,0,0,0.3)); 
+            filter: drop-shadow(0px 30px 25px rgba(0,0,0,0.25)); 
         }
 
         .swiper-slide p { 
             color: var(--epson-blue); 
             font-weight: 900; 
-            font-size: 1.4rem; 
+            font-size: 1.3rem; 
             text-align: center;
             margin-top: 20px;
         }
@@ -69,12 +69,7 @@
 </head>
 <body>
 
-    <div class="version-badge">v1.1.0 - Convex Carousel Mode</div>
-
-    <section class="hero">
-        <h1>Epson Nyomtató Szerviz</h1>
-        <p>Profi javítás • Valódi 3D bemutató</p>
-    </section>
+    <div class="version-badge">v1.1.1 - Correct Rotation Mode</div>
 
     <div class="swiper-container-wrapper">
         <div class="swiper mySwiper">
@@ -88,22 +83,15 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?v=1.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?v=1.1.1"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
-            effect: "coverflow",
             centeredSlides: true,
             slidesPerView: "auto",
             loop: true,
             speed: 1000,
-            coverflowEffect: { 
-                rotate: -30,    /* Negatív érték: hátrafelé dőlés */
-                stretch: -80,   /* Egymásra csúsztatás */
-                depth: 600,     /* Nagy mélység elfelé tőled */
-                modifier: 1, 
-                slideShadows: false 
-            },
-            autoplay: { delay: 3000 },
+            autoplay: { delay: 3500, disableOnInteraction: false },
+            /* Kikapcsoltuk a beépített coverflow-t, hogy a saját CSS szabályaink érvényesüljenek */
         });
     </script>
 </body>
