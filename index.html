@@ -3,132 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | Professzionális 3D Galéria</title>
-    
+    <title>Epson Nyomtató Szerviz | 3D Szakértői Megoldások</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
     <style>
-        :root { 
-            --epson-blue: #003399; 
-            --accent-yellow: #ffcc00; 
-            --light-bg: #f4f7f6;
-        }
+        :root { --epson-blue: #003399; --accent-yellow: #ffcc00; --light-bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; line-height: 1.6; color: #333; overflow-x: hidden; }
         
-        body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            margin: 0; 
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
         /* Hero szekció */
-        .hero { 
-            background: var(--light-bg); 
-            padding: 80px 20px; 
-            text-align: center; 
-        }
-        .hero h1 { font-size: 3rem; color: #1a1a1a; margin: 0 0 10px 0; }
+        .hero { background: var(--light-bg); padding: 80px 20px; text-align: center; }
+        .hero h1 { font-size: 3rem; color: #1a1a1a; margin: 0; }
         .hero p { font-size: 1.2rem; color: #555; margin-bottom: 30px; }
-        
         .call-btn { 
-            display: inline-block; 
-            padding: 18px 35px; 
-            border: 2px solid var(--accent-yellow); 
-            color: var(--epson-blue); 
-            text-decoration: none; 
-            font-weight: bold; 
-            font-size: 1.1rem;
-            border-radius: 5px; 
-            background: white;
-            transition: all 0.3s ease;
-        }
-        .call-btn:hover { background: var(--accent-yellow); color: white; }
-
-        /* 3D Coverflow Swiper stílusok */
-        .swiper {
-            width: 100%;
-            padding-top: 60px;
-            padding-bottom: 80px;
-            background: #fff;
+            display: inline-block; padding: 18px 35px; border: 2px solid var(--accent-yellow); 
+            color: var(--epson-blue); text-decoration: none; font-weight: bold; border-radius: 5px; background: white;
         }
 
-        .swiper-slide {
-            background-position: center;
-            background-size: cover;
-            width: 300px; /* Fix szélesség a látványos forgatáshoz */
-            height: auto;
-            filter: blur(2px) grayscale(50%);
-            transition: 0.5s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Az éppen kiválasztott nyomtató kiemelése */
-        .swiper-slide-active {
-            filter: blur(0) grayscale(0);
-            transform: scale(1.2);
-            z-index: 10;
-        }
-
-        .swiper-slide img {
-            width: 100%;
-            height: 220px;
-            object-fit: contain;
-            filter: drop-shadow(0px 15px 20px rgba(0,0,0,0.15));
-        }
-
-        .swiper-slide p {
-            color: var(--epson-blue);
-            font-weight: bold;
-            margin-top: 20px;
-            font-size: 1.1rem;
-        }
-
-        .swiper-button-next, .swiper-button-prev { color: var(--epson-blue); }
-        .swiper-pagination-bullet-active { background: var(--epson-blue) !important; }
+        /* 3D Coverflow Swiper */
+        .swiper { width: 100%; padding: 60px 0; background: #fff; }
+        .swiper-slide { width: 320px; filter: blur(2px) grayscale(50%); transition: 0.5s; display: flex; flex-direction: column; align-items: center; }
+        .swiper-slide-active { filter: blur(0) grayscale(0); transform: scale(1.2); z-index: 10; }
+        .swiper-slide img { width: 100%; height: 250px; object-fit: contain; }
+        .swiper-slide p { color: var(--epson-blue); font-weight: bold; margin-top: 15px; }
 
         /* Szolgáltatások blokk */
         .services-container { max-width: 1200px; margin: 60px auto; padding: 20px; }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 10px; }
-        .section-desc { text-align: center; color: #777; max-width: 700px; margin: 0 auto 50px; }
-
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 40px; 
-        }
-
-        .service-card { 
-            background: white;
-            padding: 30px; 
-            border-radius: 10px;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-bottom: 3px solid transparent;
-        }
-        .service-card:hover { 
-            transform: translateY(-10px);
-            border-bottom: 3px solid var(--accent-yellow);
-        }
-        
-        .service-card img { 
-            width: 65px; height: 65px; margin-bottom: 20px; object-fit: contain;
-        }
-
-        .service-card h3 { 
-            color: var(--epson-blue); 
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-        }
-
-        .service-card p { font-size: 0.95rem; color: #666; margin: 0; }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .swiper-slide { width: 260px; }
-        }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .service-card img { width: 60px; height: 60px; margin-bottom: 20px; }
+        .service-card h3 { color: var(--epson-blue); margin-bottom: 10px; border-left: 4px solid var(--accent-yellow); padding-left: 15px; }
     </style>
 </head>
 <body>
@@ -142,35 +44,27 @@
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="l3250.png" alt="Epson L3250">
-                <p>Epson EcoTank L3250</p>
+                <img src="Ecotank L5590.png" alt="Epson L5590">
+                <p>Epson EcoTank L5590</p>
             </div>
             <div class="swiper-slide">
-                <img src="l8180.png" alt="Epson L8180">
-                <p>Epson EcoTank L8180</p>
+                <img src="WF-C5390.png" alt="Epson C5390">
+                <p>WorkForce Pro WF-C5390</p>
             </div>
             <div class="swiper-slide">
-                <img src="m2170.png" alt="Epson M2170">
-                <p>Epson WorkForce M2170</p>
+                <img src="WF-C5890.png" alt="Epson C5890">
+                <p>WorkForce Pro WF-C5890</p>
             </div>
             <div class="swiper-slide">
-                <img src="l1800.png" alt="Epson L1800">
-                <p>Epson EcoTank L1800</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="sc-p700.png" alt="Epson P700">
-                <p>Epson SureColor P700</p>
+                <img src="Workforce ST-C4100.png" alt="Epson ST-C4100">
+                <p>WorkForce ST-C4100</p>
             </div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
         <div class="swiper-pagination"></div>
     </div>
 
     <div class="services-container">
-        <h2 class="section-title">Amiben Segíteni Tudok</h2>
-        <p class="section-desc">Epson specialistaként teljes körű támogatást nyújtok készüléke élettartama alatt.</p>
-
+        <h2 style="text-align: center; font-size: 2.5rem;">Amiben Segíteni Tudok</h2>
         <div class="services-grid">
             <div class="service-card">
                 <img src="hardver.png" alt="Mechanika">
@@ -180,27 +74,12 @@
             <div class="service-card">
                 <img src="tisztitas.png" alt="Fejtisztítás">
                 <h3>Beszáradt fejek javítása</h3>
-                <p>Vákuumos és ultrahangos technológiával tisztítjuk ki a makacsul elzáródott fúvókákat.</p>
+                <p>Vákuumos és ultrahangos technológiával tisztítjuk ki a fúvókákat.</p>
             </div>
             <div class="service-card">
                 <img src="software.png" alt="Szoftver">
                 <h3>Szoftveres nullázás</h3>
-                <p>A "Service Required" hiba elhárítása és a hulladéktinta-gyűjtő párnák cseréje.</p>
-            </div>
-            <div class="service-card">
-                <img src="ecotank.png" alt="Karbantartás">
-                <h3>EcoTank karbantartás</h3>
-                <p>Rendszertisztítás és légtelenítés, ha a festékellátás nem egyenletes.</p>
-            </div>
-            <div class="service-card">
-                <img src="tanacsadas.png" alt="Tanácsadás">
-                <h3>Vételi tanácsadás</h3>
-                <p>Segítünk kiválasztani a leggazdaságosabb gépet az Ön egyedi igényeihez.</p>
-            </div>
-            <div class="service-card">
-                <img src="tinta.png" alt="Kellékanyag">
-                <h3>Prémium kellékanyagok</h3>
-                <p>Minőségi tinták és tonerek raktárról, gyors kiszállítással.</p>
+                <p>A "Service Required" hiba elhárítása és a hulladéktinta-párnák cseréje.</p>
             </div>
         </div>
     </div>
@@ -209,22 +88,13 @@
     <script>
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
-            grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
             loop: true,
-            coverflowEffect: {
-                rotate: 35,    /* Szélső képek dőlésszöge */
-                stretch: 0,
-                depth: 150,   /* Mélységi távolság */
-                modifier: 1,
-                slideShadows: false,
-            },
-            autoplay: { delay: 3500 },
+            coverflowEffect: { rotate: 30, stretch: 0, depth: 200, modifier: 1, slideShadows: false },
+            autoplay: { delay: 3000 },
             pagination: { el: ".swiper-pagination" },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
         });
     </script>
-
 </body>
 </html>
