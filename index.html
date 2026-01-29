@@ -114,10 +114,12 @@
 
     <section class="services-section" id="services">
         <div class="services-grid">
-            <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása.</p></div>
-            <div class="service-box"><i class="fas fa-eye-dropper"></i><h3>Fejtisztítás</h3><p>Beszáradt fejek professzionális tisztítása, csíkmentes nyomatok.</p></div>
-            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>Hulladéktinta-párna telítettség szoftveres és fizikai javítása.</p></div>
-            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szakmai tanácsadás</h3><p>Segítek kiválasztani a legjobb Epson típust a munkájához.</p></div>
+            <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása. Gyors alkatrészcserével dolgozom.</p></div>
+            <div class="service-box"><i class="fas fa-eye-dropper"></i><h3>Fejtisztítás</h3><p>Beszáradt fejek professzionális tisztítása, hogy újra tökéletes, csíkmentes nyomatokat kapjon.</p></div>
+            <div class="service-box"><i class="fas fa-sitemap"></i><h3>EcoTank karbantartás</h3><p>A tartályos rendszerek légtelenítése és rendszertisztítása rutinfeladat számomra.</p></div>
+            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>"Service Required" üzenet? Hulladéktinta-párna telítettség szoftveres és fizikai javítása.</p></div>
+            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szakmai tanácsadás</h3><p>Segítek kiválasztani a leginkább fenntartható Epson típust a munkájához.</p></div>
+            <div class="service-box"><i class="fas fa-coins"></i><h3>Kellékanyagok</h3><p>Segítek a megfelelő gyári vagy megbízható utángyártott tinták beszerzésében.</p></div>
         </div>
     </section>
 
@@ -127,6 +129,7 @@
                 <h2>Miért tőlem kérjen segítséget?</h2>
                 <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ minden kérdésre.</p></div></div>
                 <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra és alkatrészre felelősséget vállalok.</p></div></div>
+                <div class="feature-item"><i class="fas fa-history"></i><div><strong>Gyors reakcióidő</strong><p>A hibajegy beérkezése után 24 órán belül felveszem Önnel a kapcsolatot.</p></div></div>
             </div>
 
             <div class="report-card" id="ticket-box">
@@ -201,20 +204,24 @@
 
             const ticketID = new Date().getFullYear() + "/" + Math.floor(1000 + Math.random() * 9000);
 
-            // Formspree küldés
-            const formData = new FormData();
-            formData.append('Ticket_ID', ticketID);
-            formData.append('Nev', name);
-            formData.append('Telefon', phone);
-            formData.append('Email', email);
-            formData.append('Hibak', errors.join(', '));
-            formData.append('Uzenet', extra);
+            // Formbricks beküldési struktúra
+            const responseData = {
+                surveyId: "cmkz5hifa0qaqad01dl19fklo",
+                values: {
+                    "Név": name,
+                    "Telefon": phone,
+                    "Email": email,
+                    "Hibajelenségek": errors.join(', '),
+                    "Üzenet": extra,
+                    "Ticket_ID": ticketID
+                }
+            };
 
             try {
-                const response = await fetch('https://formspree.io/f/mvzrkodw', {
+                const response = await fetch('https://app.formbricks.com/api/v1/client/responses', {
                     method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(responseData)
                 });
 
                 if (response.ok) {
@@ -222,13 +229,12 @@
                     document.getElementById('form-content').style.display = 'none';
                     document.getElementById('ticket-success').style.display = 'block';
                 } else {
-                    alert("Hiba történt. Kérjük próbálja újra!");
-                    btn.disabled = false;
-                    btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
+                    throw new Error("Szerver hiba");
                 }
             } catch (error) {
-                alert("Hálózati hiba!");
+                alert("Hiba történt a küldés során. Kérjük próbálja újra!");
                 btn.disabled = false;
+                btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
         }
     </script>
