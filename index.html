@@ -3,115 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Szerviz | Profi Nyomtató Javítás</title>
+    <title>Epson Szerviz | Clean Carousel v1.2.0</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        :root { 
-            --epson-blue: #003399; 
-            --light-bg: #f8f9fa;
-            --dark-text: #333;
+        :root { --epson-blue: #003399; --bg: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); overflow-x: hidden; }
+
+        .version-badge { position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999; }
+
+        /* A konténer szűkítése, hogy a szélek "hátul" tűnjenek el */
+        .swiper-container-wrapper {
+            max-width: 1000px;
+            margin: 60px auto;
+            position: relative;
         }
-        
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #fff; color: var(--dark-text); overflow-x: hidden; }
 
-        /* --- HEADER --- */
-        header { background: #fff; padding: 20px; text-align: center; border-bottom: 3px solid var(--epson-blue); }
-        header h1 { margin: 0; color: var(--epson-blue); font-size: 2.5rem; text-transform: uppercase; }
-        header p { margin: 5px 0 0; font-weight: 300; letter-spacing: 2px; }
+        .swiper { width: 100%; padding-bottom: 50px; }
 
-        /* --- 3D SCENE --- */
-        .scene { width: 100%; height: 500px; perspective: 1500px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #ffffff 0%, #f0f0f0 100%); }
-        .orbit-container { width: 1px; height: 1px; position: relative; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .printer-card { position: absolute; width: 300px; left: -150px; top: -150px; display: flex; flex-direction: column; align-items: center; transition: transform 1.2s, opacity 1.2s; backface-visibility: hidden; }
-        .printer-card img { width: 100%; height: 240px; object-fit: contain; filter: drop-shadow(0px 20px 15px rgba(0,0,0,0.15)); }
-        .printer-card p { color: var(--epson-blue); font-weight: 900; margin-top: 10px; text-align: center; }
+        .swiper-slide {
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.6s ease; /* Sima, nem rángatózó átmenet */
+            filter: grayscale(0.5);
+            opacity: 0.3;
+            transform: scale(0.8); /* A szélsők alapból kisebbek */
+        }
 
-        /* --- SERVICES GRID --- */
-        .section-title { text-align: center; padding: 40px 20px 20px; font-size: 1.8rem; }
-        .services-grid { max-width: 1100px; margin: 0 auto 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 0 20px; }
-        .service-card { background: var(--light-bg); padding: 30px; border-radius: 15px; text-align: center; border-bottom: 4px solid #ddd; transition: 0.3s; }
-        .service-card:hover { border-bottom-color: var(--epson-blue); transform: translateY(-5px); }
-        .service-card h3 { color: var(--epson-blue); margin-top: 0; }
+        /* A középső kiemelése - ez lesz a "fókusz" */
+        .swiper-slide-active {
+            opacity: 1;
+            filter: grayscale(0);
+            transform: scale(1.1); /* Csak méretnövelés, nincs 3D torzítás */
+            z-index: 10;
+        }
 
-        /* --- FOOTER --- */
-        footer { background: var(--dark-text); color: #fff; padding: 40px 20px; text-align: center; }
-        .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; }
-        .footer-info { margin: 10px; min-width: 200px; }
-        .version-badge { font-size: 10px; opacity: 0.5; margin-top: 20px; }
+        /* Az oldalsó elemek (látszódjanak, de legyenek másodlagosak) */
+        .swiper-slide-prev, .swiper-slide-next {
+            opacity: 0.6;
+            transform: scale(0.9);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            /* Csak egy lágy árnyék, ami nem torzít */
+            filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.1));
+        }
+
+        .swiper-slide p {
+            color: var(--epson-blue);
+            font-weight: 900;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .swiper-slide-active p { opacity: 1; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Epson Szerviz</h1>
-        <p>GYORS • PRECÍZ • GARANCIÁLIS</p>
-    </header>
+    <div class="version-badge">v1.2.0 - Clean Swiper Mode</div>
 
-    <div class="scene">
-        <div class="orbit-container">
-            <div class="printer-card"><img src="l5590.png"><p>EcoTank L5590</p></div>
-            <div class="printer-card"><img src="c5390.png"><p>WorkForce C5390</p></div>
-            <div class="printer-card"><img src="c5890.png"><p>WorkForce C5890</p></div>
-            <div class="printer-card"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
-            <div class="printer-card"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
+    <div class="swiper-container-wrapper">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
+                <div class="swiper-slide"><img src="c5390.png"><p>WorkForce C5390</p></div>
+                <div class="swiper-slide"><img src="c5890.png"><p>WorkForce C5890</p></div>
+                <div class="swiper-slide"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
+                <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
+            </div>
         </div>
     </div>
 
-    <h2 class="section-title">Amiben Segíteni Tudunk</h2>
-    <div class="services-grid">
-        <div class="service-card">
-            <h3>Mechanikai Javítás</h3>
-            <p>Papírelakadás, görgők cseréje és általános tisztítás.</p>
-        </div>
-        <div class="service-card">
-            <h3>Fejtisztítás</h3>
-            <p>Besűrűsödött tinta eltávolítása speciális ultrahangos eljárással.</p>
-        </div>
-        <div class="service-card">
-            <h3>Hulladéktinta Reset</h3>
-            <p>"Service Required" hiba elhárítása és tartály csere.</p>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-info">
-                <h4>Helyszín</h4>
-                <p>1234 Budapest, Példa utca 12.</p>
-            </div>
-            <div class="footer-info">
-                <h4>Kapcsolat</h4>
-                <p>Tel: +36 1 234 5678<br>Email: info@epsonszerviz.hu</p>
-            </div>
-            <div class="footer-info">
-                <h4>Nyitvatartás</h4>
-                <p>H-P: 08:00 - 17:00</p>
-            </div>
-        </div>
-        <div class="version-badge">v1.1.9 - Professional Full Page Build</div>
-    </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        const container = document.querySelector('.orbit-container');
-        const cards = document.querySelectorAll('.printer-card');
-        const radius = 420;
-        let currentRotation = 0;
-
-        function updateCards() {
-            cards.forEach((card, index) => {
-                const angle = (index * (360 / cards.length));
-                card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px) rotateY(${-angle - currentRotation}deg)`;
-                const normalizedRotation = ((angle + currentRotation) % 360 + 360) % 360;
-                card.style.opacity = (normalizedRotation > 100 && normalizedRotation < 260) ? "0.15" : "1";
-            });
-        }
-
-        setInterval(() => {
-            currentRotation -= (360 / cards.length);
-            container.style.transform = `rotateY(${currentRotation}deg)`;
-            updateCards();
-        }, 3500);
-
-        updateCards();
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            spaceBetween: -50, /* Egymásra csúszás a kör-hatás miatt */
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            speed: 800,
+        });
     </script>
 </body>
 </html>
