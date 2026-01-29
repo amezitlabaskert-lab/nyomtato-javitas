@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epson Nyomtató Szerviz</title>
+    <style>
+        :root { --epson-blue: #003399; --accent-yellow: #ffcc00; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; color: #333; }
+        
+        /* Hero szekció */
+        .hero { background: #f4f7f6; padding: 60px 20px; text-align: center; }
+        .hero h1 { font-size: 3rem; color: #1a1a1a; margin-bottom: 10px; }
+        .call-btn { 
+            display: inline-block; padding: 15px 30px; border: 2px solid var(--accent-yellow); 
+            color: var(--epson-blue); text-decoration: none; font-weight: bold; border-radius: 5px; background: white;
+        }
+
+        /* Szolgáltatások rács (Grid) */
+        .services-container { max-width: 1200px; margin: 50px auto; padding: 20px; }
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+        }
+        .service-card { text-align: left; padding: 20px; transition: 0.3s; }
+        .service-card img { width: 60px; height: 60px; margin-bottom: 15px; }
+        .service-card h3 { color: var(--epson-blue); margin-bottom: 10px; }
+        .service-card p { font-size: 0.95rem; line-height: 1.6; color: #666; }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <h1>Epson Nyomtatók Javítása</h1>
+        <p>20 éves szakmai tapasztalattal állok rendelkezésére</p>
+        <a href="tel:+36201234567" class="call-btn">HÍVJON SZAKEMBERT: +36 20 123 4567</a>
+    </section>
+
+    <div class="services-container">
+        <h2 style="text-align: center; font-size: 2rem;">Amiben Segíteni Tudok</h2>
+        <p style="text-align: center; color: #777; margin-bottom: 40px;">
+            Epson specialistaként teljes körű támogatást nyújtok nyomtatója élettartama alatt.
+        </p>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="icon1.png" alt="Papírelakadás"> <h3>Papírelakadás és mechanikai javítás</h3>
+                <p>Recseg, ropog, vagy egyszerűen begyűri a papírt? Gyors alkatrészcserével újra akadásmentessé tesszük készülékét.</p>
+            </div>
+
+            <div class="service-card">
+                <img src="icon2.png" alt="Beszáradt fejek">
+                <h3>Beszáradt fejek és csíkos nyomtatás</h3>
+                <p>Speciális ultrahangos és vákuumos technológiával a legmakacsabb fúvóka-elzáródásokat is orvosoljuk.</p>
+            </div>
+
+            <div class="service-card">
+                <img src="icon3.png" alt="Tanácsadás">
+                <h3>Szakértői tanácsadás</h3>
+                <p>Segítünk a gazdaságos választásban és megtanítjuk a helyes használat fogásaira is.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
