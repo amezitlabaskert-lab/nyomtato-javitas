@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | 3D Pro Galéria</title>
+    <title>Epson Szerviz | 3D Pro v1.0.7</title>
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css?v=1.0.5" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css?v=1.0.7" />
 
     <style>
         :root { 
@@ -21,52 +21,36 @@
             overflow-x: hidden; 
         }
 
-        /* VERZIÓ JELZŐ - Ezt fogjuk levenni a végén */
+        /* Verzió jelző a sarokban */
         .version-badge {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 10px;
-            z-index: 9999;
-            pointer-events: none;
+            position: fixed; bottom: 10px; right: 10px; background: rgba(0, 0, 0, 0.7);
+            color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999;
         }
 
-        /* Hero szekció */
         .hero { 
             background: var(--light-bg); 
             padding: 40px 20px; 
             text-align: center; 
             border-bottom: 1px solid #eee; 
         }
-        .hero h1 { font-size: 2.5rem; color: #1a1a1a; margin: 0; }
-        .hero p { color: #666; font-size: 1.1rem; }
 
-        /* A 3D Panoráma Konténer */
+        /* 3D Konténer */
         .swiper { 
             width: 100%; 
-            padding-top: 80px; 
-            padding-bottom: 120px; 
+            padding-top: 50px; 
+            padding-bottom: 100px; 
             perspective: 2000px; 
         }
 
         .swiper-slide { 
-            width: 500px; 
-            height: auto;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
-            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: blur(6px) opacity(0.2); 
-            will-change: transform, opacity;
+            width: 480px; 
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            filter: blur(4px) opacity(0.3); 
         }
 
         .swiper-slide-active { 
             filter: blur(0) opacity(1); 
-            transform: scale(1.4) translateY(-20px); 
+            transform: scale(1.4) translateY(-10px); 
             z-index: 10;
         }
 
@@ -74,70 +58,56 @@
             width: 100%; 
             height: 350px; 
             object-fit: contain;
-            filter: drop-shadow(0px 30px 45px rgba(0,0,0,0.3)); 
+            filter: drop-shadow(0px 20px 30px rgba(0,0,0,0.25)); 
         }
 
         .swiper-slide p { 
             color: var(--epson-blue); 
             font-weight: 900; 
-            font-size: 1.6rem; 
-            margin-top: 30px;
-            background: rgba(255,255,255,0.9);
-            padding: 5px 20px;
-            border-radius: 30px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 1.5rem; 
+            text-align: center;
+            margin-top: 25px;
         }
 
-        .services-container { max-width: 1100px; margin: 0 auto 50px; padding: 0 20px; }
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 25px; 
-        }
-        .service-card { 
-            background: var(--light-bg); 
-            padding: 25px; 
-            border-radius: 15px; 
-            text-align: center; 
-            border: 1px solid #ddd;
-        }
+        .services-container { max-width: 1000px; margin: 0 auto 60px; padding: 0 20px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .service-card { background: var(--light-bg); padding: 25px; border-radius: 12px; text-align: center; }
 
         @media (max-width: 768px) {
-            .swiper-slide { width: 280px; }
+            .swiper-slide { width: 260px; }
             .swiper-slide img { height: 200px; }
-            .swiper-slide-active { transform: scale(1.2) translateY(-10px); }
         }
     </style>
 </head>
 <body>
 
-    <div class="version-badge">v1.0.5 - Dev Mode</div>
+    <div class="version-badge">v1.0.7 - Final Filenames</div>
 
     <section class="hero">
-        <h1>Epson Nyomtatók Javítása</h1>
-        <p>Profi szerviz • 20 év tapasztalat</p>
+        <h1>Epson Nyomtató Szerviz</h1>
+        <p>Profi szerviz 20 év tapasztalattal</p>
     </section>
 
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="Ecotank L5590.png" alt="L5590">
+                <img src="l5590.png" alt="L5590">
                 <p>EcoTank L5590</p>
             </div>
             <div class="swiper-slide">
-                <img src="WF-C5390.png" alt="C5390">
-                <p>WorkForce WF-C5390</p>
+                <img src="c5390.png" alt="C5390">
+                <p>WorkForce C5390</p>
             </div>
             <div class="swiper-slide">
-                <img src="WF-C5890.png" alt="C5890">
-                <p>WorkForce WF-C5890</p>
+                <img src="c5890.png" alt="C5890">
+                <p>WorkForce C5890</p>
             </div>
             <div class="swiper-slide">
-                <img src="Workforce ST-C4100.png" alt="ST-C4100">
+                <img src="st-c4100.png" alt="ST-C4100">
                 <p>WorkForce ST-C4100</p>
             </div>
             <div class="swiper-slide">
-                <img src="Epson Workforce Enterprise AM-C5000.png" alt="AM-C5000">
+                <img src="am-c5000.png" alt="AM-C5000">
                 <p>Enterprise AM-C5000</p>
             </div>
         </div>
@@ -146,48 +116,28 @@
 
     <div class="services-container">
         <div class="services-grid">
-            <div class="service-card">
-                <h3>Mechanikai javítás</h3>
-                <p>Görgőcsere és papírelakadás megszüntetése.</p>
-            </div>
-            <div class="service-card">
-                <h3>Fejtisztítás</h3>
-                <p>Beszáradt fúvókák ultrahangos tisztítása.</p>
-            </div>
-            <div class="service-card">
-                <h3>Szoftveres nullázás</h3>
-                <p>Tintahulladék-gyűjtő reset és karbantartás.</p>
-            </div>
+            <div class="service-card"><h3>Mechanika</h3><p>Görgők és papírpálya javítása.</p></div>
+            <div class="service-card"><h3>Fejtisztítás</h3><p>Speciális ultrahangos eljárás.</p></div>
+            <div class="service-card"><h3>Szoftver</h3><p>Hulladéktinta reset és javítás.</p></div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?v=1.0.5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?v=1.0.7"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
-            grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
             loop: true,
-            speed: 900,
-            
             coverflowEffect: { 
-                rotate: -35,   
-                stretch: -120, 
-                depth: 800,    
-                modifier: 1.2, 
+                rotate: -30,   /* Domború ív */
+                stretch: -110, /* Összehúzás */
+                depth: 700,    /* Mélység */
+                modifier: 1, 
                 slideShadows: false 
             },
-            
-            autoplay: { 
-                delay: 3000, 
-                disableOnInteraction: false 
-            },
-            
-            pagination: { 
-                el: ".swiper-pagination", 
-                clickable: true 
-            },
+            autoplay: { delay: 3500 },
+            pagination: { el: ".swiper-pagination", clickable: true },
         });
     </script>
 </body>
