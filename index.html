@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Epson Nyomtató Szerviz | Professzionális Javítás</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <style>
         :root { 
             --epson-blue: #003399; 
@@ -42,6 +45,22 @@
         }
         .call-btn:hover { background: var(--accent-yellow); color: white; }
 
+        /* Carousel (Swiper) stílusok */
+        .swiper { width: 100%; padding: 50px 0; background: #fff; border-bottom: 1px solid #eee; }
+        .swiper-slide { 
+            display: flex; flex-direction: column; align-items: center; 
+            text-align: center; 
+        }
+        .swiper-slide img { 
+            width: 280px; height: 200px; object-fit: contain; 
+            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.1));
+        }
+        .swiper-slide p { color: var(--epson-blue); font-weight: bold; margin-top: 15px; font-size: 1.1rem; }
+        
+        /* Navigációs gombok színe */
+        .swiper-button-next, .swiper-button-prev { color: var(--epson-blue); }
+        .swiper-pagination-bullet-active { background: var(--epson-blue) !important; }
+
         /* Szolgáltatások blokk */
         .services-container { max-width: 1200px; margin: 60px auto; padding: 20px; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 10px; }
@@ -58,10 +77,10 @@
             padding: 30px; 
             border-radius: 10px;
             transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         .service-card:hover { transform: translateY(-5px); }
         
-        /* Ikonok helye (PNG képek) */
         .service-card img { 
             width: 70px; 
             height: 70px; 
@@ -92,6 +111,30 @@
         <p>20 éves szakmai tapasztalattal állok rendelkezésére</p>
         <a href="tel:+36201234567" class="call-btn">HÍVJON SZAKEMBERT: +36 20 123 4567</a>
     </section>
+
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="l3250.png" alt="Epson L3250">
+                <p>Epson EcoTank L3250</p>
+            </div>
+            <div class="swiper-slide">
+                <img src="l8180.png" alt="Epson L8180">
+                <p>Epson EcoTank L8180</p>
+            </div>
+            <div class="swiper-slide">
+                <img src="m2170.png" alt="Epson M2170">
+                <p>Epson WorkForce M2170</p>
+            </div>
+            <div class="swiper-slide">
+                <img src="l1800.png" alt="Epson L1800">
+                <p>Epson EcoTank L1800</p>
+            </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
 
     <div class="services-container">
         <h2 class="section-title">Amiben Segíteni Tudok</h2>
@@ -137,6 +180,32 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+            },
+        });
+    </script>
 
 </body>
 </html>
