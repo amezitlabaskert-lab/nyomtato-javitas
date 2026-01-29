@@ -3,82 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Szerviz | Zero Blur v1.2.6</title>
+    <title>Epson Nyomtató Szerviz | Profi Javítás</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        :root { --epson-blue: #003399; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; }
+        :root { --epson-blue: #003399; --gold: #ffcc00; --dark-bg: #4a4a4a; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: #333; line-height: 1.5; }
 
-        /* --- KÖRHINTA (TILTOTT BLUR) --- */
-        .swiper-container-wrapper { 
-            max-width: 900px; 
-            margin: 50px auto; 
-            overflow: visible; /* Hogy a szélső éles képek se vágódjanak le */
-        }
+        /* --- HEADER & HERO --- */
+        .hero { text-align: center; padding: 40px 20px; background: #fff; }
+        .hero h1 { font-size: 2.5rem; color: #000; margin: 10px 0; text-transform: uppercase; }
+        .hero p { font-size: 1.1rem; color: #666; margin-bottom: 25px; }
+        .cta-button { background: var(--epson-blue); color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; }
 
+        /* --- KÖRHINTA (TISZTA ÉS ÉLES) --- */
+        .carousel-section { max-width: 900px; margin: 40px auto; overflow: visible; }
         .swiper-slide {
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
             transition: transform 0.6s ease, opacity 0.6s ease;
-            
-            /* RADIKÁLIS BLUR-TILTS */
-            filter: none !important; 
-            -webkit-filter: none !important;
-            backface-visibility: hidden;
-            transform-style: flat; /* Megakadályozza a 3D-s pixel-elmosódást */
-            
-            opacity: 0.4; 
-            transform: scale(0.8);
+            filter: none !important; /* BLUR BUG FIX */
+            opacity: 0.35; transform: scale(0.85);
         }
+        .swiper-slide-active { opacity: 1; transform: scale(1.1); z-index: 10; filter: none !important; }
+        .swiper-slide img { width: 100%; height: 240px; object-fit: contain; }
+        .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 15px; font-size: 1.1rem; }
 
-        /* Csak az aktív elem kap fókuszt, de a többi is ÉLES marad */
-        .swiper-slide-active {
-            opacity: 1; 
-            transform: scale(1.1); 
-            z-index: 10;
-            filter: none !important;
-        }
+        /* --- INFO BOXOK (Kék sáv) --- */
+        .info-bar { background: var(--epson-blue); color: white; padding: 40px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto; border-radius: 8px; transform: translateY(-20px); }
+        .info-item h3 { margin: 0 0 10px; font-size: 1.2rem; }
 
-        /* Szomszédos elemek - halványabbak, de kristálytiszták */
-        .swiper-slide-prev, .swiper-slide-next {
-            opacity: 0.7;
-            filter: none !important;
-        }
+        /* --- SZOLGÁLTATÁSOK (Képed alapján) --- */
+        .services { padding: 60px 20px; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .service-card { text-align: left; }
+        .service-card h3 { color: var(--epson-blue); border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; }
 
-        .swiper-slide img { 
-            width: 100%; 
-            height: 250px; 
-            object-fit: contain; 
-            /* Letisztult árnyék, blur nélkül */
-            filter: drop-shadow(0px 10px 5px rgba(0,0,0,0.1)) !important; 
-        }
-
-        .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 10px; }
-
-        /* --- WIDGET HELY --- */
-        .widget-section { padding: 40px; background: #f9f9f9; text-align: center; }
-        #trustindex-widget { min-height: 150px; }
+        /* --- VÉLEMÉNYEK (Sötét szekció) --- */
+        .reviews-section { background: var(--dark-bg); color: white; padding: 60px 20px; text-align: center; }
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1000px; margin: 40px auto; }
+        .review-card { background: #fff; color: #333; padding: 25px; border-radius: 5px; text-align: left; }
+        .stars { color: var(--gold); font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
-    <section class="swiper-container-wrapper">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
-                <div class="swiper-slide"><img src="c5390.png"><p>WorkForce C5390</p></div>
-                <div class="swiper-slide"><img src="c5890.png"><p>WorkForce C5890</p></div>
-                <div class="swiper-slide"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
-                <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
+    <header class="hero">
+        <h1>Epson Nyomtatók Javítása</h1>
+        <p>20 éves szakmai tapasztalat, minőségi alkatrészekkel.</p>
+        <a href="#" class="cta-button">MINDEN SZOLGÁLTATÁS MEGTEKINTÉSE</a>
+
+        <div class="carousel-section">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
+                    <div class="swiper-slide"><img src="c5390.png"><p>WorkForce C5390</p></div>
+                    <div class="swiper-slide"><img src="c5890.png"><p>WorkForce C5890</p></div>
+                    <div class="swiper-slide"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
+                    <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
+                </div>
             </div>
+        </div>
+    </header>
+
+    <div class="info-bar">
+        <div class="info-item"><h3>Időpontfoglalás</h3><p>Hívjon minket bizalommal!</p></div>
+        <div class="info-item"><h3>Nyitvatartás</h3><p>H-P: 08:00 - 17:00</p></div>
+        <div class="info-item"><h3>Sürgősségi hívás</h3><p>+36 1 123 4567</p></div>
+    </div>
+
+    <section class="services">
+        <div class="service-card">
+            <h3>Papírelakadás és Mechanika</h3>
+            <p>Görgők cseréje, idegen tárgyak eltávolítása és teljes mechanikai tisztítás.</p>
+        </div>
+        <div class="service-card">
+            <h3>Beszáradt fejek</h3>
+            <p>Csíkos nyomtatás javítása professzionális fejtisztító eljárással.</p>
+        </div>
+        <div class="service-card">
+            <h3>Tartály Rendszerek</h3>
+            <p>EcoTank rendszerek karbantartása és hulladéktinta tartály csere.</p>
         </div>
     </section>
 
-    <section class="widget-section">
-        <h3>Valódi Vélemények</h3>
-        <div id="trustindex-widget">
-             <p>A Google és Facebook vélemények betöltése...</p>
+    <section class="reviews-section">
+        <h2>Ügyfeleink Mondták</h2>
+        <div class="review-grid">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"Gyors és szakszerű segítség. A nyomtatóm újra tökéletesen működik."</p>
+                <strong>- M. János</strong>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"Korrekt árak, nem volt rejtett költség. Csak ajánlani tudom őket!"</p>
+                <strong>- S. Beatrix</strong>
+            </div>
+        </div>
+        <div style="margin-top: 30px;">
+            <p>Google Értékelés: 4.9/5 | Facebook: 5/5</p>
         </div>
     </section>
 
@@ -89,9 +110,8 @@
             centeredSlides: true,
             slidesPerView: 3,
             spaceBetween: 0,
-            autoplay: { delay: 3500 },
+            autoplay: { delay: 4000 },
             speed: 800,
-            // Ez kikapcsolja a Swiper saját CSS transzformációs trükkjeit, amik blurt okozhatnak
             watchSlidesProgress: true,
         });
     </script>
