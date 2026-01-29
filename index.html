@@ -17,51 +17,50 @@
         
         body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; }
 
-/* --- HERO & KÖRHINTA (TISZTA ÉS ÉLES) --- */
-header { text-align: center; padding: 40px 20px; }
-header h1 { font-size: 2.8rem; font-weight: 800; color: #000; margin: 0; }
-.hero-sub { color: #666; font-size: 1.1rem; margin: 15px 0 30px; }
+        /* --- HERO & KÖRHINTA (TISZTA ÉS ÉLES) --- */
+        header { text-align: center; padding: 60px 20px; }
+        header h1 { font-size: 2.8rem; font-weight: 800; color: #000; margin: 0; }
+        .hero-sub { color: #666; font-size: 1.1rem; margin: 15px 0 30px; }
 
-.btn-outline { 
-    display: inline-block; padding: 12px 30px; border: 2px solid var(--epson-blue); 
-    text-decoration: none; color: var(--epson-blue); font-weight: bold; border-radius: 4px;
-    transition: 0.3s; text-transform: uppercase; font-size: 0.9rem;
-}
-.btn-outline:hover { background: var(--epson-blue); color: #fff; }
+        .btn-outline { 
+            display: inline-block; padding: 12px 30px; border: 2px solid var(--epson-blue); 
+            text-decoration: none; color: var(--epson-blue); font-weight: bold; border-radius: 4px;
+            transition: 0.3s; text-transform: uppercase; font-size: 0.9rem;
+        }
+        .btn-outline:hover { background: var(--epson-blue); color: #fff; }
 
-.carousel-outer { max-width: 1000px; margin: 40px auto; overflow: visible; }
+        .carousel-outer { max-width: 1000px; margin: 40px auto; overflow: visible; }
 
-.swiper-slide {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-    transition: transform 0.6s ease; /* Csak a méret változik */
-    filter: none !important; /* BLUR TILTVA */
-    opacity: 1 !important;   /* OPACITY KIIRTVA */
-    transform: scale(0.9);   /* A szélsők csak kicsit kisebbek maradnak a fókusz miatt */
-}
+        .swiper-slide {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            transition: transform 0.6s ease;
+            filter: none !important; 
+            opacity: 1 !important;  
+            transform: scale(0.9);  
+        }
 
-.swiper-slide-active { 
-    opacity: 1 !important; 
-    transform: scale(1.1); 
-    z-index: 10; 
-}
+        .swiper-slide-active { 
+            transform: scale(1.1); 
+            z-index: 10; 
+        }
 
-.swiper-slide img { 
-    width: 100%; 
-    height: 240px; 
-    object-fit: contain; 
-}
+        .swiper-slide img { 
+            width: 100%; 
+            height: 240px; 
+            object-fit: contain; 
+        }
 
-.swiper-slide p { 
-    font-weight: 800; 
-    color: var(--epson-blue); 
-    margin-top: 15px; 
-}
+        .swiper-slide p { 
+            font-weight: 800; 
+            color: var(--epson-blue); 
+            margin-top: 15px; 
+        }
 
         /* --- SZOLGÁLTATÁSOK SZAKASZ --- */
         .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
-        .section-title-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px; border-bottom: 1px solid var(--border-light); padding-bottom: 20px; }
+        .section-title-row { margin-bottom: 50px; border-bottom: 1px solid var(--border-light); padding-bottom: 20px; }
         .services-grid { 
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
             gap: 60px 40px; 
@@ -80,11 +79,6 @@ header h1 { font-size: 2.8rem; font-weight: 800; color: #000; margin: 0; }
         .callback-card h3 { margin-top: 0; color: var(--epson-blue); }
         .callback-card input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box; }
         .callback-card button { width: 100%; padding: 14px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; }
-
-        /* --- VÉLEMÉNYEK --- */
-        .reviews { padding: 80px 20px; text-align: center; background: var(--bg-gray); }
-        .review-flex { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
-        .review-item { background: #fff; padding: 30px; border-radius: 4px; border-bottom: 3px solid var(--epson-blue); width: 480px; text-align: left; }
     </style>
 </head>
 <body>
@@ -94,30 +88,23 @@ header h1 { font-size: 2.8rem; font-weight: 800; color: #000; margin: 0; }
         <p class="hero-sub">20 éves szakmai tapasztalat, amivel ügyfeleink rendelkezésére állunk.</p>
         <a href="#services" class="btn-outline">Szolgáltatásaim <i class="fas fa-chevron-right"></i></a>
 
-<div class="carousel-outer">
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="c5390.png"><p>WorkForce Pro WF-C5390</p></div>
-            <div class="swiper-slide"><img src="c5890.png"><p>WorkForce Pro WF-C5890</p></div>
-            <div class="swiper-slide"><img src="l5590.png"><p>Epson EcoTank L5590</p></div>
-            <div class="swiper-slide"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
-            <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
-            <div class="swiper-slide"><img src="C800.png"><p>Epson C800</p></div>
+        <div class="carousel-outer">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="c5390.png"><p>WorkForce Pro WF-C5390</p></div>
+                    <div class="swiper-slide"><img src="c5890.png"><p>WorkForce Pro WF-C5890</p></div>
+                    <div class="swiper-slide"><img src="l5590.png"><p>Epson EcoTank L5590</p></div>
+                    <div class="swiper-slide"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
+                    <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
+                    <div class="swiper-slide"><img src="C800.png"><p>Epson C800</p></div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     </header>
-
-    <div class="info-bar">
-        <div class="info-card"><i class="fas fa-calendar-check"></i><div><strong>Make An Appointment</strong><small>Foglaljon időpontot online</small></div></div>
-        <div class="info-card"><i class="fas fa-history"></i><div><strong>Working Hours</strong><small>H-P: 08:00 - 17:00</small></div></div>
-        <div class="info-card"><i class="fas fa-phone-square-alt"></i><div><strong>Emergency Call 24/7</strong><strong>+36 1 123 4567</strong></div></div>
-    </div>
 
     <section class="services-section" id="services">
         <div class="section-title-row">
             <h2>Amiben Segíteni Tudok</h2>
-            <a href="#" class="btn-outline" style="padding: 8px 20px; font-size: 0.75rem;">SZOLGÁLTATÁSAIM</a>
         </div>
         <div class="services-grid">
             <div class="service-box">
