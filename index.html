@@ -67,7 +67,6 @@
         .report-card h3 { margin-top: 0; color: var(--epson-blue); margin-bottom: 5px; }
         .report-card p.subtitle { font-size: 0.85rem; color: #666; margin-bottom: 20px; }
         
-        /* Új Hiba-rács stílus */
         .error-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 15px; }
         .error-btn { 
             padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa; cursor: pointer;
@@ -77,11 +76,10 @@
         .error-btn:hover { border-color: var(--accent-blue); background: #f0f5ff; }
         .error-btn.active { border-color: var(--epson-blue); background: var(--soft-blue); color: var(--epson-blue); box-shadow: inset 0 0 0 1px var(--epson-blue); }
 
-        .report-card input, .report-card textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; }
-        .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; }
+        .report-card input, .report-card textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; }
+        .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
         .report-card button.submit-btn:hover { background: var(--accent-blue); }
 
-        /* Ticket Siker Üzenet */
         #ticket-success { display: none; text-align: center; padding: 20px 0; }
         #ticket-success i { font-size: 3rem; color: #28a745; margin-bottom: 15px; }
 
@@ -143,13 +141,17 @@
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-magic"></i> Nem tudom, nem értek hozzá</button>
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tint"></i> Csíkoz / Foltos a nyomat</button>
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-scroll"></i> Beragadt / Nem húz papírt</button>
-                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-exclamation-circle"></i> Karbantartás (Tinta-párna)</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-exclamation-triangle"></i> Kerreg / Fura hangja van</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tools"></i> Karbantartás (Tinta-párna)</button>
                     </div>
 
-                    <textarea id="extra-msg" placeholder="Bővebb leírás (opcionális)..." rows="2" style="display:none;"></textarea>
+                    <textarea id="extra-msg" placeholder="Bővebb leírás vagy hibakód (opcionális)..." rows="2" style="display:none; margin-top:10px;"></textarea>
                     
-                    <input type="text" id="cust-name" placeholder="Az Ön neve">
-                    <input type="tel" id="cust-phone" placeholder="Telefonszáma">
+                    <div style="margin-top:15px;">
+                        <input type="text" id="cust-name" placeholder="Az Ön neve">
+                        <input type="tel" id="cust-phone" placeholder="Telefonszáma">
+                        <input type="email" id="cust-email" placeholder="E-mail címe">
+                    </div>
                     
                     <button class="submit-btn" onclick="submitTicket()">HIBAJEGY LÉTREHOZÁSA</button>
                 </div>
@@ -158,7 +160,7 @@
                     <i class="fas fa-check-circle"></i>
                     <h3 style="color:var(--epson-blue)">Hibajegy rögzítve!</h3>
                     <p>Azonosító: <strong>#<span id="ticket-id"></span></strong></p>
-                    <p>Hamarosan keresni fogom a megadott telefonszámon.</p>
+                    <p>Hamarosan keresni fogom a megadott elérhetőségeken!</p>
                 </div>
             </div>
         </div>
@@ -166,7 +168,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Swiper inicializálás
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
@@ -177,18 +178,13 @@
             }
         });
 
-        // Ticket Logika
         function toggleError(btn) {
             const activeBtns = document.querySelectorAll('.error-btn.active');
-            
             if (!btn.classList.contains('active') && activeBtns.length >= 2) {
                 alert("Kérjük, jelölje meg a két legfontosabb problémát!");
                 return;
             }
-            
             btn.classList.toggle('active');
-            
-            // Mutassuk a textarea-t, ha van kijelölt hiba
             document.getElementById('extra-msg').style.display = 
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
@@ -196,14 +192,14 @@
         function submitTicket() {
             const name = document.getElementById('cust-name').value;
             const phone = document.getElementById('cust-phone').value;
+            const email = document.getElementById('cust-email').value;
             const errors = document.querySelectorAll('.error-btn.active');
 
-            if (!name || !phone || errors.length === 0) {
-                alert("Kérem adja meg a nevét, telefonját és legalább egy hibát!");
+            if (!name || !phone || !email || errors.length === 0) {
+                alert("Kérem töltsön ki minden mezőt és válasszon legalább egy hibát!");
                 return;
             }
 
-            // Ticket generálás szimuláció
             const randomID = Math.floor(1000 + Math.random() * 9000);
             document.getElementById('ticket-id').innerText = new Date().getFullYear() + "/" + randomID;
             
