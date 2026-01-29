@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Nyomtató Szerviz | Teljeskörű Támogatás</title>
+    <title>Epson Nyomtató Szerviz | Profi Megoldások</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -17,7 +17,7 @@
         
         body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; }
 
-        /* --- HERO & KÖRHINTA --- */
+        /* --- NAGYÍTOTT KÖRHINTA RÉSZ --- */
         header { text-align: center; padding: 60px 20px; }
         header h1 { font-size: 2.8rem; font-weight: 800; color: #000; margin: 0; }
         .hero-sub { color: #666; font-size: 1.1rem; margin: 15px 0 30px; }
@@ -29,26 +29,26 @@
         }
         .btn-outline:hover { background: var(--epson-blue); color: #fff; }
 
-        .carousel-outer { max-width: 1000px; margin: 40px auto; overflow: visible; }
+        .carousel-outer { max-width: 1200px; margin: 50px auto; overflow: visible; }
 
         .swiper-slide {
             display: flex; 
             flex-direction: column; 
             align-items: center;
-            transition: transform 0.6s ease;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             filter: none !important; 
             opacity: 1 !important;  
-            transform: scale(0.9);  
+            transform: scale(0.85); /* A szélsők picit kisebbek az alapméretnél */
         }
 
         .swiper-slide-active { 
-            transform: scale(1.1); 
+            transform: scale(1.3); /* A KÖZÉPSŐ GÉP NAGYÍTÁSA */
             z-index: 10; 
         }
 
         .swiper-slide img { 
             width: 100%; 
-            height: 240px; 
+            height: 320px; /* MEGNÖVELT MAGASSÁG */
             object-fit: contain; 
         }
 
@@ -56,6 +56,7 @@
             font-weight: 800; 
             color: var(--epson-blue); 
             margin-top: 15px; 
+            font-size: 1.1rem;
         }
 
         /* --- SZOLGÁLTATÁSOK SZAKASZ --- */
@@ -69,7 +70,7 @@
         .service-box h3 { font-size: 1.4rem; color: var(--dark-gray); margin: 10px 0; border-left: 4px solid var(--epson-blue); padding-left: 15px; }
         .service-box p { font-size: 0.92rem; color: #555; text-align: justify; }
 
-        /* --- LÁBLÉC (EPSON KÉKRE JAVÍTVA) --- */
+        /* --- LÁBLÉC EPSON KÉKBEN --- */
         .why-us { background: var(--epson-blue); color: #fff; padding: 70px 20px; }
         .why-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
         .feature-item { margin-bottom: 25px; display: flex; gap: 15px; }
@@ -144,20 +145,8 @@
         <div class="why-grid">
             <div>
                 <h2>Miért minket válasszon?</h2>
-                <div class="feature-item">
-                    <i class="fas fa-user-check"></i>
-                    <div>
-                        <strong>Szakértő mérnökök</strong>
-                        <p>Tapasztalt szakemberek, akik ismerik az Epson minden rezdülését.</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-shield-alt"></i>
-                    <div>
-                        <strong>Garanciális szerviz</strong>
-                        <p>Minden elvégzett javításra és beépített alkatrészre garanciát vállalunk.</p>
-                    </div>
-                </div>
+                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Szakértő mérnökök</strong><p>Tapasztalt szakemberek, akik ismerik az Epson minden rezdülését.</p></div></div>
+                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Garanciális szerviz</strong><p>Minden elvégzett javításra és beépített alkatrészre garanciát vállalunk.</p></div></div>
             </div>
             <div class="callback-card">
                 <h3>Visszahívás kérése</h3>
@@ -173,7 +162,7 @@
         var swiper = new Swiper(".mySwiper", {
             loop: true,
             centeredSlides: true,
-            slidesPerView: 3,
+            slidesPerView: 3, // Meghagytuk a 3 gépet egyszerre
             autoplay: { delay: 4000 },
             speed: 1000,
             watchSlidesProgress: true,
