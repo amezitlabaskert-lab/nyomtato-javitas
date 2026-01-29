@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Epson Nyomtató Szerviz | 3D Pro Galéria</title>
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css?v=1.0.5" />
 
     <style>
         :root { 
@@ -19,6 +19,20 @@
             margin: 0; 
             background: #fff; 
             overflow-x: hidden; 
+        }
+
+        /* VERZIÓ JELZŐ - Ezt fogjuk levenni a végén */
+        .version-badge {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 10px;
+            z-index: 9999;
+            pointer-events: none;
         }
 
         /* Hero szekció */
@@ -36,7 +50,6 @@
             width: 100%; 
             padding-top: 80px; 
             padding-bottom: 120px; 
-            /* A perspektíva adja meg a 3D torzítás erejét */
             perspective: 2000px; 
         }
 
@@ -47,12 +60,10 @@
             flex-direction: column; 
             align-items: center;
             transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            /* Az oldalsó elemeket erősen elhalványítjuk és elhomályosítjuk */
             filter: blur(6px) opacity(0.2); 
             will-change: transform, opacity;
         }
 
-        /* Az aktív (középső) elem kiemelése */
         .swiper-slide-active { 
             filter: blur(0) opacity(1); 
             transform: scale(1.4) translateY(-20px); 
@@ -63,7 +74,6 @@
             width: 100%; 
             height: 350px; 
             object-fit: contain;
-            /* Profi árnyék a térhatásért */
             filter: drop-shadow(0px 30px 45px rgba(0,0,0,0.3)); 
         }
 
@@ -78,7 +88,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Szolgáltatások */
         .services-container { max-width: 1100px; margin: 0 auto 50px; padding: 0 20px; }
         .services-grid { 
             display: grid; 
@@ -93,7 +102,6 @@
             border: 1px solid #ddd;
         }
 
-        /* Mobil nézet finomítása */
         @media (max-width: 768px) {
             .swiper-slide { width: 280px; }
             .swiper-slide img { height: 200px; }
@@ -102,6 +110,8 @@
     </style>
 </head>
 <body>
+
+    <div class="version-badge">v1.0.5 - Dev Mode</div>
 
     <section class="hero">
         <h1>Epson Nyomtatók Javítása</h1>
@@ -151,7 +161,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?v=1.0.5"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
@@ -159,14 +169,14 @@
             centeredSlides: true,
             slidesPerView: "auto",
             loop: true,
-            speed: 900, /* Selymesen puha mozgás */
+            speed: 900,
             
             coverflowEffect: { 
-                rotate: -35,   /* Negatív fok: a szélek hátrafelé dőlnek a térbe */
-                stretch: -120, /* Egymásra csúsztatja a képeket az ív mentén */
-                depth: 800,    /* Brutális mélységi eltolás (Z-tengely) */
-                modifier: 1.2, /* Az összhatás szorzója */
-                slideShadows: false /* Árnyékok kikapcsolva a tisztább képért */
+                rotate: -35,   
+                stretch: -120, 
+                depth: 800,    
+                modifier: 1.2, 
+                slideShadows: false 
             },
             
             autoplay: { 
