@@ -78,7 +78,7 @@
 
         .report-card input, .report-card textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; }
         .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
-        .report-card button.submit-btn:hover { background: var(--accent-blue); }
+        .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
         #ticket-success { display: none; text-align: center; padding: 20px 0; }
         #ticket-success i { font-size: 3rem; color: #28a745; margin-bottom: 15px; }
@@ -96,7 +96,7 @@
 
     <header>
         <h1><span>Országos</span> Epson Szervizelés</h1>
-        <p class="hero-sub">Gyors és szakszerű javítás bárhol az országban. Budapesttől a legkisebb falvakig segítek újra munkára bírni nyomtatóját.</p>
+        <p class="hero-sub">Gyors és szakszerű javítás bárhol az országban. Segítek újra munkára bírni nyomtatóját.</p>
         <a href="#services" class="btn-main">Miben segíthetek? <i class="fas fa-chevron-down"></i></a>
 
         <div class="carousel-outer">
@@ -107,7 +107,6 @@
                     <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
                     <div class="swiper-slide"><img src="st-c4100.png"><p>WF ST-C4100</p></div>
                     <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
-                    <div class="swiper-slide"><img src="C800.png"><p>Epson C800</p></div>
                 </div>
             </div>
         </div>
@@ -115,12 +114,10 @@
 
     <section class="services-section" id="services">
         <div class="services-grid">
-            <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása. Gyors alkatrészcserével dolgozom.</p></div>
-            <div class="service-box"><i class="fas fa-eye-dropper"></i><h3>Fejtisztítás</h3><p>Beszáradt fejek professzionális tisztítása, hogy újra tökéletes, csíkmentes nyomatokat kapjon.</p></div>
-            <div class="service-box"><i class="fas fa-sitemap"></i><h3>EcoTank karbantartás</h3><p>A tartályos rendszerek légtelenítése és rendszertisztítása rutinfeladat számomra.</p></div>
-            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>"Service Required" üzenet? Hulladéktinta-párna telítettség szoftveres és fizikai javítása.</p></div>
-            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szakmai tanácsadás</h3><p>Segítek kiválasztani a leginkább fenntartható Epson típust a munkájához.</p></div>
-            <div class="service-box"><i class="fas fa-coins"></i><h3>Kellékanyagok</h3><p>Segítek a megfelelő gyári vagy megbízható utángyártott tinták beszerzésében.</p></div>
+            <div class="service-box"><i class="fas fa-cog"></i><h3>Mechanikai javítások</h3><p>Papírelakadás, görgők kopása vagy idegen tárgyak eltávolítása.</p></div>
+            <div class="service-box"><i class="fas fa-eye-dropper"></i><h3>Fejtisztítás</h3><p>Beszáradt fejek professzionális tisztítása, csíkmentes nyomatok.</p></div>
+            <div class="service-box"><i class="fas fa-cash-register"></i><h3>Szoftveres nullázás</h3><p>Hulladéktinta-párna telítettség szoftveres és fizikai javítása.</p></div>
+            <div class="service-box"><i class="fas fa-microchip"></i><h3>Szakmai tanácsadás</h3><p>Segítek kiválasztani a legjobb Epson típust a munkájához.</p></div>
         </div>
     </section>
 
@@ -128,8 +125,8 @@
         <div class="why-grid">
             <div>
                 <h2>Miért tőlem kérjen segítséget?</h2>
-                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ minden szakmai kérdésére.</p></div></div>
-                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden elvégzett javításra és beépített alkatrészre felelősséget vállalok.</p></div></div>
+                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ minden kérdésre.</p></div></div>
+                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra és alkatrészre felelősséget vállalok.</p></div></div>
             </div>
 
             <div class="report-card" id="ticket-box">
@@ -145,12 +142,12 @@
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tools"></i> Karbantartás (Tinta-párna)</button>
                     </div>
 
-                    <textarea id="extra-msg" placeholder="Bővebb leírás vagy hibakód (opcionális)..." rows="2" style="display:none; margin-top:10px;"></textarea>
+                    <textarea id="extra-msg" placeholder="Bővebb leírás vagy hibakód (opcionális)..." rows="2" style="display:none;"></textarea>
                     
                     <div style="margin-top:15px;">
-                        <input type="text" id="cust-name" placeholder="Az Ön neve">
-                        <input type="tel" id="cust-phone" placeholder="Telefonszáma">
-                        <input type="email" id="cust-email" placeholder="E-mail címe">
+                        <input type="text" id="cust-name" placeholder="Az Ön neve" required>
+                        <input type="tel" id="cust-phone" placeholder="Telefonszáma" required>
+                        <input type="email" id="cust-email" placeholder="E-mail címe" required>
                     </div>
                     
                     <button class="submit-btn" onclick="submitTicket()">HIBAJEGY LÉTREHOZÁSA</button>
@@ -158,9 +155,9 @@
 
                 <div id="ticket-success">
                     <i class="fas fa-check-circle"></i>
-                    <h3 style="color:var(--epson-blue)">Hibajegy rögzítve!</h3>
+                    <h3 style="color:var(--epson-blue)">Hibajegy elküldve!</h3>
                     <p>Azonosító: <strong>#<span id="ticket-id"></span></strong></p>
-                    <p>Hamarosan keresni fogom a megadott elérhetőségeken!</p>
+                    <p>Megkaptam az adatokat, hamarosan keresni fogom!</p>
                 </div>
             </div>
         </div>
@@ -171,11 +168,8 @@
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
-            speed: 800, watchSlidesProgress: true,
-            breakpoints: {
-                0: { slidesPerView: 1, spaceBetween: 10 },
-                768: { slidesPerView: 3, spaceBetween: 30 }
-            }
+            speed: 800,
+            breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 3, spaceBetween: 30 } }
         });
 
         function toggleError(btn) {
@@ -189,22 +183,53 @@
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
 
-        function submitTicket() {
+        async function submitTicket() {
             const name = document.getElementById('cust-name').value;
             const phone = document.getElementById('cust-phone').value;
             const email = document.getElementById('cust-email').value;
-            const errors = document.querySelectorAll('.error-btn.active');
+            const extra = document.getElementById('extra-msg').value;
+            const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim());
 
             if (!name || !phone || !email || errors.length === 0) {
                 alert("Kérem töltsön ki minden mezőt és válasszon legalább egy hibát!");
                 return;
             }
 
-            const randomID = Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('ticket-id').innerText = new Date().getFullYear() + "/" + randomID;
-            
-            document.getElementById('form-content').style.display = 'none';
-            document.getElementById('ticket-success').style.display = 'block';
+            const btn = document.querySelector('.submit-btn');
+            btn.disabled = true;
+            btn.innerText = "KÜLDÉS...";
+
+            const ticketID = new Date().getFullYear() + "/" + Math.floor(1000 + Math.random() * 9000);
+
+            // Formspree küldés
+            const formData = new FormData();
+            formData.append('Ticket_ID', ticketID);
+            formData.append('Nev', name);
+            formData.append('Telefon', phone);
+            formData.append('Email', email);
+            formData.append('Hibak', errors.join(', '));
+            formData.append('Uzenet', extra);
+
+            try {
+                const response = await fetch('https://formspree.io/f/mvzrkodw', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    document.getElementById('ticket-id').innerText = ticketID;
+                    document.getElementById('form-content').style.display = 'none';
+                    document.getElementById('ticket-success').style.display = 'block';
+                } else {
+                    alert("Hiba történt. Kérjük próbálja újra!");
+                    btn.disabled = false;
+                    btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
+                }
+            } catch (error) {
+                alert("Hálózati hiba!");
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
