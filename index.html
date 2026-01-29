@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Szerviz | Perfect Fit v1.2.1</title>
+    <title>Epson Szerviz | Strict 3-Slide v1.2.2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         :root { --epson-blue: #003399; }
@@ -11,65 +11,57 @@
 
         .version-badge { position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999; }
 
-        /* KISZÁMOLT KONTÉNER: 
-           3 db 300px-es slide + biztonsági margó = 1100px 
-           Így a szélsőknek van helyük "kifutni" az animáció alatt. */
+        /* KONTÉNER: Pontosan 3 nyomtató szélessége + egy kevés köztes hely */
         .swiper-container-wrapper {
-            max-width: 1100px; 
-            margin: 80px auto;
-            padding: 0 50px; /* Oldalsó védőtávolság */
+            max-width: 900px; /* Szűkebb, hogy ne legyen "túl széles" */
+            margin: 60px auto;
             position: relative;
-            overflow: visible; /* Hogy a skálázott elemek ne vágódjanak le */
+            overflow: hidden; /* Itt vágjuk le a 4. és 0. elemet */
         }
 
-        .swiper { width: 100%; overflow: visible; }
+        .swiper { width: 100%; }
 
         .swiper-slide {
-            width: 300px; /* Fix szélesség a kiszámíthatóságért */
+            /* Nem adunk fix pixel szélességet, a Swiper fogja számolni a slidesPerView: 3 alapján */
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: all 0.7s ease-in-out;
-            opacity: 0.2;
-            transform: scale(0.7);
+            transition: all 0.6s ease-in-out;
+            opacity: 0.4;
+            transform: scale(0.8);
             filter: grayscale(1);
         }
 
-        /* Aktív (középső) elem */
+        /* A középső elem kiemelése */
         .swiper-slide-active {
             opacity: 1;
             filter: grayscale(0);
-            transform: scale(1.15); /* Kiemelés, de nem lóg ki */
+            transform: scale(1.1);
             z-index: 10;
         }
 
-        /* Szomszédos elemek (láthatóak maradnak a kereten belül) */
-        .swiper-slide-prev, .swiper-slide-next {
-            opacity: 0.7;
-            filter: grayscale(0.3);
-            transform: scale(0.9);
-        }
-
         .swiper-slide img {
-            width: 100%;
-            height: 280px;
+            width: 90%; /* Kicsit beljebb húzzuk a széleitől, hogy biztosan ne lógjon ki */
+            height: 250px;
             object-fit: contain;
-            filter: drop-shadow(0px 20px 20px rgba(0,0,0,0.15));
+            filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.1));
         }
 
         .swiper-slide p {
             color: var(--epson-blue);
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-top: 15px;
             text-align: center;
-            white-space: nowrap; /* Ne törje meg a nevet */
+            opacity: 0.5;
         }
+
+        .swiper-slide-active p { opacity: 1; }
     </style>
 </head>
 <body>
 
-    <div class="version-badge">v1.2.1 - Calculated Fit Mode</div>
+    <div class="version-badge">v1.2.2 - Strict 3-Slide Loop</div>
 
     <div class="swiper-container-wrapper">
         <div class="swiper mySwiper">
@@ -86,15 +78,17 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
-            loop: true,
-            centeredSlides: true,
-            slidesPerView: "auto",
-            spaceBetween: 30, /* Pozitív térköz, hogy ne érjenek egymáshoz a 2D-ben */
+            loop: true,               /* Végtelenített mód */
+            centeredSlides: true,     /* A középső legyen az aktív */
+            slidesPerView: 3,         /* SZIGORÚAN 3 látható elem egyszerre */
+            spaceBetween: 0,          /* Nincs extra rés, a 3 elem kitölti a 900px-et */
             autoplay: {
-                delay: 3500,
+                delay: 3000,
                 disableOnInteraction: false,
             },
-            speed: 900,
+            speed: 800,
+            /* Ez segít, hogy a loop ne akadjon meg kevés elem esetén */
+            loopedSlides: 2, 
         });
     </script>
 </body>
