@@ -3,71 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Szerviz | Clean Carousel v1.2.0</title>
+    <title>Epson Szerviz | Perfect Fit v1.2.1</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        :root { --epson-blue: #003399; --bg: #ffffff; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); overflow-x: hidden; }
+        :root { --epson-blue: #003399; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; overflow-x: hidden; }
 
         .version-badge { position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 10px; z-index: 9999; }
 
-        /* A konténer szűkítése, hogy a szélek "hátul" tűnjenek el */
+        /* KISZÁMOLT KONTÉNER: 
+           3 db 300px-es slide + biztonsági margó = 1100px 
+           Így a szélsőknek van helyük "kifutni" az animáció alatt. */
         .swiper-container-wrapper {
-            max-width: 1000px;
-            margin: 60px auto;
+            max-width: 1100px; 
+            margin: 80px auto;
+            padding: 0 50px; /* Oldalsó védőtávolság */
             position: relative;
+            overflow: visible; /* Hogy a skálázott elemek ne vágódjanak le */
         }
 
-        .swiper { width: 100%; padding-bottom: 50px; }
+        .swiper { width: 100%; overflow: visible; }
 
         .swiper-slide {
-            width: 350px;
+            width: 300px; /* Fix szélesség a kiszámíthatóságért */
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: all 0.6s ease; /* Sima, nem rángatózó átmenet */
-            filter: grayscale(0.5);
-            opacity: 0.3;
-            transform: scale(0.8); /* A szélsők alapból kisebbek */
+            transition: all 0.7s ease-in-out;
+            opacity: 0.2;
+            transform: scale(0.7);
+            filter: grayscale(1);
         }
 
-        /* A középső kiemelése - ez lesz a "fókusz" */
+        /* Aktív (középső) elem */
         .swiper-slide-active {
             opacity: 1;
             filter: grayscale(0);
-            transform: scale(1.1); /* Csak méretnövelés, nincs 3D torzítás */
+            transform: scale(1.15); /* Kiemelés, de nem lóg ki */
             z-index: 10;
         }
 
-        /* Az oldalsó elemek (látszódjanak, de legyenek másodlagosak) */
+        /* Szomszédos elemek (láthatóak maradnak a kereten belül) */
         .swiper-slide-prev, .swiper-slide-next {
-            opacity: 0.6;
+            opacity: 0.7;
+            filter: grayscale(0.3);
             transform: scale(0.9);
         }
 
         .swiper-slide img {
             width: 100%;
-            height: 300px;
+            height: 280px;
             object-fit: contain;
-            /* Csak egy lágy árnyék, ami nem torzít */
-            filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.1));
+            filter: drop-shadow(0px 20px 20px rgba(0,0,0,0.15));
         }
 
         .swiper-slide p {
             color: var(--epson-blue);
-            font-weight: 900;
-            font-size: 1.3rem;
-            margin-top: 20px;
-            opacity: 0;
-            transition: 0.4s;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            text-align: center;
+            white-space: nowrap; /* Ne törje meg a nevet */
         }
-
-        .swiper-slide-active p { opacity: 1; }
     </style>
 </head>
 <body>
 
-    <div class="version-badge">v1.2.0 - Clean Swiper Mode</div>
+    <div class="version-badge">v1.2.1 - Calculated Fit Mode</div>
 
     <div class="swiper-container-wrapper">
         <div class="swiper mySwiper">
@@ -87,12 +89,12 @@
             loop: true,
             centeredSlides: true,
             slidesPerView: "auto",
-            spaceBetween: -50, /* Egymásra csúszás a kör-hatás miatt */
+            spaceBetween: 30, /* Pozitív térköz, hogy ne érjenek egymáshoz a 2D-ben */
             autoplay: {
-                delay: 3000,
+                delay: 3500,
                 disableOnInteraction: false,
             },
-            speed: 800,
+            speed: 900,
         });
     </script>
 </body>
