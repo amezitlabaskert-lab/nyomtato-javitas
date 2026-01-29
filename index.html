@@ -267,18 +267,18 @@
             const ticketID = "EPSON-" + Math.floor(1000 + Math.random() * 9000);
             const fullDescription = `Választott hibák: ${errors.join(', ')} | Megjegyzés: ${extraMsg}`;
 
-            // A JSON ALAPJÁN FRISSÍTETT CÍM ÉS AZONOSÍTÓK
+            // A TE ŰRLAPODHOZ TARTOZÓ PONTOS ID-K
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-            formData.append('entry.2062331575', name);
-            formData.append('entry.1444170367', zip);
-            formData.append('entry.174116515', city);
-            formData.append('entry.311756592', street);
-            formData.append('entry.1983084364', phone);
-            formData.append('entry.1718585090', email);
-            formData.append('entry.1221764657', errorCode);
-            formData.append('entry.135319888', fullDescription);
+            formData.append('entry.2062331575', name);         // Név
+            formData.append('entry.1444170367', zip);          // Irányítószám
+            formData.append('entry.174116515', city);          // Város
+            formData.append('entry.311756592', street);        // Utca
+            formData.append('entry.1983084364', phone);        // Telefon
+            formData.append('entry.1718585090', email);        // Email
+            formData.append('entry.1221764657', errorCode);    // Hibakód
+            formData.append('entry.135319888', fullDescription); // Hiba leírása
 
             try {
                 await fetch(GOOGLE_FORM_URL, {
