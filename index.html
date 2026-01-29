@@ -3,123 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epson Szerviz | Elegant Blue v1.2.9</title>
+    <title>Epson Nyomtató Szerviz | Profi Megoldások</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
         :root { 
             --epson-blue: #003399; 
-            --epson-light-blue: #0055ff;
-            --gold: #ffcc00; 
-            --text-main: #2c3e50;
-            --text-muted: #546e7a;
+            --accent-blue: #005ce6;
+            --bg-light: #f4f7fa;
+            --dark-gray: #333;
+            --medium-gray: #666;
         }
         
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; color: var(--text-main); background: #fff; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; }
 
-        /* --- CÍMSOROK SZÍNEZÉSE --- */
-        h1, h2, h3 { color: var(--epson-blue); letter-spacing: -0.5px; }
+        /* --- HEADER & HERO --- */
+        header { text-align: center; padding: 60px 20px; background: #fff; }
+        h1 { font-size: 2.8rem; font-weight: 800; color: var(--dark-gray); margin-bottom: 10px; }
+        .hero-sub { font-size: 1.1rem; color: var(--medium-gray); margin-bottom: 30px; }
         
-        header { text-align: center; padding: 60px 20px; }
-        header h1 { font-size: 3.2rem; margin: 0; color: #000; } /* A főcím marad fekete a tekintélyért */
-        header p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; }
+        .btn-outline { 
+            display: inline-block; padding: 12px 28px; border: 2px solid var(--epson-blue); 
+            text-decoration: none; color: var(--epson-blue); font-weight: bold; border-radius: 4px;
+            transition: 0.3s;
+        }
+        .btn-outline:hover { background: var(--epson-blue); color: #fff; }
 
         /* --- KÖRHINTA (MINDEN ÉLES) --- */
-        .carousel-outer { max-width: 1000px; margin: 0 auto 50px; }
+        .carousel-outer { max-width: 1000px; margin: 50px auto; overflow: visible; }
         .swiper-slide {
             display: flex; flex-direction: column; align-items: center;
-            transition: all 0.6s ease;
-            filter: none !important; /* FIX: Nincs elmosódás */
-            opacity: 0.25; transform: scale(0.8);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: none !important; opacity: 0.2; transform: scale(0.8);
         }
         .swiper-slide-active { opacity: 1; transform: scale(1.1); z-index: 10; }
-        .swiper-slide img { width: 100%; height: 260px; object-fit: contain; }
-        
-        /* Nyomtató nevek diszkrét kékkel */
-        .swiper-slide p { font-weight: 700; color: var(--epson-light-blue); margin-top: 15px; font-size: 1.1rem; }
+        .swiper-slide img { width: 100%; height: 220px; object-fit: contain; }
+        .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 15px; }
 
-        /* --- INFO BAR --- */
+        /* --- INFO BAR (SÁRGA NÉLKÜL) --- */
         .info-bar { 
-            background: var(--epson-blue); color: #fff; padding: 35px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            max-width: 1100px; margin: 0 auto; gap: 20px; border-radius: 8px;
+            background: var(--epson-blue); color: #fff; padding: 40px 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            max-width: 1100px; margin: 0 auto; gap: 30px; border-radius: 8px;
         }
-        .info-card strong { color: var(--gold); font-size: 1.1rem; }
+        .info-card { display: flex; align-items: center; gap: 15px; border-right: 1px solid rgba(255,255,255,0.1); }
+        .info-card:last-child { border-right: none; }
+        .info-card i { font-size: 2.2rem; color: #fff; opacity: 0.8; }
+        .info-card strong { display: block; font-size: 1.1rem; color: #fff; }
 
-        /* --- SZOLGÁLTATÁSOK RÁCS --- */
-        .services-section { padding: 90px 20px; max-width: 1100px; margin: 0 auto; }
-        .service-box h3 { 
-            font-size: 1.35rem; margin-bottom: 12px;
-            border-left: 5px solid var(--epson-blue); padding-left: 15px;
+        /* --- AMIBEN SEGÍTENI TUDOK (SZOLGÁLTATÁSOK) --- */
+        .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        .services-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 50px; 
         }
-        .service-box p { color: var(--text-main); font-size: 0.95rem; line-height: 1.7; }
+        .service-box i { font-size: 2rem; color: var(--epson-blue); margin-bottom: 20px; display: block; }
+        .service-box h3 { font-size: 1.3rem; margin-bottom: 15px; color: var(--dark-gray); }
+        .service-box p { font-size: 0.9rem; color: var(--medium-gray); }
 
-        /* --- REVIEW WIDGET SZÍNEK --- */
-        .customer-say h2 { margin-bottom: 10px; }
-        .customer-say p { color: var(--text-muted); margin-bottom: 40px; }
-        .review-box { 
-            background: #f8fafd; border: 1px solid #e1e8ed; padding: 30px; 
-            width: 450px; border-radius: 12px;
-        }
-        .review-box strong { color: var(--epson-blue); display: block; margin-top: 15px; }
+        /* --- WHY CHOOSE US --- */
+        .why-us { background: #444; color: #fff; padding: 80px 20px; }
+        .why-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .feature-item { margin-bottom: 25px; display: flex; gap: 15px; align-items: flex-start; }
+        .feature-item i { color: var(--accent-blue); font-size: 1.5rem; }
+        
+        .callback-box { background: #fff; padding: 40px; border-radius: 8px; color: var(--dark-gray); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .callback-box h3 { margin-top: 0; color: var(--epson-blue); }
+        .callback-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .callback-box button { width: 100%; padding: 15px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .callback-box button:hover { background: var(--accent-blue); }
 
-        .stars-row { color: var(--gold); margin-bottom: 10px; font-size: 1.2rem; }
+        /* --- FOOTER / REVIEWS --- */
+        .reviews { padding: 80px 20px; text-align: center; background: var(--bg-light); }
+        .review-card { background: #fff; padding: 30px; border-radius: 8px; border: 1px solid #e1e8ed; max-width: 400px; text-align: left; }
+        .review-card strong { color: var(--epson-blue); }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Epson Nyomtatók Javítása</h1>
-        <p>Hivatalos minőség, szakértő kezekben.</p>
-        
+        <p class="hero-sub">20 éves szakmai tapasztalat, amivel ügyfeleink rendelkezésére állunk.</p>
+        <a href="#services" class="btn-outline">MINDEN SZOLGÁLTATÁS MEGTEKINTÉSE</a>
+
         <div class="carousel-outer">
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
-                    <div class="swiper-slide"><img src="c5390.png"><p>WorkForce C5390</p></div>
+                    <div class="swiper-slide"><img src="l5590.png"><p>WorkForce C5390</p></div>
                     <div class="swiper-slide"><img src="c5890.png"><p>WorkForce C5890</p></div>
+                    <div class="swiper-slide"><img src="l5590.png"><p>EcoTank L5590</p></div>
                     <div class="swiper-slide"><img src="st-c4100.png"><p>WorkForce ST-C4100</p></div>
-                    <div class="swiper-slide"><img src="am-c5000.png"><p>Enterprise AM-C5000</p></div>
                 </div>
             </div>
         </div>
     </header>
 
     <div class="info-bar">
-        <div class="info-card"><div><strong>Időpontfoglalás</strong><br><small>Hívjon minket munkanapokon</small></div></div>
-        <div class="info-card"><div><strong>Nyitvatartás</strong><br><small>H-P: 08:00 - 17:00</small></div></div>
-        <div class="info-card"><div><strong>Sürgősségi Szerviz</strong><br><strong>+36 1 234 5678</strong></div></div>
+        <div class="info-card"><i class="fas fa-calendar-check"></i><div><strong>Időpontfoglalás</strong><small>Foglaljon online vagy telefonon</small></div></div>
+        <div class="info-card"><i class="fas fa-clock"></i><div><strong>Working Hours</strong><small>H-P: 08:00 - 17:00</small></div></div>
+        <div class="info-card"><i class="fas fa-phone-alt"></i><div><strong>Emergency Call</strong><strong>+36 1 123 4567</strong></div></div>
     </div>
 
-    <section class="services-section">
+    <section class="services-section" id="services">
+        <div class="section-header">
+            <h2>Amiben Segíteni Tudok</h2>
+            <a href="#" class="btn-outline" style="font-size: 0.8rem;">SZOLGÁLTATÁSAIM</a>
+        </div>
         <div class="services-grid">
             <div class="service-box">
-                <h3>Mechanikai Hibák</h3>
-                <p>Papírelakadás, görgők kopása és idegen tárgyak szakszerű eltávolítása garanciával.</p>
+                <i class="fas fa-tools"></i>
+                <h3>Papírelakadás És Mechanikai Javítás</h3>
+                <p>Recseg, ropog, vagy egyszerűen begyűri a papírt? A görgők kopása és az idegen tárgyak a leggyakoribb hibaforrások. Gyors alkatrészcserével és tisztítással újra akadálymentessé tesszük készülékét.</p>
             </div>
             <div class="service-box">
-                <h3>Nyomtatófej Tisztítás</h3>
-                <p>Csíkos vagy hiányos nyomtatás javítása speciális, ultrahangos technológiával.</p>
+                <i class="fas fa-tint-slash"></i>
+                <h3>Beszáradt Fejek És Csíkos Nyomtatás</h3>
+                <p>Hiányoznak a színek vagy vízszintes csíkok rontják az összképet? A legmakacsabb fúvóka-elzáródásokat is orvosoljuk, hogy újra tűéles képeket kapjon.</p>
             </div>
             <div class="service-box">
-                <h3>Szoftveres Szerviz</h3>
-                <p>Hulladéktinta számláló nullázás és szerviz üzenetek végleges elhárítása.</p>
+                <i class="fas fa-fill-drip"></i>
+                <h3>Tartályos Rendszerek Karbantartása</h3>
+                <p>Légbuborék került a csövekbe vagy nem jut el a tinta a fejig? Az EcoTank rendszerek professzionális légtelenítését vállaljuk, hogy Ön továbbra is fillérekért nyomtathasson.</p>
             </div>
         </div>
     </section>
 
-    <section class="customer-say">
-        <h2>Ügyfeleink véleménye</h2>
-        <p>Több mint 500 sikeres javítás után</p>
-        <div class="reviews-wrapper" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
-            <div class="review-box">
-                <div class="stars-row">★★★★★</div>
-                "Profi hozzáállás, a nyomtatóm egy óra alatt elkészült!"
-                <strong>- Kovács Pál</strong>
+    <section class="why-us">
+        <div class="why-grid">
+            <div>
+                <h2>Why Choose Us</h2>
+                <div class="feature-item"><i class="fas fa-user-cog"></i><div><strong>Expert Engineers</strong><p>Tapasztalt szakemberek, akik ismerik az Epson minden rezdülését.</p></div></div>
+                <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Guarantee Service</strong><p>Minden elvégzett javításra és beépített alkatrészre garanciát vállalunk.</p></div></div>
             </div>
-            <div class="review-box">
-                <div class="stars-row">★★★★★</div>
-                "Végre egy szerviz, ahol nem csak alkatrészt cserélnek, hanem javítanak is."
-                <strong>- Nagy Erzsébet</strong>
+            <div class="callback-box">
+                <h3>Request Call Back</h3>
+                <input type="text" placeholder="Név">
+                <input type="text" placeholder="Telefonszám">
+                <button>KÜLDÉS MOST</button>
             </div>
         </div>
     </section>
@@ -130,8 +151,9 @@
             loop: true,
             centeredSlides: true,
             slidesPerView: 3,
+            spaceBetween: 0,
             autoplay: { delay: 4000 },
-            speed: 800,
+            speed: 1000,
             watchSlidesProgress: true,
         });
     </script>
