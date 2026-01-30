@@ -337,7 +337,7 @@
             if (btn.innerText.includes("Egyéb") && btn.classList.contains('active')) {
                 extraMsgField.placeholder = "Kérem, itt részletezze az egyéb hibát (min. 10 karakter)...";
                 extraMsgField.focus();
-            } else if (!document.querySelector('.error-btn.active[innerText*="Egyéb"]')) {
+            } else {
                 extraMsgField.placeholder = "Hiba leírása bővebben (kötelező, ha nincs hibakód)";
             }
 
@@ -356,8 +356,10 @@
             const printerModel = document.getElementById('printer-model').value.trim();
             const extraMsg = document.getElementById('extra-msg').value.trim();
             const street = document.getElementById('cust-street').value.trim();
+            
             const longStringRegex = /[^\s]{50,}/; 
             const repeatsRegex = /(.)\1{5,}/; 
+            
             const checkFields = [name, extraMsg, street, printerModel];
             let spamDetected = false;
             let spamReason = "";
@@ -370,12 +372,6 @@
                 if (repeatsRegex.test(field)) { 
                     spamReason = "Gyanúsan sok az ismétlődő karakter!"; 
                     spamDetected = true; break; 
-                }
-                if (forbiddenPatterns.some(p => p.test(field)) && field.length > 0) {
-                    if (field === extraMsg || field === name) {
-                        spamReason = "A megadott szöveg tesztadatnak tűnik!";
-                        spamDetected = true; break;
-                    }
                 }
             }
 
@@ -474,7 +470,7 @@
                 document.getElementById('res-phone').innerText = phone;
                 document.getElementById('res-email').innerText = email;
                 document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
-                document.getElementById('res-errors').innerText = errors;
+                document.getElementById('res-errors').innerHTML = errors.replace(/, /g, '<br>');
                 document.getElementById('res-code').innerText = errorCode || "Nincs megadva";
                 document.getElementById('res-desc').innerText = extraMsg || "Nincs további leírás";
                 
