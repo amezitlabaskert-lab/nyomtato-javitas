@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v4.2</title>
+    <title>Országos Epson Szerviz | v4.3</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -138,7 +138,7 @@
         <div class="why-grid">
             <div>
                 <h2>Miért tőlem kérjen segítséget?</h2>
-                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>KözDirect kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ mindenre.</p></div></div>
+                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ mindenre.</p></div></div>
                 <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra és alkatrészre felelősséget vállalok.</p></div></div>
                 <div class="feature-item"><i class="fas fa-map-marked-alt"></i><div><strong>Pontos adatok</strong><p>A strukturált címbevitel segíti a gyors kiszállást.</p></div></div>
             </div>
@@ -157,8 +157,9 @@
                     </div>
 
                     <div id="extra-fields" style="display:none;">
+                        <input type="text" id="printer-model" placeholder="Nyomtató típusa (pl. L3250)" required>
                         <input type="text" id="error-code" placeholder="Hibakód (ha van, pl. 031006)">
-                        <textarea id="extra-msg" placeholder="Hibajelenség leírása (pl. mióta csinálja...)" rows="3"></textarea>
+                        <textarea id="extra-msg" placeholder="Hiba leírása (pl. mióta csinálja...)" rows="3"></textarea>
                     </div>
                     
                     <div style="margin-top:15px;">
@@ -185,10 +186,12 @@
                     </div>
                     <div class="work-order-data">
                         <p><strong>Ügyfél:</strong> <span id="res-name"></span></p>
+                        <p><strong>Nyomtató:</strong> <span id="res-printer"></span></p>
                         <p><strong>Kapcsolat:</strong> <span id="res-phone"></span> | <span id="res-email"></span></p>
                         <p><strong>Helyszín:</strong> <span id="res-address"></span></p>
                         <p><strong>Választott hiba:</strong> <span id="res-errors"></span></p>
-                        <p><strong>Hibakód / Leírás:</strong> <span id="res-desc"></span></p>
+                        <p><strong>Hibakód:</strong> <span id="res-code"></span></p>
+                        <p><strong>Hiba leírása:</strong> <span id="res-desc"></span></p>
                         
                         <p style="margin-top:20px; font-size: 0.85rem; color: #666; font-style: italic; text-align: center;">Visszaigazoló e-mailt küldtem! Hamarosan keresni fogom a megadott telefonszámon.</p>
                         
@@ -202,12 +205,11 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v4.2</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v4.3</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- CAROUSEL ---
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
@@ -215,7 +217,6 @@
             breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 3, spaceBetween: 30 } }
         });
 
-        // --- ZIP -> CITY ---
         document.getElementById('cust-zip').addEventListener('keyup', async function(e) {
             const zip = e.target.value;
             if (zip.length === 4) {
@@ -231,7 +232,6 @@
             }
         });
 
-        // --- TOGGLE ERROR BUTTONS ---
         function toggleError(btn) {
             const activeBtns = document.querySelectorAll('.error-btn.active');
             if (!btn.classList.contains('active') && activeBtns.length >= 2) {
@@ -243,7 +243,6 @@
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
 
-        // --- GOOGLE FORMS SUBMIT ---
         async function submitTicket() {
             const name = document.getElementById('cust-name').value.trim();
             const zip = document.getElementById('cust-zip').value.trim();
@@ -251,11 +250,12 @@
             const street = document.getElementById('cust-street').value.trim();
             const phone = document.getElementById('cust-phone').value.replace(/\s/g, '');
             const email = document.getElementById('cust-email').value.trim();
+            const printerModel = document.getElementById('printer-model').value.trim();
             const errorCode = document.getElementById('error-code').value.trim();
             const extraMsg = document.getElementById('extra-msg').value.trim();
             const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim());
 
-            if (!name || !zip || !city || !street || !phone || !email || errors.length === 0) {
+            if (!name || !zip || !city || !street || !phone || !email || !printerModel || errors.length === 0) {
                 alert("Kérem töltsön ki minden kötelező mezőt!");
                 return;
             }
@@ -264,53 +264,44 @@
             btn.disabled = true;
             btn.innerText = "KÜLDÉS...";
 
-            // TICKET ID GENERÁLÁS
             const now = new Date();
-            const year = String(now.getFullYear()).slice(-2);
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hour = String(now.getHours()).padStart(2, '0');
-            const min = String(now.getMinutes()).padStart(2, '0');
-            const ticketID = `EPSON-${year}${month}${day}-${hour}${min}`;
+            const ticketID = `EPSON-${String(now.getFullYear()).slice(-2)}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
+            
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-            formData.append('entry.1567915132', name);           
+            formData.append('entry.1567915132', name);            
             formData.append('entry.2063510905', zip);            
             formData.append('entry.566376283', city);            
             formData.append('entry.977338095', street);          
             formData.append('entry.175515844', phone);           
-            formData.append('entry.156899408', email);           
+            formData.append('entry.156899408', email); 
+            // ⚠️ Cseréld ki ezt az entry ID-t a Formod alapján a típushoz!
+            formData.append('entry.000000000', printerModel); 
             formData.append('entry.836895663', errorCode || 'Nincs');      
-            formData.append('entry.1127298870', extraMsg || 'Nincs plusz megjegyzés'); 
+            formData.append('entry.1127298870', extraMsg || 'Nincs leírás'); 
             formData.append('entry.1869404490', ticketID);       
-            
-            errors.forEach(error => {
-                formData.append('entry.1886008896', error);
-            });
+            errors.forEach(error => formData.append('entry.1886008896', error));
 
             try {
-                await fetch(GOOGLE_FORM_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData
-                });
+                await fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
+                // ✅ MEGJELENÍTÉS KÜLÖN MEZŐKBEN ✅
                 document.getElementById('ticket-id').innerText = ticketID;
                 document.getElementById('res-name').innerText = name;
+                document.getElementById('res-printer').innerText = printerModel;
                 document.getElementById('res-phone').innerText = phone;
                 document.getElementById('res-email').innerText = email;
                 document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
                 document.getElementById('res-errors').innerText = errors.join(', ');
-                document.getElementById('res-desc').innerText = (errorCode ? "Kód: " + errorCode + " | " : "") + (extraMsg || "Nincs leírás");
+                document.getElementById('res-code').innerText = errorCode || "Nincs megadva";
+                document.getElementById('res-desc').innerText = extraMsg || "Nincs további leírás";
 
                 document.getElementById('form-content').style.display = 'none';
                 document.getElementById('ticket-success').style.display = 'block';
-
             } catch (error) {
                 console.error("Hiba:", error);
-                alert("Hálózati hiba történt!");
+                alert("Hálózati hiba!");
                 btn.disabled = false;
                 btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
