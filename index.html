@@ -244,7 +244,13 @@
             initialCountry: "hu",
             separateDialCode: true,
             preferredCountries: ["hu", "at", "de"],
-            autoPlaceholder: "aggressive"
+            autoPlaceholder: "aggressive",
+            customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+                if (selectedCountryData.iso2 === 'hu') {
+                    return "30 123 4567";
+                }
+                return selectedCountryPlaceholder.replace('+' + selectedCountryData.dialCode, "").trim();
+            }
         });
 
         var swiper = new Swiper(".mySwiper", {
@@ -327,6 +333,12 @@
 
         async function submitTicket() {
             if (document.getElementById('hp_field').value !== "") return;
+
+            // Tisztítás: ha beírná a 06-ot a read-only kód mellé, vágjuk le
+            let rawPhone = phoneInput.value.trim();
+            if (rawPhone.startsWith('06')) {
+                phoneInput.value = rawPhone.substring(2).trim();
+            }
 
             const btn = document.querySelector('.submit-btn');
             const name = document.getElementById('cust-name').value.trim();
