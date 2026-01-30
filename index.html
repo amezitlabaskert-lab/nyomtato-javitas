@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v5.6</title>
+    <title>Országos Epson Szerviz | v5.7</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/css/intlTelInput.css">
@@ -161,8 +161,9 @@
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-scroll"></i> Beragadt / Nem húz papírt</button>
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-exclamation-triangle"></i> Kerreg / Fura hangja van</button>
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tools"></i> Karbantartás (Tinta-párna)</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-ellipsis-h"></i> Egyéb / Nem található a listában</button>
                     </div>
-                    <div id="err-types" class="helper-text">Válasszon legalább egy hibatípust!</div>
+                    <div id="err-types" class="helper-text">Kérem, válasszon legalább egy hibatípust!</div>
 
                     <div style="margin-top:20px;">
                         <input type="text" id="printer-model" placeholder="Nyomtató típusa (pl. L3150)" required maxlength="50">
@@ -171,7 +172,7 @@
                         <div id="extra-fields" class="sliding-section">
                             <input type="text" id="error-code" placeholder="Hibakód (ha van, pl. 031006)" maxlength="30">
                             <textarea id="extra-msg" placeholder="Hiba leírása bővebben (kötelező, ha nincs hibakód)" rows="3" maxlength="1000"></textarea>
-                            <div id="err-extra" class="helper-text">Kérjük, adjon meg hibakódot VAGY leírást (min. 10 karakter)!</div>
+                            <div id="err-extra" class="helper-text">Kérem, adjon meg hibakódot VAGY leírást (min. 10 karakter)!</div>
                         </div>
                     </div>
                     
@@ -179,7 +180,7 @@
                         <div style="display:none;"><input type="text" id="hp_field" tabindex="-1" autocomplete="off"></div>
 
                         <input type="text" id="cust-name" placeholder="Az Ön neve / Cég neve" required maxlength="100">
-                        <div id="err-name" class="helper-text">Kérjük, adja meg a nevét (3-100 karakter)!</div>
+                        <div id="err-name" class="helper-text">Kérem, adja meg a nevét (3-100 karakter)!</div>
 
                         <div class="address-row">
                             <div style="flex:1">
@@ -230,7 +231,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v5.6</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v5.7</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -303,11 +304,20 @@
         function toggleError(btn) {
             const activeBtns = document.querySelectorAll('.error-btn.active');
             if (!btn.classList.contains('active') && activeBtns.length >= 2) {
-                alert("Kérjük, jelölje meg a két legfontosabb problémát!");
+                alert("Kérem, jelölje meg a két legfontosabb problémát!");
                 return;
             }
             btn.classList.toggle('active');
             
+            // Placeholder és fókusz automatizmus az Egyéb gombhoz
+            const extraMsgField = document.getElementById('extra-msg');
+            if (btn.innerText.includes("Egyéb") && btn.classList.contains('active')) {
+                extraMsgField.placeholder = "Kérem, itt részletezze az egyéb hibát (min. 10 karakter)...";
+                extraMsgField.focus();
+            } else if (!document.querySelector('.error-btn.active[innerText*="Egyéb"]')) {
+                extraMsgField.placeholder = "Hiba leírása bővebben (kötelező, ha nincs hibakód)";
+            }
+
             const hasActive = document.querySelectorAll('.error-btn.active').length > 0;
             document.getElementById('extra-fields').classList.toggle('open', hasActive);
             document.getElementById('contact-info-section').classList.toggle('open', hasActive);
@@ -316,7 +326,6 @@
         }
 
         async function submitTicket() {
-            // Honeypot check
             if (document.getElementById('hp_field').value !== "") return;
 
             const btn = document.querySelector('.submit-btn');
@@ -334,20 +343,26 @@
 
             let isValid = true;
             
-            if (activeErrors.length === 0) { document.getElementById('err-types').style.display = 'block'; isValid = false; }
+            if (activeErrors.length === 0) { 
+                document.getElementById('err-types').style.display = 'block'; 
+                isValid = false; 
+            }
             
-            // Regex: must contain at least one letter and one number
             const printerRegex = /(?=.*[a-zA-Z])(?=.*[0-9])/;
             if (printerModel.length < 3 || printerModel.length > 50 || !printerRegex.test(printerModel)) { 
                 setFieldError('printer-model', 'err-printer', true); isValid = false; 
             } else { setFieldError('printer-model', 'err-printer', false); }
             
-            // Hibakód VAGY leírás szabály
+            // Hibakód VAGY leírás szabály (minimum 10 karakteres guardrail)
             if (errorCode === "" && extraMsg.length < 10) {
-                setFieldError('extra-msg', 'err-extra', true); isValid = false;
+                setFieldError('extra-msg', 'err-extra', true, "Kérem, adjon meg hibakódot VAGY leírást (min. 10 karakter)!"); 
+                isValid = false;
             } else if (extraMsg.length > 1000) {
-                setFieldError('extra-msg', 'err-extra', true, "Túl hosszú leírás (max. 1000 karakter)!"); isValid = false;
-            } else { setFieldError('extra-msg', 'err-extra', false); }
+                setFieldError('extra-msg', 'err-extra', true, "Túl hosszú leírás (max. 1000 karakter)!"); 
+                isValid = false;
+            } else { 
+                setFieldError('extra-msg', 'err-extra', false); 
+            }
 
             if (name.length < 3 || name.length > 100) { setFieldError('cust-name', 'err-name', true); isValid = false; } else { setFieldError('cust-name', 'err-name', false); }
             if (zip.length !== 4) { setFieldError('cust-zip', 'err-zip', true); isValid = false; } else { setFieldError('cust-zip', 'err-zip', false); }
@@ -404,7 +419,7 @@
 
             } catch (error) {
                 console.error("Hiba történt:", error);
-                alert("Sajnos hiba történt a bejelentés küldésekor. Kérjük hívjon minket: +36 30 123 4567");
+                alert("Sajnos hiba történt a bejelentés küldésekor. Kérem, hívjon fel: +36 30 123 4567");
                 btn.disabled = false;
                 btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
