@@ -6,6 +6,8 @@
     <title>Országos Epson Szerviz | v5</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/css/intlTelInput.css">
+    
     <style>
         :root { 
             --epson-blue: #003399; 
@@ -79,7 +81,6 @@
         input:focus { outline: none; border-color: var(--accent-blue); }
         input.invalid { border-color: var(--error-red) !important; background-color: #fff8f8; }
 
-        /* ÚJ: Beszélő hibaüzenetek stílusa */
         .helper-text { font-size: 0.75rem; color: var(--error-red); margin: -10px 0 10px 5px; display: none; font-weight: 600; }
         
         .address-row { display: flex; gap: 10px; }
@@ -89,6 +90,9 @@
         .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
         .report-card button.submit-btn:hover { background: var(--accent-blue); }
         .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* ÚJ: Telefonos plugin szélesség korrekció */
+        .iti { width: 100%; margin-bottom: 12px; }
 
         #ticket-success { display: none; text-align: left; border: 2px dashed var(--epson-blue); padding: 25px; border-radius: 12px; background: #fff; }
         .work-order-header { text-align: center; margin-bottom: 20px; }
@@ -189,7 +193,7 @@
                         <input type="text" id="cust-street" placeholder="Utca, házszám, emelet/ajtó" required>
                         <div id="err-street" class="helper-text">A pontos cím kitöltése kötelező!</div>
 
-                        <input type="tel" id="cust-phone" placeholder="Telefonszám (pl. 06301234567)" required>
+                        <input type="tel" id="cust-phone" required>
                         <div id="err-phone" class="helper-text">Érvényes telefonszám szükséges!</div>
 
                         <input type="email" id="cust-email" placeholder="E-mail címe" required>
@@ -224,11 +228,22 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v5.1</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v5.2</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/intlTelInput.min.js"></script>
+    
     <script>
+        // --- ÚJ: Telefon inicializálása ---
+        const phoneInput = document.querySelector("#cust-phone");
+        const iti = window.intlTelInput(phoneInput, {
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/utils.js",
+            initialCountry: "hu",
+            separateDialCode: true,
+            preferredCountries: ["hu", "at", "de"]
+        });
+
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
@@ -236,7 +251,6 @@
             breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 3, spaceBetween: 30 } }
         });
 
-        // --- ÚJ: Beszélő hibaüzenet kezelő funkció ---
         function setFieldError(id, helperId, isError, customText) {
             const input = document.getElementById(id);
             const helper = document.getElementById(helperId);
@@ -250,9 +264,8 @@
             }
         }
 
-        // --- ÚJ: Irányítószám szűrés és API ---
         document.getElementById('cust-zip').addEventListener('input', async function(e) {
-            this.value = this.value.replace(/[^0-9]/g, ''); // Kalapálás elleni védelem: csak számok!
+            this.value = this.value.replace(/[^0-9]/g, '');
             const zip = this.value;
             
             if (zip.length === 4) {
@@ -295,7 +308,6 @@
             const zip = document.getElementById('cust-zip').value.trim();
             const city = document.getElementById('cust-city').value.trim();
             const street = document.getElementById('cust-street').value.trim();
-            const phone = document.getElementById('cust-phone').value.replace(/\s/g, '');
             const email = document.getElementById('cust-email').value.trim();
             const printerModel = document.getElementById('printer-model').value.trim();
             const errorCode = document.getElementById('error-code').value.trim();
@@ -303,7 +315,9 @@
             const activeErrors = document.querySelectorAll('.error-btn.active');
             const errors = Array.from(activeErrors).map(b => b.innerText.trim()).join(', ');
 
-            // --- ÚJ: Beszélő validáció beküldéskor ---
+            // ÚJ: Telefonszám kiolvasása a plugintől
+            const phone = iti.isValidNumber() ? iti.getNumber() : "";
+
             let isValid = true;
             
             if (activeErrors.length === 0) { document.getElementById('err-types').style.display = 'block'; isValid = false; }
@@ -312,7 +326,9 @@
             if (zip.length !== 4) { setFieldError('cust-zip', 'err-zip', true); isValid = false; } else { setFieldError('cust-zip', 'err-zip', false); }
             if (!city) { setFieldError('cust-city', 'err-city', true); isValid = false; } else { setFieldError('cust-city', 'err-city', false); }
             if (street.length < 5) { setFieldError('cust-street', 'err-street', true); isValid = false; } else { setFieldError('cust-street', 'err-street', false); }
-            if (phone.length < 9) { setFieldError('cust-phone', 'err-phone', true); isValid = false; } else { setFieldError('cust-phone', 'err-phone', false); }
+            
+            // Telefon validáció
+            if (!iti.isValidNumber()) { setFieldError('cust-phone', 'err-phone', true); isValid = false; } else { setFieldError('cust-phone', 'err-phone', false); }
             
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
             if (!emailRegex.test(email)) { setFieldError('cust-email', 'err-email', true); isValid = false; } else { setFieldError('cust-email', 'err-email', false); }
