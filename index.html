@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v4.3</title>
+    <title>Országos Epson Szerviz | v4.4</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -169,7 +169,7 @@
                             <input type="text" id="cust-zip" placeholder="Irányítószám" maxlength="4" required>
                             <input type="text" id="cust-city" placeholder="Város" required>
                         </div>
-                        <input type="text" id="cust-street" placeholder="Utca, házszám" required>
+                        <input type="text" id="cust-street" placeholder="Utca, házszám, emelet/ajtó" required>
 
                         <input type="tel" id="cust-phone" placeholder="Telefonszáma (pl. 06301234567)" required>
                         <input type="email" id="cust-email" placeholder="E-mail címe" required>
@@ -205,7 +205,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v4.3</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v4.4</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -270,23 +270,24 @@
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-            formData.append('entry.1567915132', name);            
-            formData.append('entry.2063510905', zip);            
-            formData.append('entry.566376283', city);            
-            formData.append('entry.977338095', street);          
-            formData.append('entry.175515844', phone);           
-            formData.append('entry.156899408', email); 
-            // ⚠️ Cseréld ki ezt az entry ID-t a Formod alapján a típushoz!
-            formData.append('entry.000000000', printerModel); 
-            formData.append('entry.836895663', errorCode || 'Nincs');      
-            formData.append('entry.1127298870', extraMsg || 'Nincs leírás'); 
-            formData.append('entry.1869404490', ticketID);       
-            errors.forEach(error => formData.append('entry.1886008896', error));
+            // ✅ Összefésült entry kódok a linked alapján:
+            formData.append('entry.1869404490', ticketID);      // Munkalap azonosító
+            formData.append('entry.1681322832', printerModel);  // Nyomtató típusa
+            formData.append('entry.1567915132', name);          // Neve / Cég neve
+            formData.append('entry.977338095', street);         // Pontos cím (utca, házszám...)
+            formData.append('entry.2063510905', zip);            // Irányítószám
+            formData.append('entry.566376283', city);           // Város
+            formData.append('entry.175515844', phone);          // Telefonszám
+            formData.append('entry.156899408', email);          // E-mail
+            formData.append('entry.836895663', errorCode || 'Nincs'); // Hibakód
+            formData.append('entry.1127298870', extraMsg || 'Nincs leírás'); // Hiba leírása
+            
+            errors.forEach(error => formData.append('entry.1886008896', error)); // Tünetek (Checklist)
 
             try {
                 await fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
-                // ✅ MEGJELENÍTÉS KÜLÖN MEZŐKBEN ✅
+                // Megjelenítés a siker ablakban
                 document.getElementById('ticket-id').innerText = ticketID;
                 document.getElementById('res-name').innerText = name;
                 document.getElementById('res-printer').innerText = printerModel;
@@ -299,9 +300,10 @@
 
                 document.getElementById('form-content').style.display = 'none';
                 document.getElementById('ticket-success').style.display = 'block';
+                window.scrollTo(0, document.getElementById('ticket-box').offsetTop - 20);
             } catch (error) {
                 console.error("Hiba:", error);
-                alert("Hálózati hiba!");
+                alert("Hálózati hiba történt a küldés során!");
                 btn.disabled = false;
                 btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
