@@ -356,11 +356,8 @@
             const printerModel = document.getElementById('printer-model').value.trim();
             const extraMsg = document.getElementById('extra-msg').value.trim();
             const street = document.getElementById('cust-street').value.trim();
-
             const longStringRegex = /[^\s]{50,}/; 
             const repeatsRegex = /(.)\1{5,}/; 
-            const forbiddenPatterns = [/teszt/i, /asdf/i, /qwer/i, /spam/i, /12345/];
-
             const checkFields = [name, extraMsg, street, printerModel];
             let spamDetected = false;
             let spamReason = "";
