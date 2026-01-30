@@ -138,7 +138,7 @@
         <div class="why-grid">
             <div>
                 <h2>Miért tőlem kérjen segítséget?</h2>
-                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>Közvetlen kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ mindenre.</p></div></div>
+                <div class="feature-item"><i class="fas fa-user-check"></i><div><strong>KözDirect kapcsolat</strong><p>Én javítom a gépét, tőlem kap választ mindenre.</p></div></div>
                 <div class="feature-item"><i class="fas fa-shield-alt"></i><div><strong>Személyes garancia</strong><p>Minden javításra és alkatrészre felelősséget vállalok.</p></div></div>
                 <div class="feature-item"><i class="fas fa-map-marked-alt"></i><div><strong>Pontos adatok</strong><p>A strukturált címbevitel segíti a gyors kiszállást.</p></div></div>
             </div>
@@ -264,31 +264,26 @@
             btn.disabled = true;
             btn.innerText = "KÜLDÉS...";
 
-            // ✅ TICKET ID GENERÁLÁS - DÁTUM ALAPÚ
+            // TICKET ID GENERÁLÁS
             const now = new Date();
             const year = String(now.getFullYear()).slice(-2);
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
             const random = Math.floor(100 + Math.random() * 900);
             const ticketID = `EPSON-${year}${month}${day}-${random}`;
-
-            // ✅ JAVÍTOTT VERZIÓ - Tartalmazza a választott hibákat is!
-            const fullDescription = `Választott hibák: ${errors.join(', ')} | Hibakód: ${errorCode || 'Nincs'} | Megjegyzés: ${extraMsg || 'Nincs'}`;
-
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-            formData.append('entry.1567915132', name);           // Név
-            formData.append('entry.2063510905', zip);            // Irányítószám
-            formData.append('entry.566376283', city);            // Város
-            formData.append('entry.977338095', street);          // Utca
-            formData.append('entry.175515844', phone);           // Telefon
-            formData.append('entry.156899408', email);           // Email
-            formData.append('entry.836895663', errorCode);       // Hibakód
-            formData.append('entry.1127298870', fullDescription); // Hibajelenség (teljes!)
-            formData.append('entry.1869404490', ticketID);       // Munkalap azonosító
+            formData.append('entry.1567915132', name);           
+            formData.append('entry.2063510905', zip);            
+            formData.append('entry.566376283', city);            
+            formData.append('entry.977338095', street);          
+            formData.append('entry.175515844', phone);           
+            formData.append('entry.156899408', email);           
+            formData.append('entry.836895663', errorCode || 'Nincs');      
+            formData.append('entry.1127298870', extraMsg || 'Nincs plusz megjegyzés'); 
+            formData.append('entry.1869404490', ticketID);       
             
-            // Hibák külön küldése a checkbox mezőbe
             errors.forEach(error => {
                 formData.append('entry.1886008896', error);
             });
@@ -307,7 +302,7 @@
                 document.getElementById('res-email').innerText = email;
                 document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
                 document.getElementById('res-errors').innerText = errors.join(', ');
-                document.getElementById('res-desc').innerText = fullDescription;
+                document.getElementById('res-desc').innerText = (errorCode ? "Kód: " + errorCode + " | " : "") + (extraMsg || "Nincs leírás");
 
                 document.getElementById('form-content').style.display = 'none';
                 document.getElementById('ticket-success').style.display = 'block';
