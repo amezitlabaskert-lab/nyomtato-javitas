@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v3.8</title>
+    <title>Országos Epson Szerviz | v3.9</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -85,12 +85,20 @@
         .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
         .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* --- SIKER ABLAK --- */
-        #ticket-success { display: none; text-align: left; border: 2px dashed var(--epson-blue); padding: 25px; border-radius: 12px; background: #fff; }
-        .work-order-header { text-align: center; margin-bottom: 20px; }
-        .work-order-header i { font-size: 3rem; color: #28a745; margin-bottom: 10px; }
-        .work-order-data { font-size: 0.95rem; border-top: 1px solid #eee; padding-top: 15px; }
-        .work-order-data p { margin: 8px 0; border-bottom: 1px solid #f9f9f9; padding-bottom: 4px; }
+        /* --- SIKER ABLAK (EMAIL FORMÁZÁSÚ) --- */
+        #ticket-success { 
+            display: none; text-align: left; border: 1px solid #ddecff; 
+            border-radius: 12px; background: #fff; overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+        }
+        .ticket-header-banner { background: #f0f5ff; padding: 20px; border-left: 5px solid var(--epson-blue); }
+        .ticket-header-banner strong { display: block; color: var(--epson-blue); font-size: 1.1rem; }
+        
+        .work-order-data { padding: 25px; font-size: 0.95rem; }
+        .work-order-data p { margin: 10px 0; }
+        .info-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+        .info-row i { color: var(--epson-blue); width: 18px; margin-top: 3px; }
+        .work-order-data hr { border: none; border-top: 1px solid #eee; margin: 20px 0; }
 
         footer { text-align: center; padding: 20px; color: #999; font-size: 0.75rem; background: var(--bg-gray); }
 
@@ -178,19 +186,29 @@
                 </div>
 
                 <div id="ticket-success">
-                    <div class="work-order-header">
-                        <i class="fas fa-check-circle"></i>
-                        <h3 style="color:var(--epson-blue); margin:0;">MUNKALAP RÖGZÍTVE</h3>
-                        <p style="font-size: 1.1rem; font-weight: bold; margin-top: 5px;">Azonosító: #<span id="ticket-id"></span></p>
+                    <div class="ticket-header-banner">
+                        <strong>Munkalap azonosító: #<span id="ticket-id"></span></strong>
+                        <p style="margin: 5px 0 0; font-size: 0.85rem; color: #555;">Sikeres rögzítés! Visszaigazolást küldtünk e-mailben.</p>
                     </div>
                     <div class="work-order-data">
-                        <p><strong>Ügyfél:</strong> <span id="res-name"></span></p>
-                        <p><strong>Kapcsolat:</strong> <span id="res-phone"></span> | <span id="res-email"></span></p>
-                        <p><strong>Helyszín:</strong> <span id="res-address"></span></p>
-                        <p><strong>Választott hiba:</strong> <span id="res-errors"></span></p>
-                        <p><strong>Hibakód / Leírás:</strong> <span id="res-desc"></span></p>
+                        <p>Tisztelt <strong><span id="res-name"></span></strong>!</p>
+                        <p>Bejelentését rögzítettük az alábbi adatokkal:</p>
+
+                        <div class="info-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div><strong>Helyszín:</strong><br><span id="res-address"></span></div>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div><strong>Hiba:</strong><br><span id="res-errors"></span> (Kód: <span id="res-code"></span>)</div>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-info-circle"></i>
+                            <div><strong>Leírás:</strong><br><span id="res-desc"></span></div>
+                        </div>
                         
-                        <p style="margin-top:20px; font-size: 0.85rem; color: #666; font-style: italic; text-align: center;">Visszaigazoló e-mailt küldtem! Hamarosan keresni fogom a megadott telefonszámon.</p>
+                        <hr>
+                        <p style="font-size: 0.85rem; color: #666; font-style: italic; text-align: center;">Hamarosan keresni fogom a megadott telefonszámon!</p>
                         
                         <button onclick="window.print()" style="width:100%; margin-top:15px; padding:15px; background:var(--epson-blue); color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:1rem;">
                             <i class="fas fa-print"></i> MUNKALAP NYOMTATÁSA
@@ -202,12 +220,11 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v3.8</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v3.9</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- CAROUSEL ---
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
@@ -215,7 +232,6 @@
             breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 3, spaceBetween: 30 } }
         });
 
-        // --- ZIP -> CITY ---
         document.getElementById('cust-zip').addEventListener('keyup', async function(e) {
             const zip = e.target.value;
             if (zip.length === 4) {
@@ -231,7 +247,6 @@
             }
         });
 
-        // --- TOGGLE ERROR BUTTONS ---
         function toggleError(btn) {
             const activeBtns = document.querySelectorAll('.error-btn.active');
             if (!btn.classList.contains('active') && activeBtns.length >= 2) {
@@ -243,7 +258,6 @@
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
 
-        // --- GOOGLE FORMS SUBMIT ---
         async function submitTicket() {
             const name = document.getElementById('cust-name').value.trim();
             const zip = document.getElementById('cust-zip').value.trim();
@@ -264,7 +278,6 @@
             btn.disabled = true;
             btn.innerText = "KÜLDÉS...";
 
-            // ✅ TICKET ID GENERÁLÁS - DÁTUM ALAPÚ
             const now = new Date();
             const year = String(now.getFullYear()).slice(-2);
             const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -272,23 +285,19 @@
             const random = Math.floor(100 + Math.random() * 900);
             const ticketID = `EPSON-${year}${month}${day}-${random}`;
 
-            // ✅ JAVÍTOTT VERZIÓ - Tartalmazza a választott hibákat is!
-            const fullDescription = `Választott hibák: ${errors.join(', ')} | Hibakód: ${errorCode || 'Nincs'} | Megjegyzés: ${extraMsg || 'Nincs'}`;
-
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-            formData.append('entry.1567915132', name);           // Név
-            formData.append('entry.2063510905', zip);            // Irányítószám
-            formData.append('entry.566376283', city);            // Város
-            formData.append('entry.977338095', street);          // Utca
-            formData.append('entry.175515844', phone);           // Telefon
-            formData.append('entry.156899408', email);           // Email
-            formData.append('entry.836895663', errorCode);       // Hibakód
-            formData.append('entry.1127298870', fullDescription); // Hibajelenség (teljes!)
-            formData.append('entry.1869404490', ticketID);       // Munkalap azonosító
+            formData.append('entry.1567915132', name);
+            formData.append('entry.2063510905', zip);
+            formData.append('entry.566376283', city);
+            formData.append('entry.977338095', street);
+            formData.append('entry.175515844', phone);
+            formData.append('entry.156899408', email);
+            formData.append('entry.836895663', errorCode);
+            formData.append('entry.1127298870', extraMsg || 'Nincs leírás');
+            formData.append('entry.1869404490', ticketID);
             
-            // Hibák külön küldése a checkbox mezőbe
             errors.forEach(error => {
                 formData.append('entry.1886008896', error);
             });
@@ -303,11 +312,14 @@
 
                 document.getElementById('ticket-id').innerText = ticketID;
                 document.getElementById('res-name').innerText = name;
-                document.getElementById('res-phone').innerText = phone;
-                document.getElementById('res-email').innerText = email;
                 document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
                 document.getElementById('res-errors').innerText = errors.join(', ');
-                document.getElementById('res-desc').innerText = fullDescription;
+                document.getElementById('res-code').innerText = errorCode || 'Nincs';
+                document.getElementById('res-desc').innerText = extraMsg || 'Nincs';
+                
+                // Ezek is kellenek a rejtett mezőkbe a biztonság kedvéért:
+                document.getElementById('res-phone').innerText = phone;
+                document.getElementById('res-email').innerText = email;
 
                 document.getElementById('form-content').style.display = 'none';
                 document.getElementById('ticket-success').style.display = 'block';
