@@ -171,8 +171,8 @@
                         
                         <div id="extra-fields" class="sliding-section">
                             <input type="text" id="error-code" placeholder="Hibakód (ha van, pl. 031006)" maxlength="30">
-                            <textarea id="extra-msg" placeholder="Hiba leírása bővebben (kötelező, ha nincs hibakód)" rows="3" maxlength="300"></textarea>
-                            <div id="err-extra" class="helper-text">Kérem, adjon meg hibakódot VAGY leírást (min. 10 karakter)!</div>
+                            <textarea id="extra-msg" placeholder="Hiba leírása bővebben (max. 150 karakter)" rows="3" maxlength="150"></textarea>
+                            <div id="err-extra" class="helper-text">Kérem, adjon meg hibakódot VAGY leírást (max. 150 karakter)!</div>
                         </div>
                     </div>
                     
@@ -335,10 +335,11 @@
             
             const extraMsgField = document.getElementById('extra-msg');
             if (btn.innerText.includes("Egyéb") && btn.classList.contains('active')) {
-                extraMsgField.placeholder = "Kérem, itt részletezze az egyéb hibát (min. 10 karakter)...";
+                // Placeholder javítva az utasítás szerint
+                extraMsgField.placeholder = "Kérem, címszavakban részletezze az egyéb hibát (max. 150 karakter)...";
                 extraMsgField.focus();
             } else {
-                extraMsgField.placeholder = "Hiba leírása bővebben (kötelező, ha nincs hibakód)";
+                extraMsgField.placeholder = "Hiba leírása bővebben (max. 150 karakter)";
             }
 
             const hasActive = document.querySelectorAll('.error-btn.active').length > 0;
@@ -351,7 +352,6 @@
         async function submitTicket() {
             if (document.getElementById('hp_field').value !== "") return;
 
-            // --- SPAM ÉS ÉRTELMETLENSÉG SZŰRŐ (v6.2) ---
             const name = document.getElementById('cust-name').value.trim();
             const printerModel = document.getElementById('printer-model').value.trim();
             const extraMsg = document.getElementById('extra-msg').value.trim();
@@ -386,7 +386,6 @@
                 alert("Kérem, várjon legalább egy percet az újabb bejelentés előtt!");
                 return;
             }
-            // --- SZŰRŐ VÉGE ---
 
             let rawPhone = phoneInput.value.trim();
             if (rawPhone.startsWith('06')) {
@@ -414,11 +413,12 @@
                 setFieldError('printer-model', 'err-printer', true); isValid = false; 
             } else { setFieldError('printer-model', 'err-printer', false); }
             
-            if (errorCode === "" && extraMsg.length < 10) {
-                setFieldError('extra-msg', 'err-extra', true, "Kérem, adjon meg hibakódot VAGY leírást (min. 10 karakter)!"); 
+            // Itt a javítás: 150 karakter korlát és a hibaüzenet szövege
+            if (errorCode === "" && extraMsg.length < 5) {
+                setFieldError('extra-msg', 'err-extra', true, "Kérem, adjon meg hibakódot VAGY leírást (max. 150 karakter)!"); 
                 isValid = false;
-            } else if (extraMsg.length > 1000) {
-                setFieldError('extra-msg', 'err-extra', true, "Túl hosszú leírás (max. 1000 karakter)!"); 
+            } else if (extraMsg.length > 150) {
+                setFieldError('extra-msg', 'err-extra', true, "Túl hosszú leírás (max. 150 karakter)!"); 
                 isValid = false;
             } else { 
                 setFieldError('extra-msg', 'err-extra', false); 
