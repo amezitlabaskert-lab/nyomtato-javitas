@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v4.4</title>
+    <title>Országos Epson Szerviz | v4.5</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -18,7 +18,6 @@
         
         body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; color: var(--dark-gray); background: #fff; line-height: 1.6; overflow-x: hidden; }
 
-        /* --- TOP BAR --- */
         .top-bar {
             background: #fff; padding: 8px 20px; border-bottom: 1px solid var(--border-light);
             display: flex; justify-content: center; flex-wrap: wrap; gap: 25px;
@@ -26,7 +25,6 @@
         }
         .top-bar a { text-decoration: none; color: var(--epson-blue); display: flex; align-items: center; gap: 8px; }
 
-        /* --- HEADER --- */
         header { 
             text-align: center; padding: 40px 20px 60px;
             background: var(--soft-blue); border-bottom: 1px solid #ddecff;
@@ -42,7 +40,6 @@
         }
         .btn-main:hover { background: var(--accent-blue); transform: translateY(-2px); }
 
-        /* --- CAROUSEL --- */
         .carousel-outer { max-width: 1100px; margin: 40px auto; overflow: hidden; position: relative; }
         .swiper { padding: 60px 0 !important; }
         .swiper-slide { display: flex; flex-direction: column; align-items: center; transition: 0.6s; transform: scale(0.7); opacity: 1; }
@@ -51,14 +48,12 @@
         .swiper-slide p { font-weight: 800; color: var(--epson-blue); margin-top: 20px; font-size: 1rem; opacity: 0; transition: 0.4s; }
         .swiper-slide-active p { opacity: 1; }
 
-        /* --- SERVICES --- */
         .services-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 60px 40px; }
         .service-box i { font-size: 2rem; color: var(--epson-blue); margin-bottom: 15px; display: block; }
         .service-box h3 { font-size: 1.4rem; color: var(--dark-gray); border-left: 4px solid var(--epson-blue); padding-left: 15px; margin-bottom: 10px; }
         .service-box p { margin: 0; color: #555; }
 
-        /* --- WHY US & TICKET SYSTEM --- */
         .why-us { background: var(--epson-blue); color: #fff; padding: 80px 20px; }
         .why-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
         .feature-item { margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start; }
@@ -85,7 +80,6 @@
         .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
         .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* --- SIKER ABLAK --- */
         #ticket-success { display: none; text-align: left; border: 2px dashed var(--epson-blue); padding: 25px; border-radius: 12px; background: #fff; }
         .work-order-header { text-align: center; margin-bottom: 20px; }
         .work-order-header i { font-size: 3rem; color: #28a745; margin-bottom: 10px; }
@@ -146,7 +140,7 @@
             <div class="report-card" id="ticket-box">
                 <div id="form-content">
                     <h3>Hiba bejelentése</h3>
-                    <p class="subtitle">Válasszon legfeljebb 2 jellemző tünetet:</p>
+                    <p class="subtitle">Válasszon tünetet, majd adja meg a gép típusát:</p>
                     
                     <div class="error-grid">
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-magic"></i> Nem tudom, nem értek hozzá</button>
@@ -156,21 +150,22 @@
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tools"></i> Karbantartás (Tinta-párna)</button>
                     </div>
 
-                    <div id="extra-fields" style="display:none;">
+                    <div style="margin-top:20px;">
                         <input type="text" id="printer-model" placeholder="Nyomtató típusa (pl. L3250)" required>
-                        <input type="text" id="error-code" placeholder="Hibakód (ha van, pl. 031006)">
-                        <textarea id="extra-msg" placeholder="Hiba leírása (pl. mióta csinálja...)" rows="3"></textarea>
+                        
+                        <div id="extra-fields" style="display:none;">
+                            <input type="text" id="error-code" placeholder="Hibakód (ha van, pl. 031006)">
+                            <textarea id="extra-msg" placeholder="Hiba leírása (pl. mióta csinálja...)" rows="3"></textarea>
+                        </div>
                     </div>
                     
                     <div style="margin-top:15px;">
                         <input type="text" id="cust-name" placeholder="Neve / Cég neve" required>
-                        
                         <div class="address-row">
                             <input type="text" id="cust-zip" placeholder="Irányítószám" maxlength="4" required>
                             <input type="text" id="cust-city" placeholder="Város" required>
                         </div>
                         <input type="text" id="cust-street" placeholder="Utca, házszám, emelet/ajtó" required>
-
                         <input type="tel" id="cust-phone" placeholder="Telefonszáma (pl. 06301234567)" required>
                         <input type="email" id="cust-email" placeholder="E-mail címe" required>
                     </div>
@@ -192,9 +187,7 @@
                         <p><strong>Választott hiba:</strong> <span id="res-errors"></span></p>
                         <p><strong>Hibakód:</strong> <span id="res-code"></span></p>
                         <p><strong>Hiba leírása:</strong> <span id="res-desc"></span></p>
-                        
                         <p style="margin-top:20px; font-size: 0.85rem; color: #666; font-style: italic; text-align: center;">Visszaigazoló e-mailt küldtem! Hamarosan keresni fogom a megadott telefonszámon.</p>
-                        
                         <button onclick="window.print()" style="width:100%; margin-top:15px; padding:15px; background:var(--epson-blue); color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:1rem;">
                             <i class="fas fa-print"></i> MUNKALAP NYOMTATÁSA
                         </button>
@@ -205,7 +198,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v4.4</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v4.5</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -239,6 +232,8 @@
                 return;
             }
             btn.classList.toggle('active');
+            
+            // Csak a hibakódot és a leírást jeleníti meg/rejti el
             document.getElementById('extra-fields').style.display = 
                 document.querySelectorAll('.error-btn.active').length > 0 ? 'block' : 'none';
         }
@@ -256,7 +251,7 @@
             const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim());
 
             if (!name || !zip || !city || !street || !phone || !email || !printerModel || errors.length === 0) {
-                alert("Kérem töltsön ki minden kötelező mezőt!");
+                alert("Kérem töltsön ki minden kötelező mezőt (Hiba típusa és Nyomtató típusa is kötelező)!");
                 return;
             }
 
@@ -270,24 +265,21 @@
             const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
             
             const formData = new URLSearchParams();
-            // ✅ Összefésült entry kódok a linked alapján:
-            formData.append('entry.1869404490', ticketID);      // Munkalap azonosító
-            formData.append('entry.1681322832', printerModel);  // Nyomtató típusa
-            formData.append('entry.1567915132', name);          // Neve / Cég neve
-            formData.append('entry.977338095', street);         // Pontos cím (utca, házszám...)
-            formData.append('entry.2063510905', zip);            // Irányítószám
-            formData.append('entry.566376283', city);           // Város
-            formData.append('entry.175515844', phone);          // Telefonszám
-            formData.append('entry.156899408', email);          // E-mail
-            formData.append('entry.836895663', errorCode || 'Nincs'); // Hibakód
-            formData.append('entry.1127298870', extraMsg || 'Nincs leírás'); // Hiba leírása
-            
-            errors.forEach(error => formData.append('entry.1886008896', error)); // Tünetek (Checklist)
+            formData.append('entry.1869404490', ticketID);
+            formData.append('entry.1681322832', printerModel);
+            formData.append('entry.1567915132', name);
+            formData.append('entry.977338095', street);
+            formData.append('entry.2063510905', zip);
+            formData.append('entry.566376283', city);
+            formData.append('entry.175515844', phone);
+            formData.append('entry.156899408', email);
+            formData.append('entry.836895663', errorCode || 'Nincs');
+            formData.append('entry.1127298870', extraMsg || 'Nincs leírás');
+            errors.forEach(error => formData.append('entry.1886008896', error));
 
             try {
                 await fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
-                // Megjelenítés a siker ablakban
                 document.getElementById('ticket-id').innerText = ticketID;
                 document.getElementById('res-name').innerText = name;
                 document.getElementById('res-printer').innerText = printerModel;
@@ -303,7 +295,7 @@
                 window.scrollTo(0, document.getElementById('ticket-box').offsetTop - 20);
             } catch (error) {
                 console.error("Hiba:", error);
-                alert("Hálózati hiba történt a küldés során!");
+                alert("Hálózati hiba történt!");
                 btn.disabled = false;
                 btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
