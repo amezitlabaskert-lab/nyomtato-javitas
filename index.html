@@ -156,12 +156,12 @@
                     <p class="subtitle">Válasszon legfeljebb 2 hibatípust!</p>
                     
                     <div class="error-grid">
-                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-magic"></i> Nem tudom, nem értek hozzá</button>
-                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tint"></i> Csíkoz / Foltos a nyomat</button>
-                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-scroll"></i> Beragadt / Nem húz papírt</button>
-                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-exclamation-triangle"></i> Kerreg / Fura hangja van</button>
-                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tools"></i> Karbantartás (Tinta-párna)</button>
-                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-ellipsis-h"></i> Egyéb / Nem található a listában</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tint"></i> 1. Csíkoz, csúnyán nyomtat</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-scroll"></i> 2. Papírelakadás</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-volume-up"></i> 3. Hangos, vagy nem a megszokott hang</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-power-off"></i> 4. Nem kapcsol be</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-tools"></i> 5. Karbantartás</button>
+                        <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-ellipsis-h"></i> 6. Egyéb hiba</button>
                     </div>
                     <div id="err-types" class="helper-text">Kérem, válasszon legalább egy hibatípust!</div>
 
@@ -309,7 +309,6 @@
             }
             btn.classList.toggle('active');
             
-            // Placeholder és fókusz automatizmus az Egyéb gombhoz
             const extraMsgField = document.getElementById('extra-msg');
             if (btn.innerText.includes("Egyéb") && btn.classList.contains('active')) {
                 extraMsgField.placeholder = "Kérem, itt részletezze az egyéb hibát (min. 10 karakter)...";
@@ -353,7 +352,6 @@
                 setFieldError('printer-model', 'err-printer', true); isValid = false; 
             } else { setFieldError('printer-model', 'err-printer', false); }
             
-            // Hibakód VAGY leírás szabály (minimum 10 karakteres guardrail)
             if (errorCode === "" && extraMsg.length < 10) {
                 setFieldError('extra-msg', 'err-extra', true, "Kérem, adjon meg hibakódot VAGY leírást (min. 10 karakter)!"); 
                 isValid = false;
