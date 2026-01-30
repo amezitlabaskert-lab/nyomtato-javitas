@@ -85,13 +85,12 @@
         
         .address-row { display: flex; gap: 10px; }
         .address-row input[id="cust-zip"] { flex: 1; }
-        .address-row input[id="cust-city"] { flex: 2; background-color: #f8f9fa; cursor: not-allowed; font-weight: 600; }
+        .address-row input[id="cust-city"] { flex: 2; background-color: #f8f9fa; font-weight: 600; }
 
         .report-card button.submit-btn { width: 100%; padding: 18px; background: var(--epson-blue); color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; font-size: 1.1rem; margin-top: 10px; }
         .report-card button.submit-btn:hover { background: var(--accent-blue); }
         .report-card button.submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* ÚJ: Telefonos plugin szélesség korrekció */
         .iti { width: 100%; margin-bottom: 12px; }
 
         #ticket-success { display: none; text-align: left; border: 2px dashed var(--epson-blue); padding: 25px; border-radius: 12px; background: #fff; }
@@ -185,7 +184,7 @@
                                 <div id="err-zip" class="helper-text">Hibás irsz.!</div>
                             </div>
                             <div style="flex:2">
-                                <input type="text" id="cust-city" placeholder="Város" readonly required>
+                                <input type="text" id="cust-city" placeholder="Város" required>
                                 <div id="err-city" class="helper-text">Város szükséges!</div>
                             </div>
                         </div>
@@ -228,14 +227,13 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v5.2</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v5.3</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/intlTelInput.min.js"></script>
     
     <script>
-        // --- ÚJ: Telefon inicializálása ---
         const phoneInput = document.querySelector("#cust-phone");
         const iti = window.intlTelInput(phoneInput, {
             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/utils.js",
@@ -279,12 +277,9 @@
                             setFieldError('cust-city', 'err-city', false);
                         }
                     } else {
-                        document.getElementById('cust-city').value = "";
                         setFieldError('cust-zip', 'err-zip', true, "Ismeretlen!");
                     }
                 } catch (err) { console.error("Zip API Error:", err); }
-            } else {
-                document.getElementById('cust-city').value = "";
             }
         });
 
@@ -314,8 +309,6 @@
             const extraMsg = document.getElementById('extra-msg').value.trim();
             const activeErrors = document.querySelectorAll('.error-btn.active');
             const errors = Array.from(activeErrors).map(b => b.innerText.trim()).join(', ');
-
-            // ÚJ: Telefonszám kiolvasása a plugintől
             const phone = iti.isValidNumber() ? iti.getNumber() : "";
 
             let isValid = true;
@@ -326,8 +319,6 @@
             if (zip.length !== 4) { setFieldError('cust-zip', 'err-zip', true); isValid = false; } else { setFieldError('cust-zip', 'err-zip', false); }
             if (!city) { setFieldError('cust-city', 'err-city', true); isValid = false; } else { setFieldError('cust-city', 'err-city', false); }
             if (street.length < 5) { setFieldError('cust-street', 'err-street', true); isValid = false; } else { setFieldError('cust-street', 'err-street', false); }
-            
-            // Telefon validáció
             if (!iti.isValidNumber()) { setFieldError('cust-phone', 'err-phone', true); isValid = false; } else { setFieldError('cust-phone', 'err-phone', false); }
             
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -347,11 +338,9 @@
             const payload = { ticketID, name, zip, city, street, phone, email, printerModel, errorCode, extraMsg, errors };
 
             try {
+                // JAVÍTOTT FETCH: no-cors és felesleges fejlécek nélkül
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
@@ -369,7 +358,7 @@
                     document.getElementById('form-content').style.display = 'none';
                     document.getElementById('ticket-success').style.display = 'block';
                     window.scrollTo(0, document.getElementById('ticket-box').offsetTop - 20);
-                }, 1500);
+                }, 1000);
 
             } catch (error) {
                 console.error("Hiba:", error);
