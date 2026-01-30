@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v6</title>
+    <title>Országos Epson Szerviz | v6.2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/css/intlTelInput.css">
@@ -231,7 +231,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v6.1</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v6.2</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -260,7 +260,6 @@
             }
         });
 
-        // DINAMIKUS KARAKTERLIMIT BEÁLLÍTÁSA
         const updateMaxLength = () => {
             const placeholder = phoneInput.getAttribute('placeholder') || "";
             if (placeholder) {
@@ -352,20 +351,60 @@
         async function submitTicket() {
             if (document.getElementById('hp_field').value !== "") return;
 
+            // --- SPAM ÉS ÉRTELMETLENSÉG SZŰRŐ (v6.2) ---
+            const name = document.getElementById('cust-name').value.trim();
+            const printerModel = document.getElementById('printer-model').value.trim();
+            const extraMsg = document.getElementById('extra-msg').value.trim();
+            const street = document.getElementById('cust-street').value.trim();
+
+            const longStringRegex = /[^\s]{50,}/; 
+            const repeatsRegex = /(.)\1{5,}/; 
+            const forbiddenPatterns = [/teszt/i, /asdf/i, /qwer/i, /spam/i, /12345/];
+
+            const checkFields = [name, extraMsg, street, printerModel];
+            let spamDetected = false;
+            let spamReason = "";
+
+            for (let field of checkFields) {
+                if (longStringRegex.test(field)) { 
+                    spamReason = "Túl hosszú, szóköz nélküli szót találtam!"; 
+                    spamDetected = true; break; 
+                }
+                if (repeatsRegex.test(field)) { 
+                    spamReason = "Gyanúsan sok az ismétlődő karakter!"; 
+                    spamDetected = true; break; 
+                }
+                if (forbiddenPatterns.some(p => p.test(field)) && field.length > 0) {
+                    if (field === extraMsg || field === name) {
+                        spamReason = "A megadott szöveg tesztadatnak tűnik!";
+                        spamDetected = true; break;
+                    }
+                }
+            }
+
+            if (spamDetected) {
+                setFieldError('extra-msg', 'err-extra', true, spamReason);
+                return;
+            }
+
+            const lastSubmit = localStorage.getItem('lastEpsonSubmit');
+            const nowTime = new Date().getTime();
+            if (lastSubmit && (nowTime - lastSubmit < 60000)) {
+                alert("Kérem, várjon legalább egy percet az újabb bejelentés előtt!");
+                return;
+            }
+            // --- SZŰRŐ VÉGE ---
+
             let rawPhone = phoneInput.value.trim();
             if (rawPhone.startsWith('06')) {
                 phoneInput.value = rawPhone.substring(2).trim();
             }
 
             const btn = document.querySelector('.submit-btn');
-            const name = document.getElementById('cust-name').value.trim();
             const zip = document.getElementById('cust-zip').value.trim();
             const city = document.getElementById('cust-city').value.trim();
-            const street = document.getElementById('cust-street').value.trim();
             const email = document.getElementById('cust-email').value.trim();
-            const printerModel = document.getElementById('printer-model').value.trim();
             const errorCode = document.getElementById('error-code').value.trim();
-            const extraMsg = document.getElementById('extra-msg').value.trim();
             const activeErrors = document.querySelectorAll('.error-btn.active');
             const errors = Array.from(activeErrors).map(b => b.innerText.trim()).join(', ');
             const phone = iti.isValidNumber() ? iti.getNumber() : "";
@@ -405,6 +444,7 @@
 
             btn.disabled = true;
             btn.innerText = "FELDOLGOZÁS...";
+            localStorage.setItem('lastEpsonSubmit', new Date().getTime());
 
             const now = new Date();
             const ticketID = `EPSON-${String(now.getFullYear()).slice(-2)}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
