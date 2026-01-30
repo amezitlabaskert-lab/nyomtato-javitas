@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v5.5</title>
+    <title>Országos Epson Szerviz | v5.6</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/css/intlTelInput.css">
@@ -165,18 +165,21 @@
                     <div id="err-types" class="helper-text">Válasszon legalább egy hibatípust!</div>
 
                     <div style="margin-top:20px;">
-                        <input type="text" id="printer-model" placeholder="Nyomtató típusa (pl. L3150)" required>
-                        <div id="err-printer" class="helper-text">Milyen nyomtatót javítsunk?</div>
+                        <input type="text" id="printer-model" placeholder="Nyomtató típusa (pl. L3150)" required maxlength="50">
+                        <div id="err-printer" class="helper-text">Pontos modell szükséges (betű és szám is, pl. L3150)!</div>
                         
                         <div id="extra-fields" class="sliding-section">
-                            <input type="text" id="error-code" placeholder="Hibakód (ha van, pl. 031006)">
-                            <textarea id="extra-msg" placeholder="Hiba leírása röviden" rows="3"></textarea>
+                            <input type="text" id="error-code" placeholder="Hibakód (ha van, pl. 031006)" maxlength="30">
+                            <textarea id="extra-msg" placeholder="Hiba leírása bővebben (kötelező, ha nincs hibakód)" rows="3" maxlength="1000"></textarea>
+                            <div id="err-extra" class="helper-text">Kérjük, adjon meg hibakódot VAGY leírást (min. 10 karakter)!</div>
                         </div>
                     </div>
                     
                     <div id="contact-info-section" class="sliding-section" style="margin-top:15px;">
-                        <input type="text" id="cust-name" placeholder="Az Ön neve / Cég neve" required>
-                        <div id="err-name" class="helper-text">Kérjük, adja meg a nevét!</div>
+                        <div style="display:none;"><input type="text" id="hp_field" tabindex="-1" autocomplete="off"></div>
+
+                        <input type="text" id="cust-name" placeholder="Az Ön neve / Cég neve" required maxlength="100">
+                        <div id="err-name" class="helper-text">Kérjük, adja meg a nevét (3-100 karakter)!</div>
 
                         <div class="address-row">
                             <div style="flex:1">
@@ -184,18 +187,18 @@
                                 <div id="err-zip" class="helper-text">Hibás irsz.!</div>
                             </div>
                             <div style="flex:2">
-                                <input type="text" id="cust-city" placeholder="Város" required>
+                                <input type="text" id="cust-city" placeholder="Város" required readonly maxlength="60">
                                 <div id="err-city" class="helper-text">Város szükséges!</div>
                             </div>
                         </div>
 
-                        <input type="text" id="cust-street" placeholder="Utca, házszám, emelet/ajtó" required>
-                        <div id="err-street" class="helper-text">A pontos cím kitöltése kötelező!</div>
+                        <input type="text" id="cust-street" placeholder="Utca, házszám, emelet/ajtó" required maxlength="150">
+                        <div id="err-street" class="helper-text">A pontos cím kitöltése kötelező (min. 5 karakter)!</div>
 
                         <input type="tel" id="cust-phone" required>
                         <div id="err-phone" class="helper-text">Érvényes telefonszám szükséges!</div>
 
-                        <input type="email" id="cust-email" placeholder="E-mail címe" required>
+                        <input type="email" id="cust-email" placeholder="E-mail címe" required maxlength="120">
                         <div id="err-email" class="helper-text">Hibás e-mail formátum!</div>
                         
                         <button class="submit-btn" onclick="submitTicket()">HIBAJEGY LÉTREHOZÁSA</button>
@@ -227,7 +230,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v5.5</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v5.6</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -265,21 +268,35 @@
         document.getElementById('cust-zip').addEventListener('input', async function(e) {
             this.value = this.value.replace(/[^0-9]/g, '');
             const zip = this.value;
+            const cityField = document.getElementById('cust-city');
             
             if (zip.length === 4) {
+                const timeout = setTimeout(() => {
+                    if (cityField.value === "") {
+                        cityField.readOnly = false;
+                        cityField.style.backgroundColor = "#fff";
+                    }
+                }, 2000);
+
                 try {
                     const response = await fetch(`https://api.zippopotam.us/hu/${zip}`);
+                    clearTimeout(timeout);
                     if (response.ok) {
                         const data = await response.json();
                         if (data.places && data.places.length > 0) {
-                            document.getElementById('cust-city').value = data.places[0]['place name'];
+                            cityField.value = data.places[0]['place name'];
+                            cityField.readOnly = true;
+                            cityField.style.backgroundColor = "#f8f9fa";
                             setFieldError('cust-zip', 'err-zip', false);
                             setFieldError('cust-city', 'err-city', false);
                         }
                     } else {
-                        setFieldError('cust-zip', 'err-zip', true, "Ismeretlen!");
+                        throw new Error("API fail");
                     }
-                } catch (err) { console.error("Zip API Error:", err); }
+                } catch (err) { 
+                    cityField.readOnly = false;
+                    cityField.style.backgroundColor = "#fff";
+                }
             }
         });
 
@@ -299,6 +316,9 @@
         }
 
         async function submitTicket() {
+            // Honeypot check
+            if (document.getElementById('hp_field').value !== "") return;
+
             const btn = document.querySelector('.submit-btn');
             const name = document.getElementById('cust-name').value.trim();
             const zip = document.getElementById('cust-zip').value.trim();
@@ -315,15 +335,28 @@
             let isValid = true;
             
             if (activeErrors.length === 0) { document.getElementById('err-types').style.display = 'block'; isValid = false; }
-            if (printerModel.length < 3) { setFieldError('printer-model', 'err-printer', true); isValid = false; } else { setFieldError('printer-model', 'err-printer', false); }
-            if (name.length < 3) { setFieldError('cust-name', 'err-name', true); isValid = false; } else { setFieldError('cust-name', 'err-name', false); }
+            
+            // Regex: must contain at least one letter and one number
+            const printerRegex = /(?=.*[a-zA-Z])(?=.*[0-9])/;
+            if (printerModel.length < 3 || printerModel.length > 50 || !printerRegex.test(printerModel)) { 
+                setFieldError('printer-model', 'err-printer', true); isValid = false; 
+            } else { setFieldError('printer-model', 'err-printer', false); }
+            
+            // Hibakód VAGY leírás szabály
+            if (errorCode === "" && extraMsg.length < 10) {
+                setFieldError('extra-msg', 'err-extra', true); isValid = false;
+            } else if (extraMsg.length > 1000) {
+                setFieldError('extra-msg', 'err-extra', true, "Túl hosszú leírás (max. 1000 karakter)!"); isValid = false;
+            } else { setFieldError('extra-msg', 'err-extra', false); }
+
+            if (name.length < 3 || name.length > 100) { setFieldError('cust-name', 'err-name', true); isValid = false; } else { setFieldError('cust-name', 'err-name', false); }
             if (zip.length !== 4) { setFieldError('cust-zip', 'err-zip', true); isValid = false; } else { setFieldError('cust-zip', 'err-zip', false); }
-            if (!city) { setFieldError('cust-city', 'err-city', true); isValid = false; } else { setFieldError('cust-city', 'err-city', false); }
-            if (street.length < 5) { setFieldError('cust-street', 'err-street', true); isValid = false; } else { setFieldError('cust-street', 'err-street', false); }
+            if (city.length < 2 || city.length > 60) { setFieldError('cust-city', 'err-city', true); isValid = false; } else { setFieldError('cust-city', 'err-city', false); }
+            if (street.length < 5 || street.length > 150) { setFieldError('cust-street', 'err-street', true); isValid = false; } else { setFieldError('cust-street', 'err-street', false); }
             if (!iti.isValidNumber()) { setFieldError('cust-phone', 'err-phone', true); isValid = false; } else { setFieldError('cust-phone', 'err-phone', false); }
             
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-            if (!emailRegex.test(email)) { setFieldError('cust-email', 'err-email', true); isValid = false; } else { setFieldError('cust-email', 'err-email', false); }
+            if (!emailRegex.test(email) || email.length > 120) { setFieldError('cust-email', 'err-email', true); isValid = false; } else { setFieldError('cust-email', 'err-email', false); }
 
             if (!isValid) return;
 
@@ -335,7 +368,6 @@
             
             const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx_7ieuKkZtBpN2z-3085mkgC2AAPagUnsI4Oe0hREIYN1yajLKuqWNtuQWGkYuSstf/exec';
 
-            // Google Apps Script-nek küldött adatok
             const formData = new FormData();
             formData.append('ticketID', ticketID);
             formData.append('name', name);
@@ -350,16 +382,12 @@
             formData.append('errors', errors);
 
             try {
-                // Fetch kérés – a 'no-cors' segíthet ha a szerver nem ad vissza headert, 
-                // de ekkor nem tudjuk olvasni a választ. Ezért normál módon próbáljuk:
-                const response = await fetch(WEB_APP_URL, {
+                await fetch(WEB_APP_URL, {
                     method: 'POST',
                     body: formData,
-                    mode: 'no-cors' // Google Scriptnél ez gyakran szükséges a redirect miatt
+                    mode: 'no-cors'
                 });
 
-                // Mivel 'no-cors' esetén nem látjuk a választ, feltételezzük a sikert, 
-                // ha nem dobott hibát a fetch.
                 document.getElementById('ticket-id').innerText = ticketID;
                 document.getElementById('res-name').innerText = name;
                 document.getElementById('res-printer').innerText = printerModel;
