@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v4.5</title>
+    <title>Országos Epson Szerviz | v4.6</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -140,7 +140,7 @@
             <div class="report-card" id="ticket-box">
                 <div id="form-content">
                     <h3>Hiba bejelentése</h3>
-                    <p class="subtitle">Válasszon tünetet, majd adja meg a gép típusát:</p>
+                    <p class="subtitle">Válasszon legfeljebb 2 hibatípust!</p>
                     
                     <div class="error-grid">
                         <button type="button" class="error-btn" onclick="toggleError(this)"><i class="fas fa-magic"></i> Nem tudom, nem értek hozzá</button>
@@ -151,11 +151,11 @@
                     </div>
 
                     <div style="margin-top:20px;">
-                        <input type="text" id="printer-model" placeholder="Nyomtató típusa (pl. L3250)" required>
+                        <input type="text" id="printer-model" placeholder="Nyomtató típusa" required>
                         
                         <div id="extra-fields" style="display:none;">
                             <input type="text" id="error-code" placeholder="Hibakód (ha van, pl. 031006)">
-                            <textarea id="extra-msg" placeholder="Hiba leírása (pl. mióta csinálja...)" rows="3"></textarea>
+                            <textarea id="extra-msg" placeholder="Hiba leírása" rows="3"></textarea>
                         </div>
                     </div>
                     
@@ -198,7 +198,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v4.5</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v4.6</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
