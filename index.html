@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Országos Epson Szerviz | v4.8</title>
+    <title>Országos Epson Szerviz | v5</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -201,7 +201,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v4.8</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v5</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -251,7 +251,7 @@
             const printerModel = document.getElementById('printer-model').value.trim();
             const errorCode = document.getElementById('error-code').value.trim();
             const extraMsg = document.getElementById('extra-msg').value.trim();
-            const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim());
+            const errors = Array.from(document.querySelectorAll('.error-btn.active')).map(b => b.innerText.trim()).join(', ');
 
             if (!name || !zip || !city || !street || !phone || !email || !printerModel || errors.length === 0) {
                 alert("Kérem töltsön ki minden kötelező mezőt (Hiba típusa és Nyomtató típusa is kötelező)!");
@@ -260,41 +260,48 @@
 
             const btn = document.querySelector('.submit-btn');
             btn.disabled = true;
-            btn.innerText = "KÜLDÉS...";
+            btn.innerText = "FELDOLGOZÁS...";
 
             const now = new Date();
             const ticketID = `EPSON-${String(now.getFullYear()).slice(-2)}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
             
-            const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfMktA1DUNS1EYWBe6nTp8WVWhceb5QDuzY7Cf-23AD6FMc6g/formResponse';
-            const formData = new URLSearchParams();
-            formData.append('entry.1869404490', ticketID);
-            formData.append('entry.1681322832', printerModel);
-            formData.append('entry.1567915132', name);
-            formData.append('entry.977338095', street);
-            formData.append('entry.2063510905', zip);
-            formData.append('entry.566376283', city);
-            formData.append('entry.175515844', phone);
-            formData.append('entry.156899408', email);
-            formData.append('entry.836895663', errorCode || 'Nincs');
-            formData.append('entry.1127298870', extraMsg || 'Nincs leírás');
-            errors.forEach(error => formData.append('entry.1886008896', error));
+            // A SAJÁT WEB APP URL-ED
+            const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzalRrnHX4RG-odhRMBCRJWfSR2YgF4j8mKi5UemldIZ5y38QZgQzriaFzQrwjLxB3wTg/exec';
+
+            const payload = {
+                ticketID, name, zip, city, street, phone, email, printerModel, errorCode, extraMsg, errors
+            };
 
             try {
-                await fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
-                document.getElementById('ticket-id').innerText = ticketID;
-                document.getElementById('res-name').innerText = name;
-                document.getElementById('res-printer').innerText = printerModel;
-                document.getElementById('res-phone').innerText = phone;
-                document.getElementById('res-email').innerText = email;
-                document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
-                document.getElementById('res-errors').innerText = errors.join(', ');
-                document.getElementById('res-code').innerText = errorCode || "Nincs megadva";
-                document.getElementById('res-desc').innerText = extraMsg || "Nincs további leírás";
-                document.getElementById('form-content').style.display = 'none';
-                document.getElementById('ticket-success').style.display = 'block';
-                window.scrollTo(0, document.getElementById('ticket-box').offsetTop - 20);
+                // Adatok küldése a Google Web App-nak (no-cors a redirect miatt)
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                // Mivel no-cors esetén nem látunk választ, rövid várakozás után megjelenítjük az eredményt
+                setTimeout(() => {
+                    document.getElementById('ticket-id').innerText = ticketID;
+                    document.getElementById('res-name').innerText = name;
+                    document.getElementById('res-printer').innerText = printerModel;
+                    document.getElementById('res-phone').innerText = phone;
+                    document.getElementById('res-email').innerText = email;
+                    document.getElementById('res-address').innerText = zip + " " + city + ", " + street;
+                    document.getElementById('res-errors').innerText = errors;
+                    document.getElementById('res-code').innerText = errorCode || "Nincs megadva";
+                    document.getElementById('res-desc').innerText = extraMsg || "Nincs további leírás";
+                    
+                    document.getElementById('form-content').style.display = 'none';
+                    document.getElementById('ticket-success').style.display = 'block';
+                    window.scrollTo(0, document.getElementById('ticket-box').offsetTop - 20);
+                }, 1500);
+
             } catch (error) {
-                alert("Hálózati hiba történt!");
+                console.error("Hiba:", error);
+                alert("Hiba történt a rögzítés során! Kérem próbálja meg később.");
                 btn.disabled = false;
                 btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
