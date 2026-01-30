@@ -243,7 +243,7 @@
             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/utils.js",
             initialCountry: "hu",
             separateDialCode: true,
-            preferredCountries: ["hu", "at", "de"],
+            preferredCountries: ["hu", "at", "sk", "ro", "rs", "hr", "si", "ua"],
             autoPlaceholder: "aggressive",
             customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
                 if (selectedCountryData.iso2 === 'hu') {
@@ -252,6 +252,16 @@
                 return selectedCountryPlaceholder.replace('+' + selectedCountryData.dialCode, "").trim();
             }
         });
+
+        // DINAMIKUS KARAKTERLIMIT BEÁLLÍTÁSA
+        const updateMaxLength = () => {
+            const placeholder = phoneInput.getAttribute('placeholder') || "";
+            if (placeholder) {
+                phoneInput.maxLength = placeholder.length + 2; 
+            }
+        };
+        phoneInput.addEventListener('countrychange', updateMaxLength);
+        updateMaxLength();
 
         var swiper = new Swiper(".mySwiper", {
             loop: true, centeredSlides: true,
@@ -334,7 +344,6 @@
         async function submitTicket() {
             if (document.getElementById('hp_field').value !== "") return;
 
-            // Tisztítás: ha beírná a 06-ot a read-only kód mellé, vágjuk le
             let rawPhone = phoneInput.value.trim();
             if (rawPhone.startsWith('06')) {
                 phoneInput.value = rawPhone.substring(2).trim();
