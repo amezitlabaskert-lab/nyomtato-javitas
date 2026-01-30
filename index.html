@@ -238,20 +238,25 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/intlTelInput.min.js"></script>
     
     <script>
-        const phoneInput = document.querySelector("#cust-phone");
         const iti = window.intlTelInput(phoneInput, {
-            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/utils.js",
-            initialCountry: "hu",
-            separateDialCode: true,
-            countryOrder: ["hu", "at", "sk", "ro", "rs", "hr", "si", "ua"],
-            autoPlaceholder: "aggressive",
-            customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
-                if (selectedCountryData.iso2 === 'hu') {
-                    return "30 123 4567";
-                }
-                return selectedCountryPlaceholder.replace('+' + selectedCountryData.dialCode, "").trim();
-            }
-        });
+    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/utils.js",
+    initialCountry: "hu",
+    separateDialCode: true,
+    // A lista elejére a szomszédokat és fontosabbakat tettem, utána jön a többi EU-s tag A-Z
+    onlyCountries: [
+        "hu", "at", "sk", "ro", "rs", "hr", "si", "ua", // Szomszédok + Szerbia, Ukrajna
+        "de", "be", "bg", "cy", "cz", "dk", "ee", "es", 
+        "fi", "fr", "gr", "ie", "it", "lt", "lu", "lv", 
+        "mt", "nl", "pl", "pt", "se"
+    ],
+    autoPlaceholder: "aggressive",
+    customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+        if (selectedCountryData.iso2 === 'hu') {
+            return "30 123 4567";
+        }
+        return selectedCountryPlaceholder.replace('+' + selectedCountryData.dialCode, "").trim();
+    }
+});
 
         // DINAMIKUS KARAKTERLIMIT BEÁLLÍTÁSA
         const updateMaxLength = () => {
