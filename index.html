@@ -237,25 +237,34 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/intlTelInput.min.js"></script>
     
-    <script>
+<script>
+        // Ez a sor hiányzott, ezért nem töltött be:
+        const phoneInput = document.querySelector("#cust-phone");
+
         const iti = window.intlTelInput(phoneInput, {
-    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/utils.js",
-    initialCountry: "hu",
-    separateDialCode: true,
-    onlyCountries: [
-        "hu", "at", "sk", "ro", "rs", "hr", "si", "ua",
-        "de", "be", "bg", "cy", "cz", "dk", "ee", "es", 
-        "fi", "fr", "gr", "ie", "it", "lt", "lu", "lv", 
-        "mt", "nl", "pl", "pt", "se"
-    ],
-    autoPlaceholder: "aggressive",
-    customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
-        if (selectedCountryData.iso2 === 'hu') {
-            return "30 123 4567";
-        }
-        return selectedCountryPlaceholder.replace('+' + selectedCountryData.dialCode, "").trim();
-    }
-});
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/utils.js",
+            initialCountry: "hu",
+            separateDialCode: true,
+            // Az onlyCountries korlátozza a listát az általad kért országokra
+            onlyCountries: [
+                "hu", "at", "sk", "ro", "rs", "hr", "si", "ua",
+                "de", "be", "bg", "cy", "cz", "dk", "ee", "es", 
+                "fi", "fr", "gr", "ie", "it", "lt", "lu", "lv", 
+                "mt", "nl", "pl", "pt", "se"
+            ],
+            // A countryOrder pedig kényszeríti, hogy a HU legyen legfelül
+            countryOrder: ["hu"], 
+            autoPlaceholder: "aggressive",
+            customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+                if (selectedCountryData.iso2 === 'hu') {
+                    return "30 123 4567";
+                }
+                return selectedCountryPlaceholder.replace('+' + selectedCountryData.dialCode, "").trim();
+            }
+        });
+
+        // DINAMIKUS KARAKTERLIMIT BEÁLLÍTÁSA (Innentől változatlan...)
+        const updateMaxLength = () => {
 
         // DINAMIKUS KARAKTERLIMIT BEÁLLÍTÁSA
         const updateMaxLength = () => {
