@@ -227,7 +227,7 @@
     </section>
 
     <footer>
-        &copy; 2026 Országos Epson Szerviz | <strong>v5.3</strong>
+        &copy; 2026 Országos Epson Szerviz | <strong>v5.4-FIXED</strong>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -338,14 +338,27 @@
             const payload = { ticketID, name, zip, city, street, phone, email, printerModel, errorCode, extraMsg, errors };
 
             try {
-                // JAVÍTOTT FETCH: no-cors és felesleges fejlécek nélkül
-                await fetch(WEB_APP_URL, {
+                // ✅ JAVÍTOTT FETCH - Content-Type headerrel és response ellenőrzéssel
+                const response = await fetch(WEB_APP_URL, {
                     method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(payload)
                 });
 
-                setTimeout(() => {
-                    document.getElementById('ticket-id').innerText = ticketID;
+                // Ellenőrizzük a HTTP válaszkódot
+                if (!response.ok) {
+                    throw new Error(`HTTP hiba! Státusz: ${response.status}`);
+                }
+
+                // Várjuk meg és parse-oljuk a backend válaszát
+                const result = await response.json();
+                
+                // Ellenőrizzük, hogy sikeres volt-e
+                if (result.result === "success") {
+                    // ✅ VALÓBAN SIKERES - UI frissítése
+                    document.getElementById('ticket-id').innerText = result.ticketID;
                     document.getElementById('res-name').innerText = name;
                     document.getElementById('res-printer').innerText = printerModel;
                     document.getElementById('res-phone').innerText = phone;
@@ -355,14 +368,31 @@
                     document.getElementById('res-code').innerText = errorCode || "Nincs megadva";
                     document.getElementById('res-desc').innerText = extraMsg || "Nincs további leírás";
                     
+                    // Sikeres üzenet megjelenítése
                     document.getElementById('form-content').style.display = 'none';
                     document.getElementById('ticket-success').style.display = 'block';
+                    
+                    // Scroll a sikeres üzenethez
                     window.scrollTo(0, document.getElementById('ticket-box').offsetTop - 20);
-                }, 1000);
+                    
+                } else {
+                    // Backend visszajelzett hibát
+                    throw new Error(result.message || 'Ismeretlen szerver hiba');
+                }
 
             } catch (error) {
-                console.error("Hiba:", error);
-                alert("Hiba történt a rögzítés során!");
+                // ❌ HIBA TÖRTÉNT
+                console.error("Hiba történt:", error);
+                
+                // Felhasználóbarát hibaüzenet
+                alert(
+                    "Sajnos hiba történt a bejelentés rögzítése során.\n\n" +
+                    "Kérjük, próbálja újra, vagy hívjon minket közvetlenül:\n" +
+                    "📞 +36 30 123 4567\n" +
+                    "📧 info@epsonszerviz.hu"
+                );
+                
+                // Gomb újra aktiválása
                 btn.disabled = false;
                 btn.innerText = "HIBAJEGY LÉTREHOZÁSA";
             }
